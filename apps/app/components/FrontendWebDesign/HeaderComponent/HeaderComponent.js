@@ -51,11 +51,14 @@ export default function HeaderComponent() {
               <div className="menu-right">
                 <p className="menu-heading">Menu</p>
                 <ul className="main-links">
-                  <li><a href="#audit" onClick={handleMenuClick}>AI Website Audit Tool</a></li>
-                  <li><a href="#dashboard" onClick={handleMenuClick}>Client Dashboard</a></li>
-                  <li><a href="#booking" onClick={handleMenuClick}>Design Consultation Booking</a></li>
-                  <li><a href="#seo" onClick={handleMenuClick}>SEO Reports</a></li>
-                  <li><a href="#subscription" onClick={handleMenuClick}>Subscription Maintenance</a></li>
+                  <li><a href="/frontend-web-design" onClick={handleMenuClick}>Home</a></li>
+                  <li><a href="/frontend-web-design/about" onClick={handleMenuClick}>About Us</a></li>
+                  <li><a href="/frontend-web-design/services" onClick={handleMenuClick}>Services</a></li>
+                  <li><a href="/frontend-web-design/portfolio" onClick={handleMenuClick}>Portfolio</a></li>
+                  <li><a href="/frontend-web-design/pricing" onClick={handleMenuClick}>Pricing</a></li>
+                  <li><a href="/frontend-web-design/faq" onClick={handleMenuClick}>FAQ</a></li>
+                  <li><a href="/frontend-web-design/client-portal" onClick={handleMenuClick}>Client Portal</a></li>
+                  <li><a href="/frontend-web-design-contact-us" onClick={handleMenuClick}>Contact Us</a></li>
                 </ul>
                 <div className="contact-block">
                   <p>Get in touch</p>

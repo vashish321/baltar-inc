@@ -1,7 +1,10 @@
 'use client';
 import { useEffect } from 'react';
 import HeroComponent from '../components/FrontendWebDesign/HeroComponent/HeroComponent';
+import QuickSnapshotTiles from '../components/FrontendWebDesign/QuickSnapshotComponent/QuickSnapshotTiles';
+import TrustedBySection from '../components/FrontendWebDesign/TrustedByComponent/TrustedBySection';
 import WhatWeDoComponent from '../components/FrontendWebDesign/WhatWeDoComponent/WhatWeDoComponent';
+import WhyChooseUsSection from '../components/FrontendWebDesign/WhyChooseUsComponent/WhyChooseUsSection';
 import AIAuditSection from '../components/FrontendWebDesign/AIAuditSection/AIAuditSection';
 import ClientDashboardSection from '../components/FrontendWebDesign/ClientDashboardComponent/ClientDashboardSection';
 import DesignConsultationSection from '../components/FrontendWebDesign/DesignConsultationComponent/DesignConsultationSection';
@@ -26,14 +29,19 @@ export default function FrontendWebDesignPage() {
 
     return () => {
       window.removeEventListener('mousemove', moveCursor);
-      document.body.removeChild(cursor);
+      if (document.body.contains(cursor)) {
+        document.body.removeChild(cursor);
+      }
     };
   }, []);
 
   return (
     <>
       <HeroComponent />
+      <QuickSnapshotTiles />
+      <TrustedBySection />
       <WhatWeDoComponent />
+      <WhyChooseUsSection />
       <AIAuditSection />
       <ClientDashboardSection />
       <DesignConsultationSection />
