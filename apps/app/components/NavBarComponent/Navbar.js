@@ -53,23 +53,22 @@ export default function Navbar() {
     const lowerItem = item.toLowerCase();
     const href = hrefMap[lowerItem] || '/coming-soon';
 
-    const isExternal = lowerItem === 'transac' || lowerItem === 'frontend web design' || lowerItem === 'le mode co.' || lowerItem === 'savour & sip' || lowerItem === 'consumer pulse' || lowerItem === 'vr (luxury eyewear & fashion tech)';
+    // Integrated pages should open in new tab, coming soon pages stay in same tab
+    const isIntegratedPage = hrefMap[lowerItem] && href !== '/coming-soon';
 
-    return isExternal ? (
-      <a
-        href={href}
-        target="_blank"
-        rel="noopener noreferrer"
-        key={i}
-        className="dropdown-item"
-      >
-        {item}
-      </a>
-    ) : (
-      <Link href={href} key={i} className="dropdown-item">
-        {item}
-      </Link>
-    );
+    if (isIntegratedPage) {
+      return (
+        <a href={href} key={i} className="dropdown-item" target="_blank" rel="noopener noreferrer">
+          {item}
+        </a>
+      );
+    } else {
+      return (
+        <Link href={href} key={i} className="dropdown-item">
+          {item}
+        </Link>
+      );
+    }
   };
 
   return (
@@ -126,11 +125,17 @@ export default function Navbar() {
 
                 {mobileDropdownOpen === heading && (
                   <div className="mobile-dropdown">
-                    {subItems.map((item, i) => (
-                      <div key={i} onClick={() => setMobileOpen(false)}>
-                        {renderLink(item, i)}
-                      </div>
-                    ))}
+                    {subItems.map((item, i) => {
+                      const lowerItem = item.toLowerCase();
+                      const href = hrefMap[lowerItem] || '/coming-soon';
+                      const isIntegratedPage = hrefMap[lowerItem] && href !== '/coming-soon';
+
+                      return (
+                        <div key={i} onClick={() => !isIntegratedPage && setMobileOpen(false)}>
+                          {renderLink(item, i)}
+                        </div>
+                      );
+                    })}
                   </div>
                 )}
               </div>

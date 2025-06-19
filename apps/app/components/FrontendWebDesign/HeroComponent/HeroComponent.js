@@ -23,9 +23,18 @@ export default function HeroComponent() {
           </h1>
           
           <p className={styles.heroSubheadline}>
-            From domain to design and everything in between — we're your all-in-one solution 
+            From domain to design and everything in between — we're your all-in-one solution
             for powerful websites that convert, impress, and grow with your business.
           </p>
+
+          <div className={styles.hostingAdvantage}>
+            <div className={styles.advantageBox}>
+              <span className={styles.advantageIcon}>🚀</span>
+              <p className={styles.advantageText}>
+                <strong>Better Hosting, Lower Prices:</strong> We offer web hosting and servers at cheaper prices than competitors, with faster performance and 24/7 support included.
+              </p>
+            </div>
+          </div>
           
           <div className={styles.ctaButtons}>
             <motion.a

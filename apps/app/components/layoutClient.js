@@ -23,11 +23,27 @@ export default function LayoutClient({ children }) {
   const isLeModeCoContactUsPage = pathname === '/le-mode-co-contact-us';
   const isSavourAndSip = pathname === '/sip-and-savour';
   const isSavourAndSipComingSoonPage = pathname === '/savour-and-sip-coming-soon';
+
+  // Savour & Sip pages
+  const isSavourAboutPage = pathname === '/sip-and-savour/about';
+  const isSavourServicesPage = pathname === '/sip-and-savour/services';
+  const isSavourEventsPage = pathname === '/sip-and-savour/events';
+  const isSavourMenuPage = pathname === '/sip-and-savour/menu';
+  const isSavourPricingPage = pathname === '/sip-and-savour/pricing';
+
+  // Check if any Savour & Sip page
+  const isAnySavourPage = isSavourAndSip || isSavourAboutPage || isSavourServicesPage ||
+                         isSavourEventsPage || isSavourMenuPage || isSavourPricingPage;
   const isConsumerPulsepage = pathname === '/consumer-pulse';
   const isConsumerPulseLoginpage = pathname === '/consumer-pulse-signin';
   const isConsumerPulseSignuppage = pathname === '/consumer-pulse-signup';
   const isConsumerPulseComingSoonpage = pathname === '/consumer-pulse-comingsoon';
   const isVRpage = pathname === '/vr';
+
+  // Dashboard pages that should not have default headers/footers
+  const isAdminDashboard = pathname === '/admin-dashboard';
+  const isAdminLogin = pathname === '/admin-login';
+  const isClientDashboard = pathname === '/client-dashboard';
 
   // Frontend Web Design pages
   const isFrontendAboutPage = pathname === '/frontend-web-design/about';
@@ -44,10 +60,14 @@ export default function LayoutClient({ children }) {
 
   return (
     <div className="w-full overflow-x-hidden bg-black text-white font-sans min-h-screen">
-      {/* ✅ Special handling for Savour & Sip page */}
-      {isSavourAndSip ? (
+      {/* ✅ Special handling for dashboard pages - no headers/footers */}
+      {isAdminDashboard || isAdminLogin || isClientDashboard ? (
+        <main className="w-full">{children}</main>
+      ) :
+      /* ✅ Special handling for Savour & Sip pages */
+      isAnySavourPage ? (
         <>
-          <PageLoader />
+          {isSavourAndSip && <PageLoader />}
           <main className="flex-1 w-full">{children}</main>
         </>
       ) : (

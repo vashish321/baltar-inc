@@ -194,6 +194,32 @@ export default function PricingPage() {
         </div>
       </section>
 
+      {/* Budget Flexibility Disclaimer */}
+      <section className={styles.disclaimerSection}>
+        <div className={styles.container}>
+          <motion.div
+            className={styles.disclaimerContent}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <div className={styles.disclaimerBox}>
+              <h3 className={styles.disclaimerTitle}>💡 We Work With Any Budget</h3>
+              <p className={styles.disclaimerText}>
+                <strong>Flexible Pricing for Small Businesses & Entrepreneurs:</strong> We understand that every business has different financial constraints. Our pricing is flexible and we offer special packages for small businesses, startups, and entrepreneurs. Don't let budget concerns stop you from getting the website you need - let's discuss what works for you.
+              </p>
+              <div className={styles.disclaimerHighlights}>
+                <div className={styles.highlight}>✓ Payment plans available</div>
+                <div className={styles.highlight}>✓ Special rates for startups</div>
+                <div className={styles.highlight}>✓ Scaled-down packages for tight budgets</div>
+                <div className={styles.highlight}>✓ No hidden fees or surprise costs</div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* Custom Package CTA */}
       <section className={styles.customSection}>
         <div className={styles.container}>
