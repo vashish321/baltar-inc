@@ -1,0 +1,183 @@
+.whoWeServeSection {
+  padding: 6rem 2rem;
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  color: white;
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  font-size: 1.25rem;
+  color: #cccccc;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.clientGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.clientCard {
+  background: #2a2a2a;
+  border-radius: 20px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid #333;
+}
+
+.clientCard:hover {
+  border-color: #d4af37;
+  box-shadow: 0 15px 35px rgba(212, 175, 55, 0.2);
+  transform: translateY(-5px);
+}
+
+.mediaWrapper {
+  position: relative;
+  height: 300px;
+  overflow: hidden;
+}
+
+.clientVideo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.clientCard:hover .clientVideo {
+  transform: scale(1.1);
+}
+
+.videoOverlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
+  padding: 2rem;
+  transform: translateY(20px);
+  transition: transform 0.3s ease;
+}
+
+.clientCard:hover .videoOverlay {
+  transform: translateY(0);
+}
+
+.overlayContent {
+  color: white;
+}
+
+.clientTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: #d4af37;
+}
+
+.clientDescription {
+  font-size: 1rem;
+  color: #cccccc;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.learnMoreBtn {
+  background: linear-gradient(135deg, #d4af37, #f4e4a6);
+  color: #1a1a1a;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.clientCard:hover .learnMoreBtn {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.1s;
+}
+
+.learnMoreBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .whoWeServeSection {
+    padding: 4rem 1rem;
+  }
+  
+  .title {
+    font-size: 2rem;
+  }
+  
+  .subtitle {
+    font-size: 1.1rem;
+  }
+  
+  .clientGrid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .mediaWrapper {
+    height: 250px;
+  }
+  
+  .videoOverlay {
+    padding: 1.5rem;
+    transform: translateY(0);
+  }
+  
+  .learnMoreBtn {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 1.75rem;
+  }
+  
+  .clientTitle {
+    font-size: 1.25rem;
+  }
+  
+  .clientDescription {
+    font-size: 0.95rem;
+  }
+  
+  .mediaWrapper {
+    height: 200px;
+  }
+  
+  .videoOverlay {
+    padding: 1.25rem;
+  }
+}

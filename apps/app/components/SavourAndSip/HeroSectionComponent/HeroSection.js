@@ -2,43 +2,45 @@
 
 import { useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, EffectFade } from "swiper/modules";
+import { Autoplay, EffectFade, Pagination } from "swiper/modules";
 import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
 import "swiper/css";
 import "swiper/css/effect-fade";
+import "swiper/css/pagination";
 import styles from "./HeroSection.module.css";
 
 const slides = [
   {
-    video: "/savourandsip.mp4",
-    image: "/food1.jpg",
-    title: "WELCOME TO SAVOUR & SIP",
-    description: "Indulge in personalized culinary experiences with a professional personal chef. Specializing in farm-to-table ingredients, vegan, and gluten-free diets.",
-    buttonText: "Explore more",
+    image: "https://images.unsplash.com/photo-1555244162-803834f70033?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    title: "Bringing Hospitality to Life — One Event, One Venue, One Team at a Time.",
+    description: "Event bartenders, catering, restaurant staffing, and hospitality experts serving private, corporate, and commercial clients across Ontario.",
+    buttonText: "Book Our Services",
+    buttonLink: "/sip-and-savour/services",
   },
   {
-    video: "/giftcard.mp4",
-    image: "/giftcard.jpg",
-    title: "Get a giftcard from Savour & Sip",
-    description: "",
-    buttonText: "Redeem",
+    image: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    title: "Professional Hospitality Staff",
+    description: "Trained bartenders, servers, chefs, and event teams ready to make your event unforgettable.",
+    buttonText: "Hire Hospitality Staff",
+    buttonLink: "/sip-and-savour/services",
   },
   {
-    video: "/food.mp4",
-    image: "/food3.jpg",
-    title: "Food with Savour & Sip",
-    description: "",
-    buttonText: "Dive in",
+    image: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    title: "Complete Event Solutions",
+    description: "From intimate dinners to corporate galas, we handle every detail with professionalism and care.",
+    buttonText: "Plan Your Event",
+    buttonLink: "/sip-and-savour/events",
   },
 ];
 
-const features = [
-  "AI-Powered Menu Builder",
-  "Client Booking System",
-  "E-Commerce for Event Packages",
-  "Monthly Subscription Menus",
-  "Live Chat & AI Support",
-  "Event Planning Assistance",
+const menuItems = [
+  { name: "Home", link: "/sip-and-savour" },
+  { name: "About Us", link: "/sip-and-savour/about" },
+  { name: "Services", link: "/sip-and-savour/services" },
+  { name: "Events We Serve", link: "/sip-and-savour/events" },
+  { name: "Menu", link: "/sip-and-savour/menu" },
+  { name: "Pricing", link: "/sip-and-savour/pricing" },
 ];
 
 export default function HeroSection() {
@@ -67,48 +69,72 @@ export default function HeroSection() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleMenuClick = () => {
-    router.push("/savour-and-sip-coming-soon");
+  const handleMenuClick = (link) => {
+    router.push(link);
     setMenuOpen(false);
   };
 
-  const handleButtonClick = () => {
-    router.push("/savour-and-sip-coming-soon");
+  const handleButtonClick = (link) => {
+    router.push(link);
   };
 
   return (
     <div className={styles.heroContainer}>
       <Swiper
-        modules={[Autoplay, EffectFade]}
-        autoplay={{ delay: 5000, disableOnInteraction: false }}
+        modules={[Autoplay, EffectFade, Pagination]}
+        autoplay={{
+          delay: 3000,
+          disableOnInteraction: false,
+          pauseOnMouseEnter: false
+        }}
         loop={true}
         effect="fade"
         fadeEffect={{ crossFade: true }}
+        pagination={{
+          clickable: true,
+          dynamicBullets: true
+        }}
+        speed={800}
         className={styles.swiper}
       >
         {slides.map((slide, index) => (
           <SwiperSlide key={index} className={styles.slide}>
-            {isMobile ? (
-              <img src={slide.image} alt={slide.title} className={styles.bgVideo} />
-            ) : (
-              <video
-                src={slide.video}
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="auto"
-                className={styles.bgVideo}
-              />
-            )}
+            <img src={slide.image} alt={slide.title} className={styles.bgVideo} />
             <div className={styles.overlay}></div>
-            <div className={styles.heroContent}>
-              <h1>{slide.title}</h1>
-              {slide.description && <p>{slide.description}</p>}
-              <button className={styles.heroButton} onClick={handleButtonClick}>
+            <motion.div
+              className={styles.heroContent}
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: 0.3 }}
+            >
+              <motion.h1
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.5 }}
+              >
+                {slide.title}
+              </motion.h1>
+              {slide.description && (
+                <motion.p
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.7 }}
+                >
+                  {slide.description}
+                </motion.p>
+              )}
+              <motion.button
+                className={styles.heroButton}
+                onClick={() => handleButtonClick(slide.buttonLink)}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6, delay: 0.9 }}
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+              >
                 {slide.buttonText}
-              </button>
-            </div>
+              </motion.button>
+            </motion.div>
           </SwiperSlide>
         ))}
       </Swiper>
@@ -123,8 +149,8 @@ export default function HeroSection() {
         }}
       >
         <button className={styles.menuButton} onClick={() => setMenuOpen(true)}>☰</button>
-        <button className={styles.locationButton} onClick={handleButtonClick}>
-          Locations
+        <button className={styles.locationButton} onClick={() => handleButtonClick("/sip-and-savour/services")}>
+          Book Services
         </button>
       </div>
 
@@ -136,11 +162,11 @@ export default function HeroSection() {
             <button className={styles.closeButton} onClick={() => setMenuOpen(false)}>×</button>
             <div className={styles.menuSections}>
               <div className={styles.leftMenu}>
-                <h3>Our Features</h3>
+                <h3>Navigation</h3>
                 <ul>
-                  {features.map((feature, index) => (
-                    <li key={index} onClick={handleMenuClick}>
-                      {feature}
+                  {menuItems.map((item, index) => (
+                    <li key={index} onClick={() => handleMenuClick(item.link)}>
+                      {item.name}
                     </li>
                   ))}
                 </ul>

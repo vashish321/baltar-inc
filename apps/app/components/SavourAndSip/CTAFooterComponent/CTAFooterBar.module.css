@@ -1,0 +1,178 @@
+.ctaSection {
+  position: relative;
+  padding: 6rem 2rem;
+  background: #1a1a1a;
+  overflow: hidden;
+  min-height: 400px;
+  display: flex;
+  align-items: center;
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+  width: 100%;
+}
+
+.backgroundVideo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.videoOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(26, 26, 26, 0.8), rgba(45, 45, 45, 0.7));
+}
+
+.ctaContent {
+  text-align: center;
+  color: white;
+  position: relative;
+  z-index: 3;
+}
+
+.textContent {
+  margin-bottom: 3rem;
+}
+
+.ctaTitle {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.ctaSubtitle {
+  font-size: 1.25rem;
+  color: #cccccc;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.ctaButtons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.phoneButton {
+  background: linear-gradient(135deg, #d4af37, #f4e4a6);
+  color: #1a1a1a;
+  border: none;
+  padding: 1.25rem 2rem;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.phoneButton:hover {
+  box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+  transform: translateY(-2px);
+}
+
+.phoneIcon {
+  font-size: 1.2rem;
+}
+
+.orText {
+  font-size: 1.1rem;
+  color: #cccccc;
+  font-weight: 500;
+  margin: 0 1rem;
+}
+
+.quoteButton {
+  background: transparent;
+  color: white;
+  border: 2px solid #d4af37;
+  padding: 1.25rem 2rem;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.quoteButton:hover {
+  background: #d4af37;
+  color: #1a1a1a;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(212, 175, 55, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .ctaSection {
+    padding: 4rem 1rem;
+    min-height: 300px;
+  }
+  
+  .ctaTitle {
+    font-size: 2rem;
+  }
+  
+  .ctaSubtitle {
+    font-size: 1.1rem;
+  }
+  
+  .ctaButtons {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .orText {
+    margin: 0;
+  }
+  
+  .phoneButton,
+  .quoteButton {
+    width: 100%;
+    max-width: 350px;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .ctaTitle {
+    font-size: 1.75rem;
+  }
+  
+  .ctaSubtitle {
+    font-size: 1rem;
+  }
+  
+  .phoneButton,
+  .quoteButton {
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+  }
+  
+  .textContent {
+    margin-bottom: 2rem;
+  }
+}

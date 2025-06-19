@@ -11,6 +11,13 @@ app.use(morgan('dev'));
 // Use subservice routes
 app.use('/api/frontend', require('./routes/frontendWebDesign'));
 
+// Core business routes
+app.use('/api/auth', require('./routes/authRoutes'));
+app.use('/api/clients', require('./routes/clientRoutes'));
+app.use('/api/projects', require('./routes/projectRoutes'));
+app.use('/api/invoices', require('./routes/invoiceRoutes'));
+app.use('/api/bookings', require('./routes/bookingRoutes'));
+
 // Health check
 app.get('/', (req, res) => {
   res.send('Baltar Backend is up and running 🚀');

@@ -1,0 +1,223 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Enums
+enum ServiceType {
+  FRONTEND_WEB_DESIGN
+  SAVOUR_AND_SIP
+}
+
+enum ProjectStatus {
+  INQUIRY
+  QUOTED
+  APPROVED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+enum InvoiceStatus {
+  DRAFT
+  SENT
+  PAID
+  OVERDUE
+  CANCELLED
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  REFUNDED
+}
+
+// Core Models
+model Client {
+  id          String   @id @default(cuid())
+  email       String   @unique
+  firstName   String
+  lastName    String
+  phone       String?
+  company     String?
+  address     String?
+  city        String?
+  province    String?
+  postalCode  String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relationships
+  projects    Project[]
+  invoices    Invoice[]
+  bookings    Booking[]
+
+  @@map("clients")
+}
+
+model Project {
+  id            String        @id @default(cuid())
+  clientId      String
+  serviceType   ServiceType
+  title         String
+  description   String?
+  status        ProjectStatus @default(INQUIRY)
+  estimatedCost Float?
+  finalCost     Float?
+  startDate     DateTime?
+  endDate       DateTime?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  // Frontend Web Design specific fields
+  websiteUrl    String?
+  domainName    String?
+  hostingPlan   String?
+
+  // Savour & Sip specific fields
+  eventDate     DateTime?
+  eventLocation String?
+  guestCount    Int?
+  eventType     String?
+
+  // Relationships
+  client        Client        @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  invoices      Invoice[]
+  projectFiles  ProjectFile[]
+  tasks         Task[]
+
+  @@map("projects")
+}
+
+model Invoice {
+  id            String        @id @default(cuid())
+  clientId      String
+  projectId     String?
+  invoiceNumber String        @unique
+  title         String
+  description   String?
+  subtotal      Float
+  tax           Float         @default(0)
+  total         Float
+  status        InvoiceStatus @default(DRAFT)
+  issueDate     DateTime      @default(now())
+  dueDate       DateTime
+  paidDate      DateTime?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  // Relationships
+  client        Client        @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  project       Project?      @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  invoiceItems  InvoiceItem[]
+  payments      Payment[]
+
+  @@map("invoices")
+}
+
+model InvoiceItem {
+  id          String  @id @default(cuid())
+  invoiceId   String
+  description String
+  quantity    Int     @default(1)
+  unitPrice   Float
+  total       Float
+
+  // Relationships
+  invoice     Invoice @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+
+  @@map("invoice_items")
+}
+
+model Payment {
+  id            String        @id @default(cuid())
+  invoiceId     String
+  amount        Float
+  status        PaymentStatus @default(PENDING)
+  paymentMethod String?
+  transactionId String?
+  paidAt        DateTime?
+  createdAt     DateTime      @default(now())
+
+  // Relationships
+  invoice       Invoice       @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+
+  @@map("payments")
+}
+
+model Booking {
+  id            String      @id @default(cuid())
+  clientId      String
+  serviceType   ServiceType
+  eventDate     DateTime
+  eventLocation String
+  guestCount    Int?
+  services      String      // JSON array of requested services
+  specialRequests String?
+  status        String      @default("pending")
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  // Relationships
+  client        Client      @relation(fields: [clientId], references: [id], onDelete: Cascade)
+
+  @@map("bookings")
+}
+
+model Task {
+  id          String   @id @default(cuid())
+  projectId   String
+  title       String
+  description String?
+  status      String   @default("pending") // pending, in_progress, completed
+  priority    String   @default("medium") // low, medium, high
+  dueDate     DateTime?
+  completedAt DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relationships
+  project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@map("tasks")
+}
+
+model ProjectFile {
+  id          String   @id @default(cuid())
+  projectId   String
+  fileName    String
+  originalName String
+  filePath    String
+  fileSize    Int
+  mimeType    String
+  uploadedAt  DateTime @default(now())
+
+  // Relationships
+  project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@map("project_files")
+}
+
+model Admin {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  firstName String
+  lastName  String
+  role      String   @default("admin")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("admins")
+}
