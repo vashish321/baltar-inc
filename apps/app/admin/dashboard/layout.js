@@ -1,6 +1,6 @@
 export default function AdminDashboardLayout({ children }) {
   return (
-    <div style={{ minHeight: '100vh' }}>
+    <div>
       {children}
     </div>
   );

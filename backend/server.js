@@ -17,6 +17,7 @@ app.use('/api/clients', require('./routes/clientRoutes'));
 app.use('/api/projects', require('./routes/projectRoutes'));
 app.use('/api/invoices', require('./routes/invoiceRoutes'));
 app.use('/api/bookings', require('./routes/bookingRoutes'));
+app.use('/api/quotes', require('./routes/quoteRoutes'));
 
 // Health check
 app.get('/', (req, res) => {

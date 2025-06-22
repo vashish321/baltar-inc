@@ -85,45 +85,30 @@ export default function PricingPage() {
     e.preventDefault();
 
     try {
-      // COMMENTED OUT FOR UI/UX DEMO - Backend calls disabled
-      /*
-      // Split name into first and last name
-      const nameParts = formData.name.trim().split(' ');
-      const firstName = nameParts[0] || '';
-      const lastName = nameParts.slice(1).join(' ') || '';
-
-      const bookingData = {
-        // Client info
-        email: formData.email,
-        firstName: firstName,
-        lastName: lastName,
-        phone: formData.phone,
-
-        // Service info
+      const quoteData = {
         serviceType: 'SAVOUR_AND_SIP',
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        message: formData.message,
+        eventType: formData.eventType,
+        guestCount: formData.guestCount,
         eventDate: formData.date,
-        eventLocation: 'TBD', // Will be discussed during consultation
-        guestCount: parseInt(formData.guestCount),
-        services: formData.services,
-        specialRequests: formData.message,
-
-        // Project info
-        projectTitle: `${formData.eventType} Event - ${firstName} ${lastName}`,
-        projectDescription: formData.message
+        services: formData.services
       };
 
-      const response = await fetch('http://localhost:5000/api/bookings', {
+      const response = await fetch('http://localhost:5000/api/quotes', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(bookingData)
+        body: JSON.stringify(quoteData)
       });
 
       const result = await response.json();
 
       if (result.success) {
-        // Show success modal instead of alert
+        // Show success modal
         showSuccessModal();
         // Reset form
         setFormData({
@@ -139,21 +124,6 @@ export default function PricingPage() {
       } else {
         throw new Error(result.error || 'Failed to submit quote request');
       }
-      */
-
-      // Mock form submission for UI demo
-      showSuccessModal();
-      // Reset form
-      setFormData({
-        eventType: '',
-        guestCount: '',
-        date: '',
-        services: [],
-        name: '',
-        email: '',
-        phone: '',
-        message: ''
-      });
     } catch (error) {
       console.error('Error submitting form:', error);
       alert('Sorry, there was an error submitting your request. Please try again or contact us directly.');

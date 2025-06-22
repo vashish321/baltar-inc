@@ -17,7 +17,7 @@ export default function AdminLogin() {
       ...formData,
       [e.target.name]: e.target.value
     });
-    setError(''); // Clear error when user types
+    setError('');
   };
 
   const handleSubmit = async (e) => {
@@ -26,8 +26,6 @@ export default function AdminLogin() {
     setError('');
 
     try {
-      // COMMENTED OUT FOR UI/UX DEMO - Backend authentication disabled
-      /*
       const response = await fetch('http://localhost:5000/api/auth/login', {
         method: 'POST',
         headers: {
@@ -44,26 +42,9 @@ export default function AdminLogin() {
         localStorage.setItem('adminUser', JSON.stringify(result.admin));
 
         // Redirect to admin dashboard
-        router.push('/admin-dashboard');
+        router.push('/admin/dashboard');
       } else {
         setError(result.error || 'Login failed');
-      }
-      */
-
-      // Mock login for UI demo
-      if (formData.email && formData.password) {
-        // Mock successful login
-        localStorage.setItem('adminToken', 'demo-token');
-        localStorage.setItem('adminUser', JSON.stringify({
-          firstName: 'Admin',
-          lastName: 'User',
-          email: formData.email
-        }));
-
-        // Redirect to admin dashboard
-        router.push('/admin-dashboard');
-      } else {
-        setError('Please enter email and password');
       }
     } catch (error) {
       console.error('Login error:', error);
@@ -77,8 +58,11 @@ export default function AdminLogin() {
     <div className={styles.loginContainer}>
       <div className={styles.loginBox}>
         <div className={styles.logoSection}>
-          <h1 className={styles.logo}>Baltar Inc</h1>
-          <p className={styles.subtitle}>Admin Dashboard</p>
+          <div className={styles.logo}>
+            <span className={styles.logoIcon}>⚡</span>
+            <span className={styles.logoText}>Baltar Inc</span>
+          </div>
+          <p className={styles.subtitle}>Admin Portal</p>
         </div>
 
         <form onSubmit={handleSubmit} className={styles.loginForm}>
@@ -99,7 +83,7 @@ export default function AdminLogin() {
               value={formData.email}
               onChange={handleChange}
               className={styles.input}
-              placeholder="Enter your admin email"
+              placeholder="admin@admin.com"
               required
             />
           </div>
@@ -126,7 +110,7 @@ export default function AdminLogin() {
             {loading ? (
               <span className={styles.loadingSpinner}></span>
             ) : (
-              'Login'
+              'Sign In'
             )}
           </button>
         </form>

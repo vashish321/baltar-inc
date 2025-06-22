@@ -1,4 +1,5 @@
 const { PrismaClient } = require('@prisma/client');
+const EmailService = require('./emailService');
 const prisma = new PrismaClient();
 
 class InvoiceService {
@@ -258,6 +259,97 @@ class InvoiceService {
       return payment;
     } catch (error) {
       console.error('Error recording payment:', error);
+      throw error;
+    }
+  }
+
+  // Generate and send invoice (for admin dashboard)
+  static async generateAndSendInvoice(invoiceData) {
+    try {
+      const {
+        serviceType,
+        customerName,
+        customerEmail,
+        cost,
+        eventType,
+        guestCount,
+        websiteType,
+        projectDescription,
+        adminId
+      } = invoiceData;
+
+      // Check if client exists, create if not
+      let client = await prisma.client.findUnique({
+        where: { email: customerEmail }
+      });
+
+      if (!client) {
+        // Split name into first and last name
+        const nameParts = customerName.trim().split(' ');
+        const firstName = nameParts[0] || '';
+        const lastName = nameParts.slice(1).join(' ') || '';
+
+        client = await prisma.client.create({
+          data: {
+            email: customerEmail,
+            firstName: firstName,
+            lastName: lastName
+          }
+        });
+      }
+
+      // Calculate tax and total
+      const subtotal = cost;
+      const tax = this.calculateTax(subtotal);
+      const total = subtotal + tax;
+
+      // Create invoice title based on service type
+      let title = '';
+      let description = '';
+
+      if (serviceType === 'SAVOUR_AND_SIP') {
+        title = `Hospitality Services - ${eventType || 'Event'}`;
+        description = `Professional hospitality and catering services${guestCount ? ` for ${guestCount} guests` : ''}`;
+      } else if (serviceType === 'FRONTEND_WEB_DESIGN') {
+        title = `Website Development - ${websiteType || 'Custom Website'}`;
+        description = projectDescription || 'Professional website development services';
+      }
+
+      // Create invoice
+      const invoice = await prisma.invoice.create({
+        data: {
+          clientId: client.id,
+          invoiceNumber: this.generateInvoiceNumber(),
+          title: title,
+          description: description,
+          subtotal: subtotal,
+          tax: tax,
+          total: total,
+          dueDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days from now
+          invoiceItems: {
+            create: [{
+              description: title,
+              quantity: 1,
+              unitPrice: subtotal,
+              total: subtotal
+            }]
+          }
+        },
+        include: {
+          invoiceItems: true,
+          client: true
+        }
+      });
+
+      // Send invoice email
+      const emailResult = await EmailService.sendInvoiceEmail(invoice);
+
+      return {
+        invoice,
+        emailResult
+      };
+    } catch (error) {
+      console.error('Error generating and sending invoice:', error);
       throw error;
     }
   }

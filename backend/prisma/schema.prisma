@@ -62,6 +62,7 @@ model Client {
   projects    Project[]
   invoices    Invoice[]
   bookings    Booking[]
+  quotes      Quote[]
 
   @@map("clients")
 }
@@ -220,4 +221,50 @@ model Admin {
   updatedAt DateTime @updatedAt
 
   @@map("admins")
+}
+
+model Quote {
+  id            String      @id @default(cuid())
+  clientId      String?
+  serviceType   ServiceType
+  status        QuoteStatus @default(PENDING)
+
+  // Common fields
+  name          String
+  email         String
+  phone         String?
+  message       String?
+
+  // Savour & Sip specific fields
+  eventType     String?
+  guestCount    Int?
+  eventDate     DateTime?
+  services      String?     // JSON array of requested services
+
+  // Frontend Web Design specific fields
+  company       String?
+  websiteType   String?
+  budget        String?
+
+  // Admin response
+  quotedAmount  Float?
+  adminNotes    String?
+  quotedAt      DateTime?
+  quotedBy      String?     // Admin ID who provided the quote
+
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  // Relationships
+  client        Client?     @relation(fields: [clientId], references: [id], onDelete: SetNull)
+
+  @@map("quotes")
+}
+
+enum QuoteStatus {
+  PENDING
+  QUOTED
+  ACCEPTED
+  REJECTED
+  CONVERTED_TO_PROJECT
 }
