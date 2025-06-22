@@ -3,6 +3,7 @@ import styles from './PricingPage.module.css';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { getApiEndpoint } from '@/lib/config';
 import SharedHeader from '../../components/SavourAndSip/SharedHeaderComponent/SharedHeader';
 
 export default function PricingPage() {
@@ -97,7 +98,7 @@ export default function PricingPage() {
         services: formData.services
       };
 
-      const response = await fetch('http://localhost:5000/api/quotes', {
+      const response = await fetch(getApiEndpoint('/api/quotes'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

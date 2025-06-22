@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
+import { getApiEndpoint } from '@/lib/config';
 import styles from './QuotePage.module.css';
 
 export default function QuotePage() {
@@ -25,7 +26,7 @@ export default function QuotePage() {
   const fetchQuote = async () => {
     try {
       const token = localStorage.getItem('adminToken');
-      const response = await fetch(`http://localhost:5000/api/quotes/${quoteId}`, {
+      const response = await fetch(getApiEndpoint(`/api/quotes/${quoteId}`), {
         headers: { 'Authorization': `Bearer ${token}` }
       });
 
@@ -68,7 +69,7 @@ export default function QuotePage() {
       const token = localStorage.getItem('adminToken');
 
       // Update quote with pricing
-      const response = await fetch(`http://localhost:5000/api/quotes/${quoteId}/price`, {
+      const response = await fetch(getApiEndpoint(`/api/quotes/${quoteId}/price`), {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -81,7 +82,7 @@ export default function QuotePage() {
 
       if (result.success) {
         // Send quote email
-        const emailResponse = await fetch(`http://localhost:5000/api/quotes/${quoteId}/send`, {
+        const emailResponse = await fetch(getApiEndpoint(`/api/quotes/${quoteId}/send`), {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${token}`

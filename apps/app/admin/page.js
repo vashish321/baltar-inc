@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { getApiEndpoint } from '@/lib/config';
 import styles from './AdminLogin.module.css';
 
 export default function AdminLogin() {
@@ -26,7 +27,7 @@ export default function AdminLogin() {
     setError('');
 
     try {
-      const response = await fetch('http://localhost:5000/api/auth/login', {
+      const response = await fetch(getApiEndpoint('/api/auth/login'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
