@@ -1,0 +1,192 @@
+/* Meta-Inspired Footer */
+.footer {
+  background: #f8f9fa;
+  border-top: 1px solid #e4e6ea;
+  padding: 3rem 0 1rem;
+  margin-top: 4rem;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.content {
+  width: 100%;
+}
+
+/* Main Content */
+.mainContent {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 3rem;
+  margin-bottom: 2rem;
+}
+
+.companySection {
+  max-width: 400px;
+}
+
+.companyName {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1c1e21;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.01em;
+}
+
+.companyTagline {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #0866ff;
+  margin-bottom: 1rem;
+}
+
+.companyDescription {
+  font-size: 0.875rem;
+  color: #65676b;
+  line-height: 1.5;
+}
+
+/* Links Grid */
+.linksGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+}
+
+.linkSection {
+  display: flex;
+  flex-direction: column;
+}
+
+.sectionTitle {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #1c1e21;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.linkList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.footerLink {
+  color: #65676b;
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 400;
+  transition: color 0.2s ease;
+  line-height: 1.4;
+}
+
+.footerLink:hover {
+  color: #0866ff;
+}
+
+/* Bottom Bar */
+.bottomBar {
+  border-top: 1px solid #e4e6ea;
+  padding-top: 1.5rem;
+  margin-top: 2rem;
+}
+
+.bottomContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.copyright {
+  color: #65676b;
+  font-size: 0.8rem;
+}
+
+.legalLinks {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.legalLink {
+  color: #65676b;
+  text-decoration: none;
+  font-size: 0.8rem;
+  transition: color 0.2s ease;
+}
+
+.legalLink:hover {
+  color: #0866ff;
+}
+
+.location {
+  color: #65676b;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .mainContent {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  .linksGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 1rem;
+  }
+  
+  .footer {
+    padding: 2rem 0 1rem;
+  }
+  
+  .linksGrid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .bottomContent {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .legalLinks {
+    order: 2;
+  }
+  
+  .location {
+    order: 3;
+  }
+}
+
+@media (max-width: 480px) {
+  .legalLinks {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .bottomContent {
+    gap: 0.75rem;
+  }
+}

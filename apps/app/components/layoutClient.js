@@ -3,6 +3,8 @@
 import { usePathname } from 'next/navigation';
 import Navbar from './NavBarComponent/Navbar';
 import Footer from './FooterComponent/Footer';
+import MetaHeader from './MetaStyleComponents/MetaHeader';
+import MetaFooter from './MetaStyleComponents/MetaFooter';
 import TransacHeader from './Transac/HeaderComponent/TransacHeader';
 import FrontendHeader from './FrontendWebDesign/HeaderComponent/HeaderComponent';
 import PageLoader from './SavourAndSip/PageAnimationComponent/PageAnimation'; // ✅ Import loader
@@ -39,6 +41,25 @@ export default function LayoutClient({ children }) {
   const isConsumerPulseSignuppage = pathname === '/consumer-pulse-signup';
   const isConsumerPulseComingSoonpage = pathname === '/consumer-pulse-comingsoon';
   const isVRpage = pathname === '/vr';
+
+  // New coming soon pages
+  const isContactUsPage = pathname === '/contact-us';
+  const isServicesPage = pathname === '/services';
+  const isCre8iveStudioComingSoonPage = pathname === '/cre8ive-studio-comingsoon';
+  const isArchonEngineeringComingSoonPage = pathname === '/archon-engineering-comingsoon';
+  const isBaltarFinanceComingSoonPage = pathname === '/baltar-finance-comingsoon';
+  const isZeitgeistMediaComingSoonPage = pathname === '/zeitgeist-media-comingsoon';
+  const isAboutComingSoonPage = pathname === '/about-comingsoon';
+  const isCareersComingSoonPage = pathname === '/careers-comingsoon';
+  const isPrivacyPolicyPage = pathname === '/privacy-policy';
+  const isTermsOfServicePage = pathname === '/terms-of-service';
+  const isCookiesPage = pathname === '/cookies';
+
+  // Group all new coming soon pages
+  const isAnyNewComingSoonPage = isCre8iveStudioComingSoonPage || isArchonEngineeringComingSoonPage ||
+                                isBaltarFinanceComingSoonPage || isZeitgeistMediaComingSoonPage ||
+                                isAboutComingSoonPage || isCareersComingSoonPage || isPrivacyPolicyPage ||
+                                isTermsOfServicePage || isCookiesPage || isServicesPage;
 
   // Dashboard pages that should not have default headers/footers
   const isAdminDashboard = pathname === '/admin-dashboard';
@@ -86,10 +107,13 @@ export default function LayoutClient({ children }) {
                 !isConsumerPulseComingSoonpage &&
                 !isConsumerPulseLoginpage &&
                 !isConsumerPulseSignuppage &&
-                !isVRpage &&(
+                !isVRpage &&
+                !isAnyNewComingSoonPage &&(
                   isTransac
                     ? <TransacHeader />
-                    : <Navbar />
+                    : (isHome || isContactUsPage)
+                      ? <MetaHeader />
+                      : <Navbar />
               )}
 
               {/* ✅ Frontend Web Design Header */}
@@ -112,8 +136,12 @@ export default function LayoutClient({ children }) {
                 !isConsumerPulseSignuppage &&
                 !isConsumerPulseComingSoonpage &&
                 !isVRpage &&
+                !isAnyNewComingSoonPage &&
+                !isContactUsPage &&
                 (
-                  <Footer />
+                  isHome
+                    ? <MetaFooter />
+                    : <Footer />
               )}
             </div>
           </div>
