@@ -11,7 +11,7 @@ This document explains how the frontend is configured to work with different bac
 
 ### Production (Vercel)
 - **Frontend**: Deployed on Vercel
-- **Backend**: https://baltar-inc-production.up.railway.app:8080
+- **Backend**: https://baltar-inc-production.up.railway.app
 - **Environment File**: `.env.production` and `vercel.json`
 
 ## Configuration Files
@@ -26,7 +26,7 @@ NEXT_PUBLIC_ENVIRONMENT=development
 
 #### `.env.production` (Production)
 ```
-NEXT_PUBLIC_API_URL=https://baltar-inc-production.up.railway.app:8080
+NEXT_PUBLIC_API_URL=https://baltar-inc-production.up.railway.app
 NEXT_PUBLIC_ENVIRONMENT=production
 ```
 
@@ -63,7 +63,7 @@ The following components have been updated to use the environment configuration:
 1. Push code to your repository
 2. Connect repository to Vercel
 3. Vercel will automatically use the production environment variables
-4. The frontend will connect to the Railway backend at `https://baltar-inc-production.up.railway.app:8080`
+4. The frontend will connect to the Railway backend at `https://baltar-inc-production.up.railway.app`
 
 ### For Local Development:
 1. Ensure backend is running on `http://localhost:5000`
