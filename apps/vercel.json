@@ -1,0 +1,12 @@
+{
+  "env": {
+    "NEXT_PUBLIC_API_URL": "https://baltar-inc-production.up.railway.app:8080",
+    "NEXT_PUBLIC_ENVIRONMENT": "production"
+  },
+  "build": {
+    "env": {
+      "NEXT_PUBLIC_API_URL": "https://baltar-inc-production.up.railway.app:8080",
+      "NEXT_PUBLIC_ENVIRONMENT": "production"
+    }
+  }
+}

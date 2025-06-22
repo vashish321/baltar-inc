@@ -2,6 +2,7 @@
 
 import styles from './ContactUs.module.css';
 import { useState } from 'react';
+import { getApiEndpoint } from '@/lib/config';
 
 export default function ContactUsComponent() {
   const [form, setForm] = useState({
@@ -42,7 +43,7 @@ export default function ContactUsComponent() {
         message: form.message
       };
 
-      const response = await fetch('http://localhost:5000/api/quotes', {
+      const response = await fetch(getApiEndpoint('/api/quotes'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

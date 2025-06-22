@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { getApiEndpoint } from '@/lib/config';
 import styles from './AdminDashboard.module.css';
 
 export default function AdminDashboard() {
@@ -35,7 +36,7 @@ export default function AdminDashboard() {
       }
 
       // Verify token with backend
-      const response = await fetch('http://localhost:5000/api/auth/verify', {
+      const response = await fetch(getApiEndpoint('/api/auth/verify'), {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -62,7 +63,7 @@ export default function AdminDashboard() {
       const token = localStorage.getItem('adminToken');
 
       // Fetch quotes data
-      const quotesResponse = await fetch('http://localhost:5000/api/quotes', {
+      const quotesResponse = await fetch(getApiEndpoint('/api/quotes'), {
         headers: { 'Authorization': `Bearer ${token}` }
       });
 
@@ -426,7 +427,7 @@ function InvoiceModal({ serviceType, onClose, onRefresh }) {
         projectDescription: formData.projectDescription
       };
 
-      const response = await fetch('http://localhost:5000/api/invoices/generate', {
+      const response = await fetch(getApiEndpoint('/api/invoices/generate'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
