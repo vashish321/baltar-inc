@@ -62,9 +62,10 @@ export default function LayoutClient({ children }) {
                                 isTermsOfServicePage || isCookiesPage || isServicesPage;
 
   // Dashboard pages that should not have default headers/footers
-  const isAdminDashboard = pathname === '/admin-dashboard';
-  const isAdminLogin = pathname === '/admin-login';
   const isClientDashboard = pathname === '/client-dashboard';
+
+  // Check if any admin page (including nested routes) - comprehensive check
+  const isAnyAdminPage = pathname.startsWith('/admin');
 
   // Frontend Web Design pages
   const isFrontendAboutPage = pathname === '/frontend-web-design/about';
@@ -82,7 +83,7 @@ export default function LayoutClient({ children }) {
   return (
     <div className="w-full overflow-x-hidden bg-black text-white font-sans min-h-screen">
       {/* ✅ Special handling for dashboard pages - no headers/footers */}
-      {isAdminDashboard || isAdminLogin || isClientDashboard ? (
+      {isAnyAdminPage || isClientDashboard ? (
         <main className="w-full">{children}</main>
       ) :
       /* ✅ Special handling for Savour & Sip pages */

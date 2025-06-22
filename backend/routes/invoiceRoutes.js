@@ -238,4 +238,52 @@ router.get('/', AuthService.requireAuth, async (req, res) => {
   }
 });
 
+// Generate and send invoice (admin only)
+router.post('/generate', AuthService.requireAuth, async (req, res) => {
+  try {
+    const {
+      serviceType,
+      customerName,
+      customerEmail,
+      cost,
+      eventType,
+      guestCount,
+      websiteType,
+      projectDescription
+    } = req.body;
+
+    if (!serviceType || !customerName || !customerEmail || !cost) {
+      return res.status(400).json({
+        error: 'Service type, customer name, email, and cost are required'
+      });
+    }
+
+    const invoiceData = {
+      serviceType,
+      customerName,
+      customerEmail,
+      cost: parseFloat(cost),
+      eventType,
+      guestCount,
+      websiteType,
+      projectDescription,
+      adminId: req.admin.id
+    };
+
+    const result = await InvoiceService.generateAndSendInvoice(invoiceData);
+
+    res.json({
+      success: true,
+      message: 'Invoice generated and sent successfully',
+      ...result
+    });
+  } catch (error) {
+    console.error('Error generating invoice:', error);
+    res.status(500).json({
+      error: 'Failed to generate invoice',
+      details: error.message
+    });
+  }
+});
+
 module.exports = router;

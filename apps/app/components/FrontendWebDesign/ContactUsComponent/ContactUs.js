@@ -31,37 +31,23 @@ export default function ContactUsComponent() {
     setIsSubmitting(true);
 
     try {
-      // COMMENTED OUT FOR UI/UX DEMO - Backend calls disabled
-      /*
-      // Split name into first and last name
-      const nameParts = form.name.trim().split(' ');
-      const firstName = nameParts[0] || '';
-      const lastName = nameParts.slice(1).join(' ') || '';
-
-      const bookingData = {
-        // Client info
+      const quoteData = {
+        serviceType: 'FRONTEND_WEB_DESIGN',
+        name: form.name,
         email: form.email,
-        firstName: firstName,
-        lastName: lastName,
         phone: form.phone,
         company: form.company,
-
-        // Service info
-        serviceType: 'FRONTEND_WEB_DESIGN',
         websiteType: form.websiteType,
-
-        // Project info
-        projectTitle: `Website Development - ${firstName} ${lastName}`,
-        projectDescription: form.message,
-        estimatedBudget: form.budget ? parseFloat(form.budget.replace(/[^0-9.]/g, '')) : null
+        budget: form.budget,
+        message: form.message
       };
 
-      const response = await fetch('http://localhost:5000/api/bookings', {
+      const response = await fetch('http://localhost:5000/api/quotes', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(bookingData)
+        body: JSON.stringify(quoteData)
       });
 
       const result = await response.json();
@@ -79,22 +65,9 @@ export default function ContactUsComponent() {
           message: '',
         });
       } else {
-        throw new Error(result.error || 'Failed to submit inquiry');
+        throw new Error(result.error || 'Failed to submit quote request');
       }
-      */
 
-      // Mock form submission for UI demo
-      showSuccessModal();
-      // Reset form
-      setForm({
-        name: '',
-        email: '',
-        phone: '',
-        company: '',
-        websiteType: '',
-        budget: '',
-        message: '',
-      });
     } catch (error) {
       console.error('Error submitting form:', error);
       alert('Sorry, there was an error submitting your inquiry. Please try again or contact us directly.');
