@@ -192,6 +192,19 @@
   padding: 1.5rem;
 }
 
+.itemCategory {
+  display: inline-block;
+  background: #f8f9fa;
+  color: #6c757d;
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
 .itemName {
   font-size: 1.25rem;
   font-weight: 600;
