@@ -7,46 +7,170 @@ import SharedHeader from '../../components/SavourAndSip/SharedHeaderComponent/Sh
 
 export default function MenuPage() {
   const router = useRouter();
-  const [activeCategory, setActiveCategory] = useState('appetizers');
+  const [activeCategory, setActiveCategory] = useState('summer-sensation');
 
   const menuCategories = [
-    { id: 'appetizers', name: 'Appetizers & Canapés', icon: '🥂' },
-    { id: 'mains', name: 'Main Courses', icon: '🍽️' },
-    { id: 'desserts', name: 'Desserts', icon: '🍰' },
-    { id: 'beverages', name: 'Beverages & Cocktails', icon: '🍹' },
-    { id: 'dietary', name: 'Dietary Options', icon: '🌱' }
+    { id: 'summer-sensation', name: 'Summer Sensation', icon: '☀️' },
+    { id: 'summer-crave', name: 'Summer Crave', icon: '🌊' },
+    { id: 'solstice-luxe', name: 'Solstice Luxe', icon: '✨' },
+    { id: 'carnival-heat', name: 'Carnival Heat', icon: '🌶️' }
   ];
 
   const menuItems = {
-    appetizers: [
-      { name: 'Smoked Salmon Canapés', description: 'House-cured salmon on artisan crackers with dill cream', price: 'Market Price', image: 'https://images.unsplash.com/photo-1544025162-d76694265947?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80' },
-      { name: 'Truffle Arancini', description: 'Crispy risotto balls with truffle oil and parmesan', price: 'Market Price', image: 'https://images.unsplash.com/photo-1551782450-17144efb9c50?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80' },
-      { name: 'Beef Tenderloin Skewers', description: 'Grilled beef with chimichurri and roasted vegetables', price: 'Market Price', image: 'https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80' },
-      { name: 'Artisan Cheese Board', description: 'Selection of local and imported cheeses with accompaniments', price: 'Market Price', image: 'https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2073&q=80' }
+    'summer-sensation': [
+      {
+        name: 'Summer Charcuterie Board',
+        description: 'Prosciutto, brie, goat cheese, fig jam, dried mango, strawberries, crackers, nuts',
+        price: 'Market Price',
+        image: 'https://images.unsplash.com/photo-1544025162-d76694265947?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80',
+        category: 'Appetizers & Grazing Boards'
+      },
+      {
+        name: 'Tropical Shrimp Skewers',
+        description: 'Chili-lime shrimp with grilled pineapple on bamboo skewers',
+        price: 'Market Price',
+        image: 'https://images.unsplash.com/photo-1565958011703-44f9829ba187?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2065&q=80',
+        category: 'Appetizers & Grazing Boards'
+      },
+      {
+        name: 'BBQ Chicken Thighs',
+        description: 'Marinated in house spice rub or bourbon BBQ sauce',
+        price: 'Market Price',
+        image: 'https://images.unsplash.com/photo-1532550907401-a500c9a57435?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+        category: 'Grill & Main Courses'
+      },
+      {
+        name: 'Cedar-Plank Salmon',
+        description: 'With maple glaze and lemon dill butter',
+        price: 'Market Price',
+        image: 'https://images.unsplash.com/photo-1467003909585-2f8a72700288?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1887&q=80',
+        category: 'Grill & Main Courses'
+      },
+      {
+        name: 'Summer Berry Spinach Salad',
+        description: 'Baby spinach, strawberries, blueberries, goat cheese, candied pecans, raspberry vinaigrette',
+        price: 'Market Price',
+        image: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+        category: 'Salads & Sides'
+      },
+      {
+        name: 'Watermelon Mojito',
+        description: 'Fresh watermelon, mint, lime, and rum - signature summer cocktail',
+        price: 'Market Price',
+        image: 'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+        category: 'Drinks & Add-Ons'
+      }
     ],
-    mains: [
-      { name: 'Pan-Seared Halibut', description: 'Fresh halibut with seasonal vegetables and lemon butter', price: 'Market Price', image: 'https://images.unsplash.com/photo-1467003909585-2f8a72700288?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1887&q=80' },
-      { name: 'Herb-Crusted Lamb', description: 'Ontario lamb with rosemary crust and red wine reduction', price: 'Market Price', image: 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80' },
-      { name: 'Wild Mushroom Risotto', description: 'Creamy arborio rice with foraged mushrooms and truffle', price: 'Market Price', image: 'https://images.unsplash.com/photo-1476124369491-e7addf5db371?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80' },
-      { name: 'Grilled Chicken Supreme', description: 'Free-range chicken with seasonal accompaniments', price: 'Market Price', image: 'https://images.unsplash.com/photo-1532550907401-a500c9a57435?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80' }
+    'summer-crave': [
+      {
+        name: 'Chicken Waldorf Mini Croissants',
+        description: 'Shredded chicken, apple, celery, grapes, and walnut in light mayo dressing',
+        price: 'Market Price',
+        image: 'https://images.unsplash.com/photo-1544025162-d76694265947?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80',
+        category: 'Signature Finger Sandwiches & Wraps'
+      },
+      {
+        name: 'Mediterranean Veggie Wraps',
+        description: 'Roasted red peppers, hummus, cucumber, olives, spinach — rolled in spinach tortillas (Vegan)',
+        price: 'Market Price',
+        image: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+        category: 'Signature Finger Sandwiches & Wraps'
+      },
+      {
+        name: 'Classic Shrimp Cocktail',
+        description: 'Plump chilled shrimp served with lemon wedges and house-made cocktail sauce',
+        price: 'Market Price',
+        image: 'https://images.unsplash.com/photo-1558818498-28c1e002b655?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+        category: 'Seafood Selection'
+      },
+      {
+        name: 'Coastal Cheese & Bites Board',
+        description: 'Brie, aged cheddar, grapes, dried fruits, nuts, artisan crackers, honey drizzle',
+        price: 'Market Price',
+        image: 'https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2073&q=80',
+        category: 'Fresh Platters & Grazing'
+      },
+      {
+        name: 'Coconut Mojito',
+        description: 'Tropical twist on classic mojito with coconut rum and fresh mint',
+        price: 'Market Price',
+        image: 'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+        category: 'Beverage Add-Ons'
+      }
     ],
-    desserts: [
-      { name: 'Chocolate Lava Cake', description: 'Warm chocolate cake with molten center and vanilla ice cream', price: 'Market Price', image: 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1887&q=80' },
-      { name: 'Crème Brûlée Trio', description: 'Classic vanilla, lavender honey, and espresso flavors', price: 'Market Price', image: 'https://images.unsplash.com/photo-1470324161839-ce2bb6fa6bc3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80' },
-      { name: 'Seasonal Fruit Tart', description: 'Fresh seasonal fruits on pastry cream with almond crust', price: 'Market Price', image: 'https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2126&q=80' },
-      { name: 'Tiramisu', description: 'Traditional Italian dessert with espresso and mascarpone', price: 'Market Price', image: 'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2020&q=80' }
+    'solstice-luxe': [
+      {
+        name: 'Ahi Tuna Tartare on Plantain Crisps',
+        description: 'Citrus ponzu, avocado, sesame, microgreens',
+        price: 'Market Price',
+        image: 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+        category: 'Amuse-Bouche & Starters'
+      },
+      {
+        name: 'Tequila-Lime Chicken Breast',
+        description: 'With poblano-corn salsa and charred scallion crema',
+        price: 'Market Price',
+        image: 'https://images.unsplash.com/photo-1532550907401-a500c9a57435?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+        category: 'Main Courses'
+      },
+      {
+        name: 'Cedar-Smoked Salmon',
+        description: 'Passionfruit glaze, on a roasted tomato quinoa bed',
+        price: 'Market Price',
+        image: 'https://images.unsplash.com/photo-1467003909585-2f8a72700288?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1887&q=80',
+        category: 'Main Courses'
+      },
+      {
+        name: 'Mango & Coconut Panna Cotta',
+        description: 'Silky coconut cream base layered with mango purée, topped with candied lime zest',
+        price: 'Market Price',
+        image: 'https://images.unsplash.com/photo-1470324161839-ce2bb6fa6bc3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+        category: 'Desserts'
+      },
+      {
+        name: 'Cucumber Elderflower Sparkler',
+        description: 'With edible flowers and cucumber ribbons',
+        price: 'Market Price',
+        image: 'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+        category: 'Signature Summer Beverages'
+      }
     ],
-    beverages: [
-      { name: 'Signature Cocktails', description: 'Custom cocktails designed for your event theme', price: 'Market Price', image: 'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80' },
-      { name: 'Wine Selection', description: 'Curated wines from Ontario and international vineyards', price: 'Market Price', image: 'https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80' },
-      { name: 'Craft Beer', description: 'Local craft beers and imported selections', price: 'Market Price', image: 'https://images.unsplash.com/photo-1608270586620-248524c67de9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80' },
-      { name: 'Non-Alcoholic Options', description: 'Artisan sodas, fresh juices, and specialty coffees', price: 'Market Price', image: 'https://images.unsplash.com/photo-1544145945-f90425340c7e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1887&q=80' }
-    ],
-    dietary: [
-      { name: 'Vegan Options', description: 'Plant-based dishes with seasonal vegetables and grains', price: 'Market Price', image: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80' },
-      { name: 'Gluten-Free Menu', description: 'Full menu available with gluten-free alternatives', price: 'Market Price', image: 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2053&q=80' },
-      { name: 'Keto-Friendly', description: 'Low-carb, high-fat options for ketogenic diets', price: 'Market Price', image: 'https://images.unsplash.com/photo-1498837167922-ddd27525d352?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80' },
-      { name: 'Halal & Kosher', description: 'Certified halal and kosher options available', price: 'Market Price', image: 'https://images.unsplash.com/photo-1574484284002-952d92456975?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2087&q=80' }
+    'carnival-heat': [
+      {
+        name: 'Trini Pepper Wings',
+        description: 'Fried chicken in light batter, marinated overnight in Chadon-Beni, cooked in spicy sauce',
+        price: 'Market Price',
+        image: 'https://images.unsplash.com/photo-1532550907401-a500c9a57435?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+        category: 'Island Starters & Street Bites'
+      },
+      {
+        name: 'Jerk Chicken Quarters',
+        description: 'Served with house scotch bonnet sauce on the side',
+        price: 'Market Price',
+        image: 'https://images.unsplash.com/photo-1532550907401-a500c9a57435?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+        category: 'Main Attractions'
+      },
+      {
+        name: 'Curry Goat',
+        description: 'Bone-in, tender and full of flavour — marinated with green seasoning and scotch bonnet, served with buss-up-shut (paratha roti)',
+        price: 'Market Price',
+        image: 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+        category: 'Main Attractions'
+      },
+      {
+        name: 'Rice & Peas (Jamaican-Style)',
+        description: 'Cooked in coconut milk, thyme, scallion, and kidney beans',
+        price: 'Market Price',
+        image: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+        category: 'Caribbean-Style Sides'
+      },
+      {
+        name: 'Rum Punch',
+        description: 'Classic or frozen - spiked with overproof rum, tropical juice blend, and a splash of lime',
+        price: 'Market Price',
+        image: 'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
+        category: 'Signature Festival Drinks'
+      }
     ]
   };
 
@@ -95,9 +219,9 @@ export default function MenuPage() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className={styles.menuTitle}>Sample Menu Items</h2>
+            <h2 className={styles.menuTitle}>Signature Menu Collections</h2>
             <p className={styles.menuSubtitle}>
-              All menus are customized for your event. Pricing varies based on guest count, service style, and seasonal availability.
+              Choose from our curated seasonal collections or let us create a custom menu for your event. All menus are tailored to your preferences, guest count, and dietary requirements.
             </p>
           </motion.div>
 
@@ -141,6 +265,9 @@ export default function MenuPage() {
                   </div>
                 </div>
                 <div className={styles.itemContent}>
+                  {item.category && (
+                    <span className={styles.itemCategory}>{item.category}</span>
+                  )}
                   <h3 className={styles.itemName}>{item.name}</h3>
                   <p className={styles.itemDescription}>{item.description}</p>
                 </div>
