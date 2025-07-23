@@ -17,6 +17,7 @@ datasource db {
 enum ServiceType {
   FRONTEND_WEB_DESIGN
   SAVOUR_AND_SIP
+  CONSUMER_PULSE
 }
 
 enum ProjectStatus {
@@ -63,6 +64,7 @@ model Client {
   invoices    Invoice[]
   bookings    Booking[]
   quotes      Quote[]
+  apiKeys     APIKey[]
 
   @@map("clients")
 }
@@ -267,4 +269,232 @@ enum QuoteStatus {
   ACCEPTED
   REJECTED
   CONVERTED_TO_PROJECT
+}
+
+// Consumer Pulse Enums
+enum SurveyStatus {
+  DRAFT
+  ACTIVE
+  PAUSED
+  COMPLETED
+  ARCHIVED
+}
+
+enum PollStatus {
+  ACTIVE
+  CLOSED
+  ARCHIVED
+}
+
+enum ArticleStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum SentimentType {
+  POSITIVE
+  NEGATIVE
+  NEUTRAL
+  MIXED
+}
+
+enum APIAccessTier {
+  FREE
+  BASIC
+  PREMIUM
+  ENTERPRISE
+}
+
+// Consumer Pulse Models
+model Survey {
+  id            String        @id @default(cuid())
+  title         String
+  description   String?
+  status        SurveyStatus  @default(DRAFT)
+  targetAudience String?
+  questions     String        // JSON array of questions
+  settings      String?       // JSON object for survey settings
+  createdBy     String        // Admin ID
+  startDate     DateTime?
+  endDate       DateTime?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  // Relationships
+  responses     SurveyResponse[]
+  analytics     SurveyAnalytics[]
+
+  @@map("surveys")
+}
+
+model SurveyResponse {
+  id          String   @id @default(cuid())
+  surveyId    String
+  respondentId String? // Optional user ID if registered
+  responses   String   // JSON object with question IDs and answers
+  ipAddress   String?
+  userAgent   String?
+  location    String?  // Geolocation data
+  completedAt DateTime @default(now())
+
+  // AI Sentiment Analysis Fields
+  sentiment          String? // POSITIVE, NEGATIVE, NEUTRAL
+  sentimentScore     Float?  // -1 to 1 sentiment score
+  sentimentConfidence Float? // 0 to 1 confidence level
+  emotions           String? // JSON array of detected emotions
+  themes             String? // JSON array of detected themes
+  demographics       String? // JSON object with demographic data
+
+  // Relationships
+  survey      Survey   @relation(fields: [surveyId], references: [id], onDelete: Cascade)
+
+  @@map("survey_responses")
+}
+
+model Poll {
+  id          String     @id @default(cuid())
+  title       String
+  question    String
+  options     String     // JSON array of poll options
+  status      PollStatus @default(ACTIVE)
+  allowMultiple Boolean  @default(false)
+  endDate     DateTime?
+  createdBy   String     // Admin ID
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  // Relationships
+  votes       PollVote[]
+
+  @@map("polls")
+}
+
+model PollVote {
+  id          String   @id @default(cuid())
+  pollId      String
+  optionIndex Int      // Index of selected option
+  voterId     String?  // Optional user ID if registered
+  ipAddress   String?
+  userAgent   String?
+  votedAt     DateTime @default(now())
+
+  // Relationships
+  poll        Poll     @relation(fields: [pollId], references: [id], onDelete: Cascade)
+
+  @@unique([pollId, ipAddress]) // Prevent duplicate votes from same IP
+  @@map("poll_votes")
+}
+
+model NewsArticle {
+  id            String        @id @default(cuid())
+  title         String
+  content       String
+  summary       String?
+  author        String?
+  sourceUrl     String?
+  imageUrl      String?
+  keywords      String        // JSON array of keywords
+  category      String?
+  status        ArticleStatus @default(DRAFT)
+  sentiment     SentimentType?
+  sentimentScore Float?       // -1 to 1 scale
+  viewCount     Int           @default(0)
+  shareCount    Int           @default(0)
+  publishedAt   DateTime?
+  scrapedAt     DateTime?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  // Relationships
+  analytics     ArticleAnalytics[]
+
+  @@map("news_articles")
+}
+
+model SurveyAnalytics {
+  id              String   @id @default(cuid())
+  surveyId        String
+  totalResponses  Int      @default(0)
+  completionRate  Float?   // Percentage
+  averageTime     Int?     // Seconds
+  sentimentScore  Float?   // Overall sentiment
+  insights        String?  // JSON object with AI-generated insights
+  demographics    String?  // JSON object with demographic breakdown
+  generatedAt     DateTime @default(now())
+
+  // Relationships
+  survey          Survey   @relation(fields: [surveyId], references: [id], onDelete: Cascade)
+
+  @@map("survey_analytics")
+}
+
+model ArticleAnalytics {
+  id              String      @id @default(cuid())
+  articleId       String
+  views           Int         @default(0)
+  shares          Int         @default(0)
+  engagementRate  Float?      // Percentage
+  readTime        Int?        // Average read time in seconds
+  bounceRate      Float?      // Percentage
+  trafficSources  String?     // JSON object with traffic source breakdown
+  generatedAt     DateTime    @default(now())
+
+  // Relationships
+  article         NewsArticle @relation(fields: [articleId], references: [id], onDelete: Cascade)
+
+  @@map("article_analytics")
+}
+
+model APIKey {
+  id            String        @id @default(cuid())
+  keyHash       String        @unique // Hashed API key
+  name          String        // Human-readable name
+  clientId      String?       // Optional link to client
+  tier          APIAccessTier @default(FREE)
+  isActive      Boolean       @default(true)
+  rateLimit     Int           @default(100) // Requests per hour
+  usageCount    Int           @default(0)
+  lastUsedAt    DateTime?
+  expiresAt     DateTime?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  // Relationships
+  client        Client?       @relation(fields: [clientId], references: [id], onDelete: SetNull)
+  usage         APIUsage[]
+
+  @@map("api_keys")
+}
+
+model APIUsage {
+  id            String   @id @default(cuid())
+  apiKeyId      String
+  endpoint      String
+  method        String
+  statusCode    Int
+  responseTime  Int      // Milliseconds
+  ipAddress     String?
+  userAgent     String?
+  requestedAt   DateTime @default(now())
+
+  // Relationships
+  apiKey        APIKey   @relation(fields: [apiKeyId], references: [id], onDelete: Cascade)
+
+  @@map("api_usage")
+}
+
+model ConsumerPulseUser {
+  id            String   @id @default(cuid())
+  email         String   @unique
+  firstName     String?
+  lastName      String?
+  company       String?
+  industry      String?
+  isVerified    Boolean  @default(false)
+  preferences   String?  // JSON object for user preferences
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@map("consumer_pulse_users")
 }

@@ -16,15 +16,10 @@ export default function ConsumerPulseHeader() {
       </div>
       <div className={styles.navbar}>
         <ul className={styles.navItems}>
-          <li><a href="/consumer-pulse-comingsoon">Live TV</a></li>
-          <li><a href="/consumer-pulse-comingsoon">Markets</a></li>
-          <li><a href="/consumer-pulse-comingsoon">Economics</a></li>
-          <li><a href="/consumer-pulse-comingsoon">Industries</a></li>
-          <li><a href="/consumer-pulse-comingsoon">Tech</a></li>
-          <li><a href="/consumer-pulse-comingsoon">Politics</a></li>
-          <li><a href="/consumer-pulse-comingsoon">Businessweek</a></li>
-          <li><a href="/consumer-pulse-comingsoon">Opinion</a></li>
-          <li><a href="/consumer-pulse-comingsoon">More ▼</a></li>
+          <li><Link href="/consumer-pulse">Home</Link></li>
+          <li><Link href="/consumer-pulse-surveys">Surveys</Link></li>
+          <li><Link href="/consumer-pulse-polling">Live Polling</Link></li>
+          <li><Link href="/consumer-pulse-analytics">Analytics</Link></li>
         </ul>
         <input
           type="text"

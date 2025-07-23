@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
+const newsScheduler = require('./services/newsSchedulerService');
 require('dotenv').config();
 
 const app = express();
@@ -32,6 +33,7 @@ app.use('/api/projects', require('./routes/projectRoutes'));
 app.use('/api/invoices', require('./routes/invoiceRoutes'));
 app.use('/api/bookings', require('./routes/bookingRoutes'));
 app.use('/api/quotes', require('./routes/quoteRoutes'));
+app.use('/api/consumer-pulse', require('./routes/consumerPulseRoutes'));
 
 // Health check endpoints
 app.get('/', (req, res) => {
@@ -51,11 +53,28 @@ app.get('/health', (req, res) => {
   });
 });
 
+// Initialize Consumer Pulse NewsData.io Scheduler
+const initializeConsumerPulse = async () => {
+  try {
+    console.log('🔄 Initializing Consumer Pulse NewsData.io scheduler...');
+
+    // Start the automatic scheduler (24 hits per day)
+    newsScheduler.startScheduler();
+
+    console.log('✅ Consumer Pulse NewsData.io scheduler started (24 hits per day)');
+  } catch (error) {
+    console.error('❌ Error initializing Consumer Pulse:', error.message);
+  }
+};
+
 // Start server
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, '0.0.0.0', () => {
+app.listen(PORT, '0.0.0.0', async () => {
   console.log(`🚀 Baltar Backend running on port ${PORT}`);
   console.log(`📍 Environment: ${process.env.NODE_ENV || 'development'}`);
   console.log(`🌐 CORS enabled for production domains`);
   console.log(`🔗 Health check: ${process.env.NODE_ENV === 'production' ? 'https://baltar-inc-production.up.railway.app/health' : `http://localhost:${PORT}/health`}`);
+
+  // Initialize Consumer Pulse NewsData.io scheduler after server starts
+  await initializeConsumerPulse();
 });

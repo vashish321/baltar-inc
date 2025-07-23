@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { getApiEndpoint } from '@/lib/config';
+import ConsumerPulseTab from '../../components/AdminDashboard/ConsumerPulseTab/ConsumerPulseTab';
 import styles from './AdminDashboard.module.css';
 
 export default function AdminDashboard() {
@@ -144,6 +145,14 @@ export default function AdminDashboard() {
             <span className={styles.navIcon}>💻</span>
             Frontend Web Design
           </button>
+
+          <button
+            className={`${styles.navItem} ${activeTab === 'consumer-pulse' ? styles.active : ''}`}
+            onClick={() => setActiveTab('consumer-pulse')}
+          >
+            <span className={styles.navIcon}>📊</span>
+            Consumer Pulse
+          </button>
         </nav>
 
         <div className={styles.sidebarFooter}>
@@ -161,6 +170,7 @@ export default function AdminDashboard() {
             {activeTab === 'overview' && 'Dashboard Overview'}
             {activeTab === 'savour-sip' && 'Savour & Sip Management'}
             {activeTab === 'frontend-design' && 'Frontend Web Design Management'}
+            {activeTab === 'consumer-pulse' && 'Consumer Pulse Management'}
           </h1>
         </div>
 
@@ -173,6 +183,9 @@ export default function AdminDashboard() {
           )}
           {activeTab === 'frontend-design' && (
             <FrontendDesignTab quotes={data.frontendQuotes} loading={loading} onRefresh={fetchDashboardData} />
+          )}
+          {activeTab === 'consumer-pulse' && (
+            <ConsumerPulseTab />
           )}
         </div>
       </div>

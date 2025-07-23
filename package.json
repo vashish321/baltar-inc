@@ -1,1 +1,1 @@
-{ "name": "baltar-inc", "private": true }
+{"name":"baltar-inc","private":true,"dependencies":{"node-cron":"^4.2.1"}}
