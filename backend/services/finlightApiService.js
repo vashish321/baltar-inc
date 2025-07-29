@@ -19,7 +19,7 @@ class FinlightApiService {
     this.prisma = new PrismaClient();
     this.aiService = new AIService();
     this.categoryDetector = new CategoryDetector();
-    this.apiKey = 'sk_161f5fe87b1b493bb3a67731c4be0d50c3d4293f39a345505a292f3226237932';
+    this.apiKey = process.env.FINLIGHT_API_KEY;
     this.baseUrl = 'https://api.finlight.com/v1';
     this.defaultImage = '/consumer-pulse-banner.svg';
     this.monthlyRequestCount = 0;

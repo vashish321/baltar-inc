@@ -12,7 +12,7 @@ const config = {
   providers: {
     newsdata: {
       name: 'NewsData.io',
-      apiKey: 'pub_e153bfe8af5b43be88dd4602c4a716d3',
+      apiKey: process.env.NEWSDATA_API_KEY,
       baseUrl: 'https://newsdata.io/api/1',
       defaultParams: {
         language: 'en',
@@ -28,7 +28,7 @@ const config = {
 
     newsapi: {
       name: 'NewsAPI.org',
-      apiKey: 'c3faaba693c948c993601c3fa23d540b',
+      apiKey: process.env.NEWSAPI_API_KEY,
       baseUrl: 'https://newsapi.org/v2',
       defaultParams: {
         language: 'en',
@@ -45,7 +45,7 @@ const config = {
 
     finlight: {
       name: 'Finlight API',
-      apiKey: 'sk_161f5fe87b1b493bb3a67731c4be0d50c3d4293f39a345505a292f3226237932',
+      apiKey: process.env.FINLIGHT_API_KEY,
       baseUrl: 'https://api.finlight.com/v1',
       defaultParams: {
         limit: 30
@@ -61,7 +61,7 @@ const config = {
 
     currents: {
       name: 'Currents API',
-      apiKey: 'cC58gtz11939xJr6zscGWn3hTUrb5ZV8McYZHRQjfXjlKa1k',
+      apiKey: process.env.CURRENTS_API_KEY,
       baseUrl: 'https://api.currentsapi.services/v1',
       defaultParams: {
         language: 'en',

@@ -20,7 +20,7 @@ class NewsApiService {
     this.prisma = new PrismaClient();
     this.aiService = new AIService();
     this.categoryDetector = new CategoryDetector();
-    this.apiKey = 'c3faaba693c948c993601c3fa23d540b';
+    this.apiKey = process.env.NEWSAPI_API_KEY;
     this.baseUrl = 'https://newsapi.org/v2';
     this.defaultImage = '/consumer-pulse-banner.svg';
     this.dailyRequestCount = 0;

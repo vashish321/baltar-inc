@@ -19,7 +19,7 @@ class CurrentsApiService {
     this.prisma = new PrismaClient();
     this.aiService = new AIService();
     this.categoryDetector = new CategoryDetector();
-    this.apiKey = 'cC58gtz11939xJr6zscGWn3hTUrb5ZV8McYZHRQjfXjlKa1k';
+    this.apiKey = process.env.CURRENTS_API_KEY;
     this.baseUrl = 'https://api.currentsapi.services/v1';
     this.defaultImage = '/consumer-pulse-banner.svg'; // Custom Consumer Pulse banner
     this.schedulerInterval = null;
