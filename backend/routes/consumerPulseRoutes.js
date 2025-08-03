@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const ConsumerPulseService = require('../services/consumerPulseService');
+const unifiedNewsScheduler = require('../services/unifiedNewsScheduler');
 const AuthService = require('../services/authService');
 const NewsDataService = require('../services/newsDataService');
 const newsScheduler = require('../services/newsSchedulerService');
@@ -597,6 +598,63 @@ router.get('/news-stats', AuthService.requireAuth, async (req, res) => {
     res.status(500).json({
       error: 'Failed to get news statistics',
       details: error.message
+    });
+  }
+});
+
+// Manual fetch from all news APIs
+router.get('/manual-fetch', async (req, res) => {
+  try {
+    console.log('🔄 Manual fetch triggered via API');
+    const result = await unifiedNewsScheduler.manualFetchAll();
+
+    res.json({
+      success: true,
+      message: 'Manual fetch completed',
+      result
+    });
+  } catch (error) {
+    console.error('Error in manual fetch:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Failed to execute manual fetch',
+      message: error.message
+    });
+  }
+});
+
+// Get scheduler status
+router.get('/scheduler-status', async (req, res) => {
+  try {
+    const status = unifiedNewsScheduler.getStatus();
+
+    res.json({
+      success: true,
+      status
+    });
+  } catch (error) {
+    console.error('Error getting status:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Failed to get status'
+    });
+  }
+});
+
+// Test all API connections
+router.get('/test-connections', async (req, res) => {
+  try {
+    const results = await unifiedNewsScheduler.testAllConnections();
+
+    res.json({
+      success: true,
+      connections: results
+    });
+  } catch (error) {
+    console.error('Error testing connections:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Failed to test connections'
     });
   }
 });

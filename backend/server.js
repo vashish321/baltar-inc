@@ -1,10 +1,14 @@
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
+const http = require('http');
 const newsScheduler = require('./services/newsSchedulerService');
+const unifiedNewsScheduler = require('./services/unifiedNewsScheduler');
+const websocketService = require('./services/websocketService');
 require('dotenv').config();
 
 const app = express();
+const server = http.createServer(app);
 
 // Enhanced CORS configuration for production
 const corsOptions = {
@@ -53,15 +57,26 @@ app.get('/health', (req, res) => {
   });
 });
 
-// Initialize Consumer Pulse NewsData.io Scheduler
+// Initialize Consumer Pulse with all news APIs and WebSocket
 const initializeConsumerPulse = async () => {
   try {
-    console.log('🔄 Initializing Consumer Pulse NewsData.io scheduler...');
+    console.log('🔄 Initializing Consumer Pulse with unified news system...');
 
-    // Start the automatic scheduler (24 hits per day)
-    newsScheduler.startScheduler();
+    // Initialize WebSocket service
+    websocketService.initialize(server);
+    websocketService.startHeartbeat();
 
-    console.log('✅ Consumer Pulse NewsData.io scheduler started (24 hits per day)');
+    // Start the unified news scheduler (all APIs)
+    unifiedNewsScheduler.startScheduler();
+
+    // Keep the old NewsData.io scheduler as backup
+    // newsScheduler.startScheduler();
+
+    console.log('✅ Consumer Pulse initialized with:');
+    console.log('   📡 WebSocket service for real-time updates');
+    console.log('   🔄 Unified scheduler (NewsData.io, NewsAPI.org, Finlight, Currents)');
+    console.log('   ⏰ Smart rotation every 30 minutes');
+
   } catch (error) {
     console.error('❌ Error initializing Consumer Pulse:', error.message);
   }
@@ -69,12 +84,12 @@ const initializeConsumerPulse = async () => {
 
 // Start server
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, '0.0.0.0', async () => {
+server.listen(PORT, '0.0.0.0', async () => {
   console.log(`🚀 Baltar Backend running on port ${PORT}`);
   console.log(`📍 Environment: ${process.env.NODE_ENV || 'development'}`);
   console.log(`🌐 CORS enabled for production domains`);
   console.log(`🔗 Health check: ${process.env.NODE_ENV === 'production' ? 'https://baltar-inc-production.up.railway.app/health' : `http://localhost:${PORT}/health`}`);
 
-  // Initialize Consumer Pulse NewsData.io scheduler after server starts
+  // Initialize Consumer Pulse with unified system after server starts
   await initializeConsumerPulse();
 });

@@ -12,12 +12,14 @@
 const axios = require('axios');
 const { PrismaClient } = require('@prisma/client');
 const AIService = require('./aiService');
+const CategoryDetector = require('../utils/categoryDetector');
 
 class CurrentsApiService {
   constructor() {
     this.prisma = new PrismaClient();
     this.aiService = new AIService();
-    this.apiKey = 'cC58gtz11939xJr6zscGWn3hTUrb5ZV8McYZHRQjfXjlKa1k';
+    this.categoryDetector = new CategoryDetector();
+    this.apiKey = process.env.CURRENTS_API_KEY;
     this.baseUrl = 'https://api.currentsapi.services/v1';
     this.defaultImage = '/consumer-pulse-banner.svg'; // Custom Consumer Pulse banner
     this.schedulerInterval = null;
@@ -49,7 +51,7 @@ class CurrentsApiService {
         content: content,
         summary: article.description?.substring(0, 300) || article.title?.substring(0, 300) || '',
         sourceUrl: article.url || '',
-        category: this.categorizeArticle(article.title, article.category),
+        category: this.categoryDetector.determineCategory(article),
         imageUrl: imageUrl,
         keywords: JSON.stringify(article.category || []),
         author: article.author || 'Unknown',
@@ -62,46 +64,7 @@ class CurrentsApiService {
     }
   }
 
-  /**
-   * Categorize article based on title and category
-   */
-  categorizeArticle(title, categories) {
-    const titleLower = title?.toLowerCase() || '';
-    const categoryArray = Array.isArray(categories) ? categories : [categories].filter(Boolean);
 
-    // Map Currents API categories to our categories
-    const categoryMap = {
-      'politics': 'POLITICS',
-      'business': 'BUSINESS', 
-      'finance': 'BUSINESS',
-      'technology': 'TECHNOLOGY',
-      'sports': 'SPORTS',
-      'entertainment': 'ENTERTAINMENT',
-      'health': 'HEALTH',
-      'science': 'TECHNOLOGY',
-      'world': 'WORLD',
-      'national': 'POLITICS'
-    };
-
-    // Check categories first
-    for (const cat of categoryArray) {
-      const mapped = categoryMap[cat?.toLowerCase()];
-      if (mapped) return mapped;
-    }
-
-    // Fallback to title-based categorization
-    if (titleLower.includes('trump') || titleLower.includes('election') || titleLower.includes('government')) {
-      return 'POLITICS';
-    }
-    if (titleLower.includes('business') || titleLower.includes('market') || titleLower.includes('economy')) {
-      return 'BUSINESS';
-    }
-    if (titleLower.includes('tech') || titleLower.includes('ai') || titleLower.includes('digital')) {
-      return 'TECHNOLOGY';
-    }
-
-    return 'GENERAL';
-  }
 
   /**
    * Fetch latest news from Currents API

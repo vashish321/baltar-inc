@@ -1,12 +1,14 @@
 const axios = require('axios');
 const ConsumerPulseService = require('./consumerPulseService');
 const AIService = require('./aiService');
+const CategoryDetector = require('../utils/categoryDetector');
 
 class NewsDataService {
   constructor() {
     this.apiKey = process.env.NEWSDATA_API_KEY;
     this.baseUrl = 'https://newsdata.io/api/1';
     this.aiService = new AIService();
+    this.categoryDetector = new CategoryDetector();
     
     if (!this.apiKey) {
       throw new Error('NewsData.io API key not found in environment variables');
@@ -95,7 +97,7 @@ class NewsDataService {
         summary: article.description?.substring(0, 300) || article.title?.substring(0, 300) || '',
         sourceUrl: article.link || '',
         source: article.source_name || 'NewsData.io',
-        category: this.categorizeArticle(article.title, article.category),
+        category: this.categoryDetector.determineCategory(article),
         imageUrl: article.image_url || '/Trump.jpg', // Fallback to default image if no image provided
         keywords: article.keywords || [],
         publishedAt: article.pubDate ? new Date(article.pubDate) : new Date(),
@@ -108,50 +110,7 @@ class NewsDataService {
     }
   }
 
-  /**
-   * Categorize article based on title and category
-   * @param {string} title - Article title
-   * @param {string} apiCategory - Category from API
-   * @returns {string} Categorized article type
-   */
-  categorizeArticle(title, apiCategory) {
-    const titleLower = title?.toLowerCase() || '';
-    
-    // Business and Finance
-    if (titleLower.includes('market') || titleLower.includes('stock') || 
-        titleLower.includes('economy') || titleLower.includes('business') ||
-        titleLower.includes('finance') || titleLower.includes('trade')) {
-      return 'Business';
-    }
-    
-    // Technology
-    if (titleLower.includes('tech') || titleLower.includes('ai') || 
-        titleLower.includes('digital') || titleLower.includes('cyber') ||
-        titleLower.includes('software') || titleLower.includes('app')) {
-      return 'Technology';
-    }
-    
-    // Politics
-    if (titleLower.includes('election') || titleLower.includes('government') || 
-        titleLower.includes('political') || titleLower.includes('congress') ||
-        titleLower.includes('senate') || titleLower.includes('president')) {
-      return 'Politics';
-    }
-    
-    // Health
-    if (titleLower.includes('health') || titleLower.includes('medical') || 
-        titleLower.includes('hospital') || titleLower.includes('vaccine') ||
-        titleLower.includes('disease') || titleLower.includes('treatment')) {
-      return 'Health';
-    }
 
-    // Use API category as fallback
-    if (apiCategory && typeof apiCategory === 'string') {
-      return apiCategory.charAt(0).toUpperCase() + apiCategory.slice(1);
-    }
-    
-    return 'General';
-  }
 
   /**
    * Fetch and process news articles, then save to database
