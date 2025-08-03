@@ -28,7 +28,7 @@ class WebSocketService {
         origin: [
           "http://localhost:3000",
           "https://baltar-inc.vercel.app",
-          "https://baltar-inc-production.up.railway.app"
+          "https://baltar-inc-1.onrender.com"
         ],
         methods: ["GET", "POST"],
         credentials: true
