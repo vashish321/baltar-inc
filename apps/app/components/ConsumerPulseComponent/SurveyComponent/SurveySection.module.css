@@ -1,0 +1,340 @@
+.surveySection {
+  background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
+  color: white;
+  min-height: 100vh;
+  padding: 2rem 0;
+  font-family: 'Helvetica Neue', sans-serif;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.surveyHeader {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  background: linear-gradient(45deg, #ffffff, #cccccc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  color: #cccccc;
+  margin-bottom: 0;
+}
+
+.surveyCard {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 2rem;
+  backdrop-filter: blur(10px);
+  margin-bottom: 2rem;
+}
+
+.surveyInfo {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.surveyTitle {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: white;
+}
+
+.surveyDescription {
+  font-size: 1.1rem;
+  color: #cccccc;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.surveyMeta {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.9rem;
+  color: #999999;
+}
+
+.responseCount {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+}
+
+.questionsContainer {
+  margin-bottom: 2rem;
+}
+
+.questionContainer {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.questionTitle {
+  font-size: 1.3rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  color: white;
+}
+
+.optionsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.optionLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  cursor: pointer;
+  padding: 0.8rem;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+}
+
+.optionLabel:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.radioInput {
+  width: 18px;
+  height: 18px;
+  accent-color: #ffffff;
+}
+
+.optionText {
+  font-size: 1rem;
+  color: #eeeeee;
+}
+
+.textArea {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  padding: 1rem;
+  color: white;
+  font-size: 1rem;
+  font-family: inherit;
+  resize: vertical;
+  min-height: 100px;
+}
+
+.textArea::placeholder {
+  color: #999999;
+}
+
+.textArea:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.ratingContainer {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.ratingLabel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+}
+
+.ratingLabel:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.ratingInput {
+  margin-bottom: 0.3rem;
+  accent-color: #ffffff;
+}
+
+.ratingNumber {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #eeeeee;
+}
+
+.ratingLabels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  color: #999999;
+}
+
+.submitContainer {
+  text-align: center;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.submitBtn {
+  background: linear-gradient(45deg, #ffffff, #cccccc);
+  color: black;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 200px;
+}
+
+.submitBtn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2);
+}
+
+.submitBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.successMessage {
+  text-align: center;
+  padding: 3rem 2rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.successMessage h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #4CAF50;
+}
+
+.successMessage p {
+  font-size: 1.1rem;
+  color: #cccccc;
+  margin-bottom: 2rem;
+}
+
+.newSurveyBtn {
+  background: transparent;
+  color: white;
+  border: 2px solid white;
+  padding: 0.8rem 1.5rem;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.newSurveyBtn:hover {
+  background: white;
+  color: black;
+}
+
+.surveySelector {
+  margin-top: 2rem;
+}
+
+.surveySelector h3 {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  color: white;
+}
+
+.surveyList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.surveyOption {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.8rem 1.2rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+}
+
+.surveyOption:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+.loadingSpinner {
+  text-align: center;
+  padding: 4rem 2rem;
+  font-size: 1.2rem;
+  color: #cccccc;
+}
+
+.noSurveys {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.noSurveys h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: white;
+}
+
+.noSurveys p {
+  font-size: 1.1rem;
+  color: #cccccc;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 1rem;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .surveyCard {
+    padding: 1.5rem;
+  }
+
+  .questionContainer {
+    padding: 1rem;
+  }
+
+  .ratingContainer {
+    justify-content: space-between;
+  }
+
+  .surveyList {
+    flex-direction: column;
+  }
+
+  .surveyOption {
+    text-align: center;
+  }
+}

@@ -40,6 +40,16 @@ export default function LayoutClient({ children }) {
   const isConsumerPulseLoginpage = pathname === '/consumer-pulse-signin';
   const isConsumerPulseSignuppage = pathname === '/consumer-pulse-signup';
   const isConsumerPulseComingSoonpage = pathname === '/consumer-pulse-comingsoon';
+  const isConsumerPulseSurveyspage = pathname === '/consumer-pulse-surveys';
+  const isConsumerPulsePollingpage = pathname === '/consumer-pulse-polling';
+  const isConsumerPulseAnalyticspage = pathname === '/consumer-pulse-analytics';
+
+  // Group all Consumer Pulse pages
+  const isAnyConsumerPulsePage = isConsumerPulsepage || isConsumerPulseLoginpage ||
+                                isConsumerPulseSignuppage || isConsumerPulseComingSoonpage ||
+                                isConsumerPulseSurveyspage || isConsumerPulsePollingpage ||
+                                isConsumerPulseAnalyticspage;
+
   const isVRpage = pathname === '/vr';
 
   // New coming soon pages
@@ -104,10 +114,7 @@ export default function LayoutClient({ children }) {
                 !isLeModeCoPage &&
                 !isLeModeCoComingSoonPage &&
                 !isLeModeCoContactUsPage &&
-                !isConsumerPulsepage &&
-                !isConsumerPulseComingSoonpage &&
-                !isConsumerPulseLoginpage &&
-                !isConsumerPulseSignuppage &&
+                !isAnyConsumerPulsePage &&
                 !isVRpage &&
                 !isAnyNewComingSoonPage &&(
                   isTransac
@@ -132,10 +139,7 @@ export default function LayoutClient({ children }) {
                 !isLeModeCoPage &&
                 !isLeModeCoComingSoonPage &&
                 !isLeModeCoContactUsPage &&
-                !isConsumerPulsepage &&
-                !isConsumerPulseLoginpage &&
-                !isConsumerPulseSignuppage &&
-                !isConsumerPulseComingSoonpage &&
+                !isAnyConsumerPulsePage &&
                 !isVRpage &&
                 !isAnyNewComingSoonPage &&
                 !isContactUsPage &&
