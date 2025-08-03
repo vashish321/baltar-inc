@@ -88,7 +88,7 @@ server.listen(PORT, '0.0.0.0', async () => {
   console.log(`🚀 Baltar Backend running on port ${PORT}`);
   console.log(`📍 Environment: ${process.env.NODE_ENV || 'development'}`);
   console.log(`🌐 CORS enabled for production domains`);
-  console.log(`🔗 Health check: ${process.env.NODE_ENV === 'production' ? 'https://baltar-inc-production.up.railway.app/health' : `http://localhost:${PORT}/health`}`);
+  console.log(`🔗 Health check: ${process.env.NODE_ENV === 'production' ? 'https://baltar-inc-1.onrender.com/health' : `http://localhost:${PORT}/health`}`);
 
   // Initialize Consumer Pulse with unified system after server starts
   await initializeConsumerPulse();

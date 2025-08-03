@@ -1,6 +1,6 @@
 // Test connection to backend
 export const testBackendConnection = async () => {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://baltar-inc-1.onrender.com';
   
   console.log('🔍 Testing backend connection...');
   console.log('📍 API URL:', apiUrl);
