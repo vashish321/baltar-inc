@@ -23,6 +23,7 @@ export default function LayoutClient({ children }) {
   const isLeModeCoPage = pathname === '/le-mode-co';
   const isLeModeCoComingSoonPage = pathname === '/le-mode-co-comingsoon';
   const isLeModeCoContactUsPage = pathname === '/le-mode-co-contact-us';
+  const isLeModeCoSubscribePage = pathname === '/le-mode-co-subscribe';
   const isSavourAndSip = pathname === '/sip-and-savour';
   const isSavourAndSipComingSoonPage = pathname === '/savour-and-sip-coming-soon';
 
@@ -114,6 +115,7 @@ export default function LayoutClient({ children }) {
                 !isLeModeCoPage &&
                 !isLeModeCoComingSoonPage &&
                 !isLeModeCoContactUsPage &&
+                !isLeModeCoSubscribePage &&
                 !isAnyConsumerPulsePage &&
                 !isVRpage &&
                 !isAnyNewComingSoonPage &&(
@@ -139,6 +141,7 @@ export default function LayoutClient({ children }) {
                 !isLeModeCoPage &&
                 !isLeModeCoComingSoonPage &&
                 !isLeModeCoContactUsPage &&
+                !isLeModeCoSubscribePage &&
                 !isAnyConsumerPulsePage &&
                 !isVRpage &&
                 !isAnyNewComingSoonPage &&

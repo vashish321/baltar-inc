@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { getApiEndpoint } from '@/lib/config';
 import ConsumerPulseTab from '../../components/AdminDashboard/ConsumerPulseTab/ConsumerPulseTab';
+import LeModeCoTab from '../../components/AdminDashboard/LeModeCoTab/LeModeCoTab';
 import styles from './AdminDashboard.module.css';
 
 export default function AdminDashboard() {
@@ -153,6 +154,14 @@ export default function AdminDashboard() {
             <span className={styles.navIcon}>📊</span>
             Consumer Pulse
           </button>
+
+          <button
+            className={`${styles.navItem} ${activeTab === 'le-mode-co' ? styles.active : ''}`}
+            onClick={() => setActiveTab('le-mode-co')}
+          >
+            <span className={styles.navIcon}>👗</span>
+            Le-Mode-Co
+          </button>
         </nav>
 
         <div className={styles.sidebarFooter}>
@@ -171,6 +180,7 @@ export default function AdminDashboard() {
             {activeTab === 'savour-sip' && 'Savour & Sip Management'}
             {activeTab === 'frontend-design' && 'Frontend Web Design Management'}
             {activeTab === 'consumer-pulse' && 'Consumer Pulse Management'}
+            {activeTab === 'le-mode-co' && 'Le-Mode-Co Management'}
           </h1>
         </div>
 
@@ -186,6 +196,9 @@ export default function AdminDashboard() {
           )}
           {activeTab === 'consumer-pulse' && (
             <ConsumerPulseTab />
+          )}
+          {activeTab === 'le-mode-co' && (
+            <LeModeCoTab />
           )}
         </div>
       </div>
