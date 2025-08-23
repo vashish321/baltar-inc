@@ -32,11 +32,11 @@ export default function NewsSection() {
   const fetchArticles = useCallback(async () => {
     try {
       setRefreshing(true);
-      
-      const requestUrl = 'http://localhost:5000/api/consumer-pulse/articles?status=PUBLISHED&limit=50';
-      
+
+      const requestUrl = '/api/consumer-pulse/articles?status=PUBLISHED&limit=50';
+
       console.log('🔍 Fetching all articles from:', requestUrl);
-      
+
       const response = await fetch(requestUrl);
       
       if (!response.ok) {

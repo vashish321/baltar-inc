@@ -173,10 +173,10 @@ npm run dev
 ```
 
 ### 5. Access the Platform
-- **Main Consumer Pulse**: http://localhost:3000/consumer-pulse
-- **Surveys**: http://localhost:3000/consumer-pulse-surveys
-- **Live Polling**: http://localhost:3000/consumer-pulse-polling
-- **Analytics Dashboard**: http://localhost:3000/consumer-pulse-analytics
+- **Main Consumer Pulse**: http://localhost:3000/consumer-pulse (local) / https://your-vercel-domain.vercel.app/consumer-pulse (production)
+- **Surveys**: http://localhost:3000/consumer-pulse-surveys (local) / https://your-vercel-domain.vercel.app/consumer-pulse-surveys (production)
+- **Live Polling**: http://localhost:3000/consumer-pulse-polling (local) / https://your-vercel-domain.vercel.app/consumer-pulse-polling (production)
+- **Analytics Dashboard**: http://localhost:3000/consumer-pulse-analytics (local) / https://your-vercel-domain.vercel.app/consumer-pulse-analytics (production)
 
 ## Usage Examples
 

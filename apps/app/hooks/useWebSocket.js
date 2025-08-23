@@ -36,10 +36,10 @@ const useWebSocket = (url = null) => {
       }
       
       // Production
-      return 'https://baltar-inc-production.up.railway.app';
+      return 'https://baltar-inc-1.onrender.com';
     }
     
-    return 'http://localhost:5000';
+    return 'https://baltar-inc-1.onrender.com';
   }, [url]);
 
   // Initialize WebSocket connection

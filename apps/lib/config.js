@@ -5,7 +5,7 @@ const config = {
     environment: 'development'
   },
   production: {
-    apiUrl: 'https://baltar-inc-production.up.railway.app:8080',
+    apiUrl: 'https://baltar-inc-1.onrender.com',
     environment: 'production'
   }
 };

@@ -10,6 +10,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@stripe/react-stripe-js": "^3.9.1",
+    "@stripe/stripe-js": "^7.8.0",
     "framer-motion": "^12.9.2",
     "gsap": "^3.12.7",
     "motion": "^12.9.2",
