@@ -23,6 +23,9 @@ const corsOptions = {
   allowedHeaders: ['Content-Type', 'Authorization']
 };
 
+// Stripe webhook needs raw body, so add it before express.json()
+app.use('/api/stripe', require('./routes/stripeWebhookRoutes'));
+
 app.use(express.json());
 app.use(cors(corsOptions));
 app.use(morgan('dev'));
@@ -38,6 +41,8 @@ app.use('/api/invoices', require('./routes/invoiceRoutes'));
 app.use('/api/bookings', require('./routes/bookingRoutes'));
 app.use('/api/quotes', require('./routes/quoteRoutes'));
 app.use('/api/consumer-pulse', require('./routes/consumerPulseRoutes'));
+app.use('/api/le-mode-co', require('./routes/leModeCoRoutes'));
+app.use('/api/products', require('./routes/productRoutes'));
 
 // Health check endpoints
 app.get('/', (req, res) => {

@@ -39,8 +39,9 @@ enum InvoiceStatus {
 
 enum PaymentStatus {
   PENDING
-  COMPLETED
+  PAID
   FAILED
+  OVERDUE
   REFUNDED
 }
 
@@ -497,4 +498,270 @@ model ConsumerPulseUser {
   updatedAt     DateTime @updatedAt
 
   @@map("consumer_pulse_users")
+}
+
+// Le-Mode-Co Subscription Models
+model SubscriptionPackage {
+  id          String   @id @default(cuid())
+  name        String   // Essentials Box, Luxury Box, Bespoke Box, Platinum Box
+  price       Float    // Monthly price
+  description String?  // Main description
+  features    String   // JSON array of feature strings
+  bestFor     String?  // "Ideal For" text
+  isPopular   Boolean  @default(false)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relationships
+  subscriptions CustomerSubscription[]
+
+  @@map("subscription_packages")
+}
+
+model CustomerSubscription {
+  id                String                @id @default(cuid())
+  email             String
+  fullName          String
+  phone             String
+  zipCode           String
+  address           String
+  packageId         String
+  stripePaymentId   String?               // Stripe payment intent ID
+  status            SubscriptionStatus    @default(PENDING)
+  paymentStatus     PaymentStatus         @default(PENDING)
+  monthlyAmount     Float
+  preferences       String?               // JSON object for customer style preferences
+  createdAt         DateTime              @default(now())
+  updatedAt         DateTime              @updatedAt
+
+  // Relationships
+  package           SubscriptionPackage   @relation(fields: [packageId], references: [id])
+  orders            SubscriptionOrder[]
+  notifications     NotificationLog[]
+
+  @@map("customer_subscriptions")
+}
+
+model SubscriptionOrder {
+  id             String                @id @default(cuid())
+  subscriptionId String
+  orderMonth     DateTime              // Which month this order is for
+  status         OrderStatus           @default(PENDING)
+  isNotified     Boolean               @default(false)
+  notifiedAt     DateTime?
+  trackingNumber String?               // Shipping tracking number
+  shippedAt      DateTime?
+  deliveredAt    DateTime?
+  totalValue     Float?                // Total value of items in the order
+  createdAt      DateTime              @default(now())
+  updatedAt      DateTime              @updatedAt
+
+  // Relationships
+  subscription   CustomerSubscription  @relation(fields: [subscriptionId], references: [id])
+  items          OrderItem[]
+  statusHistory  OrderStatusHistory[]
+  notifications  NotificationLog[]
+
+  @@map("subscription_orders")
+}
+
+model OrderItem {
+  id          String            @id @default(cuid())
+  orderId     String
+  productId   String?           // Reference to Product if using catalog
+  itemName    String
+  description String?
+  category    String?           // e.g., "clothing", "accessory", "shoes"
+  quantity    Int               @default(1)
+  unitValue   Float?            // Individual item value for inventory tracking
+  addedAt     DateTime          @default(now())
+
+  // Relationships
+  order       SubscriptionOrder @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product     Product?          @relation(fields: [productId], references: [id])
+
+  @@map("order_items")
+}
+
+// Product Catalog
+model Product {
+  id            String          @id @default(cuid())
+  name          String
+  description   String?
+  category      ProductCategory
+  brand         String?
+  color         String?
+  size          ProductSize?
+  price         Float           // Retail value for inventory tracking
+  sku           String?         @unique
+  isActive      Boolean         @default(true)
+  stockQuantity Int             @default(0)
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+
+  // Relationships
+  images        ProductImage[]
+  orderItems    OrderItem[]
+  templateItems TemplateItem[]
+
+  @@map("products")
+}
+
+model ProductImage {
+  id        String   @id @default(cuid())
+  productId String
+  imageUrl  String
+  altText   String?
+  isPrimary Boolean  @default(false)
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+
+  // Relationships
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@map("product_images")
+}
+
+// Order Status Tracking
+model OrderStatusHistory {
+  id        String      @id @default(cuid())
+  orderId   String
+  status    OrderStatus
+  notes     String?
+  changedBy String?     // Admin ID who made the change
+  createdAt DateTime    @default(now())
+
+  // Relationships
+  order     SubscriptionOrder @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@map("order_status_history")
+}
+
+// Template System
+model OrderTemplate {
+  id            String             @id @default(cuid())
+  name          String
+  description   String?
+  templateType  TemplateType
+  packageTier   String?            // Which subscription package this applies to
+  season        Season?
+  preference    CustomerPreference?
+  isActive      Boolean            @default(true)
+  createdBy     String?            // Admin ID who created the template
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @updatedAt
+
+  // Relationships
+  items         TemplateItem[]
+
+  @@map("order_templates")
+}
+
+model TemplateItem {
+  id         String        @id @default(cuid())
+  templateId String
+  productId  String
+  quantity   Int           @default(1)
+  notes      String?
+  createdAt  DateTime      @default(now())
+
+  // Relationships
+  template   OrderTemplate @relation(fields: [templateId], references: [id], onDelete: Cascade)
+  product    Product       @relation(fields: [productId], references: [id])
+
+  @@map("template_items")
+}
+
+// Notification Tracking
+model NotificationLog {
+  id               String           @id @default(cuid())
+  orderId          String?
+  subscriptionId   String?
+  notificationType NotificationType
+  recipientEmail   String
+  subject          String
+  content          String?          // Email content or template used
+  sentAt           DateTime         @default(now())
+  deliveryStatus   String?          // success, failed, pending
+  errorMessage     String?
+
+  // Relationships
+  order            SubscriptionOrder? @relation(fields: [orderId], references: [id])
+  subscription     CustomerSubscription? @relation(fields: [subscriptionId], references: [id])
+
+  @@map("notification_logs")
+}
+
+// Enums for Le-Mode-Co
+enum SubscriptionStatus {
+  PENDING
+  ACTIVE
+  PAUSED
+  CANCELLED
+}
+
+enum OrderStatus {
+  PENDING
+  PROCESSING
+  ITEMS_ADDED
+  COMPLETED
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+enum ProductCategory {
+  CLOTHING
+  ACCESSORIES
+  SHOES
+  JEWELRY
+  BAGS
+  OUTERWEAR
+  ACTIVEWEAR
+  LINGERIE
+  OTHER
+}
+
+enum ProductSize {
+  XS
+  S
+  M
+  L
+  XL
+  XXL
+  XXXL
+  ONE_SIZE
+}
+
+enum TemplateType {
+  SUBSCRIPTION_TIER
+  SEASONAL
+  PREFERENCE_BASED
+  CUSTOM
+}
+
+enum Season {
+  SPRING_SUMMER
+  FALL_WINTER
+  ALL_SEASON
+}
+
+enum CustomerPreference {
+  CASUAL
+  FORMAL
+  TRENDY
+  CLASSIC
+  BOHEMIAN
+  MINIMALIST
+  EDGY
+  ROMANTIC
+}
+
+enum NotificationType {
+  ORDER_CONFIRMATION
+  PROCESSING_UPDATE
+  SHIPPING_NOTIFICATION
+  DELIVERY_CONFIRMATION
+  GENERAL_UPDATE
 }
