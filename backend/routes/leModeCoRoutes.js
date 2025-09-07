@@ -12,7 +12,7 @@ const EmailService = require('../services/emailService');
 router.get('/packages', async (req, res) => {
   try {
     const packages = await LeModeCoService.getAllPackages(false);
-    
+
     res.json({
       success: true,
       packages
@@ -21,6 +21,106 @@ router.get('/packages', async (req, res) => {
     console.error('Error fetching packages:', error);
     res.status(500).json({
       error: 'Failed to fetch packages',
+      details: error.message
+    });
+  }
+});
+
+// Get products for lookbook (public endpoint)
+router.get('/lookbook/products', async (req, res) => {
+  try {
+    const { category } = req.query;
+    const { PrismaClient } = require('@prisma/client');
+    const prisma = new PrismaClient();
+
+    const where = {
+      isActive: true
+    };
+
+    if (category) {
+      // Support both category ID and category name
+      if (category.length > 10) { // Assume it's a CUID if longer than 10 chars
+        where.categoryId = category;
+      } else {
+        where.category = {
+          name: category.toUpperCase()
+        };
+      }
+    }
+
+    const products = await prisma.product.findMany({
+      where,
+      select: {
+        id: true,
+        name: true,
+        category: {
+          select: {
+            id: true,
+            name: true,
+            description: true
+          }
+        },
+        images: {
+          select: {
+            id: true,
+            imageUrl: true,
+            displayOrder: true
+          },
+          orderBy: {
+            displayOrder: 'asc'
+          }
+        }
+      },
+      orderBy: {
+        createdAt: 'desc'
+      }
+    });
+
+    await prisma.$disconnect();
+
+    res.json({
+      success: true,
+      products
+    });
+  } catch (error) {
+    console.error('Error fetching lookbook products:', error);
+    res.status(500).json({
+      error: 'Failed to fetch lookbook products',
+      details: error.message
+    });
+  }
+});
+
+// Get available categories for lookbook (public endpoint)
+router.get('/lookbook/categories', async (req, res) => {
+  try {
+    const { PrismaClient } = require('@prisma/client');
+    const prisma = new PrismaClient();
+
+    const categories = await prisma.category.findMany({
+      where: {
+        isActive: true
+      },
+      select: {
+        id: true,
+        name: true,
+        description: true
+      },
+      orderBy: {
+        displayOrder: 'asc'
+      }
+    });
+
+    await prisma.$disconnect();
+
+    res.json({
+      success: true,
+      categories
+    });
+  } catch (error) {
+    console.error('Error fetching lookbook categories:', error);
+    res.status(500).json({
+      error: 'Failed to fetch lookbook categories',
       details: error.message
     });
   }
@@ -761,6 +861,147 @@ router.get('/admin/templates/meta/stats', AuthService.requireAuth, async (req, r
     console.error('Error fetching template stats:', error);
     res.status(500).json({
       error: 'Failed to fetch template stats',
+      details: error.message
+    });
+  }
+});
+
+// Category Management Routes (Admin only)
+
+// Get all categories
+router.get('/admin/categories', AuthService.requireAuth, async (req, res) => {
+  try {
+    const { PrismaClient } = require('@prisma/client');
+    const prisma = new PrismaClient();
+
+    const categories = await prisma.category.findMany({
+      orderBy: {
+        displayOrder: 'asc'
+      }
+    });
+
+    await prisma.$disconnect();
+
+    res.json({
+      success: true,
+      categories
+    });
+  } catch (error) {
+    console.error('Error fetching categories:', error);
+    res.status(500).json({
+      error: 'Failed to fetch categories',
+      details: error.message
+    });
+  }
+});
+
+// Create new category
+router.post('/admin/categories', AuthService.requireAuth, async (req, res) => {
+  try {
+    const { name, description, displayOrder } = req.body;
+
+    if (!name) {
+      return res.status(400).json({
+        error: 'Category name is required'
+      });
+    }
+
+    const { PrismaClient } = require('@prisma/client');
+    const prisma = new PrismaClient();
+
+    const category = await prisma.category.create({
+      data: {
+        name: name.toUpperCase(),
+        description,
+        displayOrder: displayOrder || 0
+      }
+    });
+
+    await prisma.$disconnect();
+
+    res.json({
+      success: true,
+      category
+    });
+  } catch (error) {
+    console.error('Error creating category:', error);
+    res.status(500).json({
+      error: 'Failed to create category',
+      details: error.message
+    });
+  }
+});
+
+// Update category
+router.put('/admin/categories/:id', AuthService.requireAuth, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, description, displayOrder, isActive } = req.body;
+
+    const { PrismaClient } = require('@prisma/client');
+    const prisma = new PrismaClient();
+
+    const updateData = {};
+    if (name !== undefined) updateData.name = name.toUpperCase();
+    if (description !== undefined) updateData.description = description;
+    if (displayOrder !== undefined) updateData.displayOrder = displayOrder;
+    if (isActive !== undefined) updateData.isActive = isActive;
+
+    const category = await prisma.category.update({
+      where: { id },
+      data: updateData
+    });
+
+    await prisma.$disconnect();
+
+    res.json({
+      success: true,
+      category
+    });
+  } catch (error) {
+    console.error('Error updating category:', error);
+    res.status(500).json({
+      error: 'Failed to update category',
+      details: error.message
+    });
+  }
+});
+
+// Delete category
+router.delete('/admin/categories/:id', AuthService.requireAuth, async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const { PrismaClient } = require('@prisma/client');
+    const prisma = new PrismaClient();
+
+    // Check if category has products
+    const productsCount = await prisma.product.count({
+      where: { categoryId: id }
+    });
+
+    if (productsCount > 0) {
+      await prisma.$disconnect();
+      return res.status(400).json({
+        error: 'Cannot delete category with existing products',
+        details: `This category has ${productsCount} products. Please reassign or delete the products first.`
+      });
+    }
+
+    await prisma.category.delete({
+      where: { id }
+    });
+
+    await prisma.$disconnect();
+
+    res.json({
+      success: true,
+      message: 'Category deleted successfully'
+    });
+  } catch (error) {
+    console.error('Error deleting category:', error);
+    res.status(500).json({
+      error: 'Failed to delete category',
       details: error.message
     });
   }

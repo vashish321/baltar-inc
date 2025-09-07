@@ -213,8 +213,8 @@ class LeModeCoService {
           }
         });
 
-        // Create first order for current month
-        await this.createMonthlyOrder(subscriptionId);
+        // Create single order for this subscription
+        await this.createSubscriptionOrder(subscriptionId);
 
         return subscription;
       } else {
@@ -238,9 +238,10 @@ class LeModeCoService {
         where,
         include: {
           package: true,
-          orders: {
-            orderBy: { createdAt: 'desc' },
-            take: 1
+          order: {
+            include: {
+              items: true
+            }
           }
         },
         orderBy: { createdAt: 'desc' },
@@ -266,17 +267,12 @@ class LeModeCoService {
   }
 
   // Order Management
-  static async createMonthlyOrder(subscriptionId) {
+  static async createSubscriptionOrder(subscriptionId) {
     try {
-      const currentMonth = new Date();
-      currentMonth.setDate(1); // First day of current month
-      currentMonth.setHours(0, 0, 0, 0);
-
-      // Check if order already exists for this month
-      const existingOrder = await prisma.subscriptionOrder.findFirst({
+      // Check if order already exists for this subscription
+      const existingOrder = await prisma.subscriptionOrder.findUnique({
         where: {
-          subscriptionId,
-          orderMonth: currentMonth
+          subscriptionId
         }
       });
 
@@ -287,7 +283,6 @@ class LeModeCoService {
       const order = await prisma.subscriptionOrder.create({
         data: {
           subscriptionId,
-          orderMonth: currentMonth,
           status: 'PENDING'
         },
         include: {
@@ -299,28 +294,16 @@ class LeModeCoService {
 
       return order;
     } catch (error) {
-      console.error('Error creating monthly order:', error);
+      console.error('Error creating subscription order:', error);
       throw error;
     }
   }
 
   static async getOrdersBySubscription(subscriptionId, includeEmpty = false) {
     try {
-      const whereClause = { subscriptionId };
-
-      // By default, filter out empty PENDING orders (placeholders)
-      if (!includeEmpty) {
-        whereClause.NOT = {
-          AND: [
-            { status: 'PENDING' },
-            { totalValue: { lte: 0 } },
-            { items: { none: {} } }
-          ]
-        };
-      }
-
-      const orders = await prisma.subscriptionOrder.findMany({
-        where: whereClause,
+      // Get the single order for this subscription
+      const order = await prisma.subscriptionOrder.findUnique({
+        where: { subscriptionId },
         include: {
           items: {
             include: {
@@ -334,11 +317,19 @@ class LeModeCoService {
           subscription: {
             include: { package: true }
           }
-        },
-        orderBy: { orderMonth: 'desc' }
+        }
       });
 
-      return orders;
+      if (!order) {
+        return [];
+      }
+
+      // By default, filter out empty PENDING orders (placeholders)
+      if (!includeEmpty && order.status === 'PENDING' && (!order.items || order.items.length === 0)) {
+        return [];
+      }
+
+      return [order]; // Return as array for compatibility
     } catch (error) {
       console.error('Error fetching orders:', error);
       throw error;

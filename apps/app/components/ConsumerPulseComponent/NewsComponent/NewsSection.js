@@ -3,6 +3,18 @@ import { useState, useEffect, useCallback } from 'react';
 import useWebSocket from '../../../hooks/useWebSocket';
 import styles from './NewsSection.module.css';
 
+// Helper function to get time ago string
+const getTimeAgo = (date) => {
+  const now = new Date();
+  const diffInSeconds = Math.floor((now - date) / 1000);
+
+  if (diffInSeconds < 60) return 'Just now';
+  if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)}m ago`;
+  if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)}h ago`;
+  if (diffInSeconds < 604800) return `${Math.floor(diffInSeconds / 86400)}d ago`;
+  return date.toLocaleDateString();
+};
+
 export default function NewsSection() {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -72,6 +84,50 @@ export default function NewsSection() {
       setRefreshing(false);
     }
   }, []); // No dependencies needed since we're fetching all articles
+
+  // Function to refresh news from all sources
+  const refreshNews = useCallback(async () => {
+    try {
+      setRefreshing(true);
+      console.log('🔄 Triggering fresh news fetch...');
+
+      // Try the primary endpoint first, fallback to manual-fetch if it fails
+      let response;
+      try {
+        response = await fetch('/api/consumer-pulse/refresh-news', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+      } catch (error) {
+        console.log('🔄 Primary endpoint failed, trying fallback...');
+        response = await fetch('/api/consumer-pulse/manual-fetch', {
+          method: 'GET'
+        });
+      }
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      if (data.success) {
+        console.log('✅ Fresh news fetch completed:', data);
+        // Wait a moment for the new articles to be processed, then refresh the display
+        setTimeout(() => {
+          fetchArticles();
+        }, 2000);
+      } else {
+        console.error('❌ Fresh news fetch failed:', data.error);
+      }
+    } catch (error) {
+      console.error('❌ Error triggering fresh news fetch:', error);
+    } finally {
+      setRefreshing(false);
+    }
+  }, [fetchArticles]);
 
   // Handle WebSocket updates
   const handleWebSocketUpdate = useCallback((update) => {
@@ -171,8 +227,16 @@ export default function NewsSection() {
               {liveUpdateCount} new
             </span>
           )}
-          <button 
-            onClick={() => fetchArticles()} 
+          <button
+            onClick={() => refreshNews()}
+            className={styles.refreshNewsButton}
+            disabled={refreshing}
+            title="Fetch fresh news from all sources"
+          >
+            {refreshing ? '↻' : '🔄'} Fresh News
+          </button>
+          <button
+            onClick={() => fetchArticles()}
             className={styles.refreshButton}
             disabled={refreshing}
           >
@@ -223,7 +287,7 @@ export default function NewsSection() {
                 <div className={styles.articleMeta}>
                   <span className={styles.category}>{item.category || 'General'}</span>
                   <span className={styles.publishedAt}>
-                    {item.publishedAt ? new Date(item.publishedAt).toLocaleDateString() : 'Recent'}
+                    {item.publishedAt ? getTimeAgo(new Date(item.publishedAt)) : 'Recent'}
                   </span>
                 </div>
               </div>
@@ -249,7 +313,7 @@ export default function NewsSection() {
             <div className={styles.modalMeta}>
               <span className={styles.modalCategory}>{selectedArticle.category || 'General'}</span>
               <span className={styles.modalDate}>
-                {selectedArticle.publishedAt ? new Date(selectedArticle.publishedAt).toLocaleDateString() : 'Recent'}
+                {selectedArticle.publishedAt ? getTimeAgo(new Date(selectedArticle.publishedAt)) : 'Recent'}
               </span>
             </div>
             <p className={styles.modalDescription}>

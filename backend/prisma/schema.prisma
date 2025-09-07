@@ -537,7 +537,7 @@ model CustomerSubscription {
 
   // Relationships
   package           SubscriptionPackage   @relation(fields: [packageId], references: [id])
-  orders            SubscriptionOrder[]
+  order             SubscriptionOrder?    // One-to-one relationship
   notifications     NotificationLog[]
 
   @@map("customer_subscriptions")
@@ -545,8 +545,7 @@ model CustomerSubscription {
 
 model SubscriptionOrder {
   id             String                @id @default(cuid())
-  subscriptionId String
-  orderMonth     DateTime              // Which month this order is for
+  subscriptionId String                @unique // One order per subscription
   status         OrderStatus           @default(PENDING)
   isNotified     Boolean               @default(false)
   notifiedAt     DateTime?
@@ -584,12 +583,29 @@ model OrderItem {
   @@map("order_items")
 }
 
+// Product Categories
+model Category {
+  id          String    @id @default(cuid())
+  name        String    @unique
+  description String?
+  isActive    Boolean   @default(true)
+  displayOrder Int      @default(0)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  // Relationships
+  products    Product[]
+
+  @@map("categories")
+}
+
 // Product Catalog
 model Product {
   id            String          @id @default(cuid())
   name          String
   description   String?
-  category      ProductCategory
+  categoryId    String?
+  category      Category?       @relation(fields: [categoryId], references: [id])
   brand         String?
   color         String?
   size          ProductSize?
@@ -711,17 +727,7 @@ enum OrderStatus {
   CANCELLED
 }
 
-enum ProductCategory {
-  CLOTHING
-  ACCESSORIES
-  SHOES
-  JEWELRY
-  BAGS
-  OUTERWEAR
-  ACTIVEWEAR
-  LINGERIE
-  OTHER
-}
+
 
 enum ProductSize {
   XS

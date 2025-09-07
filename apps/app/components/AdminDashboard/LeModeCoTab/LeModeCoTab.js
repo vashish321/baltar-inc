@@ -110,6 +110,12 @@ export default function LeModeCoTab() {
           >
             Templates
           </button>
+          <button
+            className={`${styles.subTab} ${activeSubTab === 'categories' ? styles.active : ''}`}
+            onClick={() => setActiveSubTab('categories')}
+          >
+            Categories
+          </button>
         </div>
       </div>
 
@@ -140,6 +146,9 @@ export default function LeModeCoTab() {
         {activeSubTab === 'templates' && (
           <TemplateManagement />
         )}
+        {activeSubTab === 'categories' && (
+          <CategoryManagement />
+        )}
       </div>
     </div>
   );
@@ -151,7 +160,12 @@ function OverviewSection({ stats, onRefresh }) {
     <div className={styles.overviewSection}>
       <div className={styles.statsGrid}>
         <div className={styles.statCard}>
-          <div className={styles.statIcon}>👥</div>
+          <div className={styles.statIcon}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M12 14C8.13401 14 5 17.134 5 21H19C19 17.134 15.866 14 12 14Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
           <div className={styles.statContent}>
             <h3>Total Subscriptions</h3>
             <p className={styles.statNumber}>{stats.totalSubscriptions || 0}</p>
@@ -159,7 +173,11 @@ function OverviewSection({ stats, onRefresh }) {
         </div>
         
         <div className={styles.statCard}>
-          <div className={styles.statIcon}>✅</div>
+          <div className={styles.statIcon}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
           <div className={styles.statContent}>
             <h3>Active Subscriptions</h3>
             <p className={styles.statNumber}>{stats.activeSubscriptions || 0}</p>
@@ -167,7 +185,13 @@ function OverviewSection({ stats, onRefresh }) {
         </div>
         
         <div className={styles.statCard}>
-          <div className={styles.statIcon}>📦</div>
+          <div className={styles.statIcon}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M21 16V8C20.9996 7.64928 20.9071 7.30481 20.7315 7.00116C20.556 6.69751 20.3037 6.44536 20 6.27L13 2.27C12.696 2.09446 12.3511 2.00205 12 2.00205C11.6489 2.00205 11.304 2.09446 11 2.27L4 6.27C3.69626 6.44536 3.44398 6.69751 3.26846 7.00116C3.09294 7.30481 3.00036 7.64928 3 8V16C3.00036 16.3507 3.09294 16.6952 3.26846 16.9988C3.44398 17.3025 3.69626 17.5546 4 17.73L11 21.73C11.304 21.9055 11.6489 21.9979 12 21.9979C12.3511 21.9979 12.696 21.9055 13 21.73L20 17.73C20.3037 17.5546 20.556 17.3025 20.7315 16.9988C20.9071 16.6952 20.9996 16.3507 21 16Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <polyline points="3.27,6.96 12,12.01 20.73,6.96" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <line x1="12" y1="22.08" x2="12" y2="12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
           <div className={styles.statContent}>
             <h3>Pending Orders</h3>
             <p className={styles.statNumber}>{stats.pendingOrders || 0}</p>
@@ -175,9 +199,14 @@ function OverviewSection({ stats, onRefresh }) {
         </div>
         
         <div className={styles.statCard}>
-          <div className={styles.statIcon}>💰</div>
+          <div className={styles.statIcon}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <line x1="12" y1="1" x2="12" y2="23" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M17 5H9.5C8.57174 5 7.6815 5.36875 7.02513 6.02513C6.36875 6.6815 6 7.57174 6 8.5C6 9.42826 6.36875 10.3185 7.02513 10.9749C7.6815 11.6312 8.57174 12 9.5 12H14.5C15.4283 12 16.3185 12.3687 16.9749 13.0251C17.6312 13.6815 18 14.5717 18 15.5C18 16.4283 17.6312 17.3185 16.9749 17.9749C16.3185 18.6312 15.4283 19 14.5 19H6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
           <div className={styles.statContent}>
-            <h3>Monthly Revenue</h3>
+            <h3>Total Revenue</h3>
             <p className={styles.statNumber}>${(stats.monthlyRevenue || 0).toLocaleString()}</p>
           </div>
         </div>
@@ -186,7 +215,11 @@ function OverviewSection({ stats, onRefresh }) {
       <div className={styles.quickActions}>
         <h3>Quick Actions</h3>
         <button className={styles.actionBtn} onClick={onRefresh}>
-          🔄 Refresh Data
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{marginRight: '8px'}}>
+            <path d="M1 4V10H7M23 20V14H17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M20.49 9C19.9828 7.56678 19.1209 6.28825 17.9845 5.27455C16.8482 4.26085 15.4745 3.54933 13.9917 3.20137C12.5089 2.8534 10.9652 2.87945 9.49337 3.27684C8.02157 3.67423 6.67253 4.43346 5.57 5.48L1 10M23 14L18.43 18.52C17.3275 19.5665 15.9784 20.3258 14.5066 20.7232C13.0348 21.1205 11.4911 21.1466 10.0083 20.7986C8.52547 20.4507 7.1518 19.7391 6.01547 18.7254C4.87913 17.7118 4.01717 16.4332 3.51 15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+          Refresh Data
         </button>
       </div>
     </div>
@@ -472,10 +505,10 @@ function OrdersSection({ selectedSubscription, onRefresh }) {
   return (
     <div className={styles.ordersSection}>
       <div className={styles.sectionHeader}>
-        <h3>Orders for {selectedSubscription.fullName}</h3>
+        <h3>Order for {selectedSubscription.fullName}</h3>
         <div className={styles.customerDetails}>
           <span>{selectedSubscription.package.name}</span>
-          <span>${selectedSubscription.monthlyAmount}/month</span>
+          <span>${selectedSubscription.monthlyAmount}</span>
         </div>
       </div>
 
@@ -561,7 +594,7 @@ function OrderCard({ order, onRefresh }) {
   return (
     <div className={styles.orderCard}>
       <div className={styles.orderHeader}>
-        <h4>{new Date(order.orderMonth).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</h4>
+        <h4>Subscription Order</h4>
         <span
           className={styles.statusBadge}
           style={{ backgroundColor: getStatusColor(order.status) }}
@@ -635,7 +668,11 @@ function OrderCard({ order, onRefresh }) {
             className={styles.notifyBtn}
             onClick={handleNotifyCustomer}
           >
-            📧 Notify Customer
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{marginRight: '8px'}}>
+              <path d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <polyline points="22,6 12,13 2,6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+            Notify Customer
           </button>
         )}
 
@@ -796,6 +833,231 @@ function PackageModal({ package: subscriptionPackage, onClose, onRefresh }) {
             </button>
             <button type="submit" className={styles.saveBtn}>
               {subscriptionPackage ? 'Update' : 'Create'} Package
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+}
+
+// Category Management Component
+function CategoryManagement() {
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [showModal, setShowModal] = useState(false);
+  const [editingCategory, setEditingCategory] = useState(null);
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
+  const fetchCategories = async () => {
+    try {
+      setLoading(true);
+      const token = localStorage.getItem('adminToken');
+      const response = await fetch(getApiEndpoint('/api/le-mode-co/admin/categories'), {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+
+      const data = await response.json();
+      if (data.success) {
+        setCategories(data.categories);
+      }
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleCreateCategory = () => {
+    setEditingCategory(null);
+    setShowModal(true);
+  };
+
+  const handleEditCategory = (category) => {
+    setEditingCategory(category);
+    setShowModal(true);
+  };
+
+  const handleDeleteCategory = async (categoryId) => {
+    if (!confirm('Are you sure you want to delete this category?')) return;
+
+    try {
+      const token = localStorage.getItem('adminToken');
+      const response = await fetch(getApiEndpoint(`/api/le-mode-co/admin/categories/${categoryId}`), {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+
+      const data = await response.json();
+      if (data.success) {
+        fetchCategories();
+      } else {
+        alert(data.error || 'Failed to delete category');
+      }
+    } catch (error) {
+      console.error('Error deleting category:', error);
+      alert('Failed to delete category');
+    }
+  };
+
+  if (loading) {
+    return <div className={styles.loading}>Loading categories...</div>;
+  }
+
+  return (
+    <div className={styles.categoryManagement}>
+      <div className={styles.sectionHeader}>
+        <h3>Category Management</h3>
+        <button onClick={handleCreateCategory} className={styles.createBtn}>
+          Add New Category
+        </button>
+      </div>
+
+      <div className={styles.categoriesGrid}>
+        {categories.map(category => (
+          <div key={category.id} className={styles.categoryCard}>
+            <div className={styles.categoryHeader}>
+              <h4>{category.name}</h4>
+              <div className={styles.categoryActions}>
+                <button
+                  onClick={() => handleEditCategory(category)}
+                  className={styles.editBtn}
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={() => handleDeleteCategory(category.id)}
+                  className={styles.deleteBtn}
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+            <p className={styles.categoryDescription}>
+              {category.description || 'No description'}
+            </p>
+            <div className={styles.categoryMeta}>
+              <span className={`${styles.status} ${category.isActive ? styles.active : styles.inactive}`}>
+                {category.isActive ? 'Active' : 'Inactive'}
+              </span>
+              <span className={styles.order}>Order: {category.displayOrder}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {showModal && (
+        <CategoryModal
+          category={editingCategory}
+          onClose={() => setShowModal(false)}
+          onSave={() => {
+            setShowModal(false);
+            fetchCategories();
+          }}
+        />
+      )}
+    </div>
+  );
+}
+
+// Category Modal Component
+function CategoryModal({ category, onClose, onSave }) {
+  const [formData, setFormData] = useState({
+    name: category?.name || '',
+    description: category?.description || '',
+    displayOrder: category?.displayOrder || 0,
+    isActive: category?.isActive ?? true
+  });
+  const [saving, setSaving] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setSaving(true);
+
+    try {
+      const token = localStorage.getItem('adminToken');
+      const url = category
+        ? getApiEndpoint(`/api/le-mode-co/admin/categories/${category.id}`)
+        : getApiEndpoint('/api/le-mode-co/admin/categories');
+
+      const response = await fetch(url, {
+        method: category ? 'PUT' : 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(formData)
+      });
+
+      const data = await response.json();
+      if (data.success) {
+        onSave();
+      } else {
+        alert(data.error || 'Failed to save category');
+      }
+    } catch (error) {
+      console.error('Error saving category:', error);
+      alert('Failed to save category');
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  return (
+    <div className={styles.modalOverlay}>
+      <div className={styles.modal}>
+        <h3>{category ? 'Edit Category' : 'Create New Category'}</h3>
+
+        <form onSubmit={handleSubmit}>
+          <div className={styles.formGroup}>
+            <label>Category Name</label>
+            <input
+              type="text"
+              value={formData.name}
+              onChange={(e) => setFormData({...formData, name: e.target.value})}
+              required
+            />
+          </div>
+
+          <div className={styles.formGroup}>
+            <label>Description</label>
+            <textarea
+              value={formData.description}
+              onChange={(e) => setFormData({...formData, description: e.target.value})}
+              rows={3}
+            />
+          </div>
+
+          <div className={styles.formGroup}>
+            <label>Display Order</label>
+            <input
+              type="number"
+              value={formData.displayOrder}
+              onChange={(e) => setFormData({...formData, displayOrder: parseInt(e.target.value)})}
+              min={0}
+            />
+          </div>
+
+          <div className={styles.formGroup}>
+            <label className={styles.checkboxLabel}>
+              <input
+                type="checkbox"
+                checked={formData.isActive}
+                onChange={(e) => setFormData({...formData, isActive: e.target.checked})}
+              />
+              Active
+            </label>
+          </div>
+
+          <div className={styles.modalActions}>
+            <button type="button" onClick={onClose} className={styles.cancelBtn}>
+              Cancel
+            </button>
+            <button type="submit" disabled={saving} className={styles.saveBtn}>
+              {saving ? 'Saving...' : (category ? 'Update' : 'Create')} Category
             </button>
           </div>
         </form>

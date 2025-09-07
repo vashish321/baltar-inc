@@ -453,6 +453,28 @@ router.get('/test-newsdata', AuthService.requireAuth, async (req, res) => {
   }
 });
 
+// Manual refresh endpoint for fresh news
+router.post('/refresh-news', async (req, res) => {
+  try {
+    console.log('🔄 Manual news refresh requested');
+
+    // Trigger manual fetch from unified news scheduler
+    const result = await unifiedNewsScheduler.manualFetchAll();
+
+    res.json({
+      success: true,
+      message: 'News refresh completed',
+      ...result
+    });
+  } catch (error) {
+    console.error('Error in manual news refresh:', error);
+    res.status(500).json({
+      error: 'Failed to refresh news',
+      details: error.message
+    });
+  }
+});
+
 // Unified News API Routes (supports both NewsData.io and Currents API)
 const unifiedNewsService = new UnifiedNewsService();
 
