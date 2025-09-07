@@ -64,10 +64,10 @@ router.get('/lookbook/products', async (req, res) => {
           select: {
             id: true,
             imageUrl: true,
-            displayOrder: true
+            sortOrder: true
           },
           orderBy: {
-            displayOrder: 'asc'
+            sortOrder: 'asc'
           }
         }
       },
