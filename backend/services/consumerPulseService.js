@@ -345,7 +345,7 @@ class ConsumerPulseService {
           status: articleData.status || 'DRAFT',
           sentiment: articleData.sentiment,
           sentimentScore: articleData.sentimentScore,
-          publishedAt: articleData.status === 'PUBLISHED' ? new Date() : null,
+          publishedAt: articleData.publishedAt ? new Date(articleData.publishedAt) : (articleData.status === 'PUBLISHED' ? new Date() : null),
           scrapedAt: articleData.scrapedAt ? new Date(articleData.scrapedAt) : null
         }
       });
@@ -365,12 +365,35 @@ class ConsumerPulseService {
       if (filters.category) where.category = filters.category;
       if (filters.sentiment) where.sentiment = filters.sentiment;
 
+      // Prioritize articles from the last 30 days for better freshness
+      if (!filters.includeOld) {
+        const thirtyDaysAgo = new Date();
+        thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+        where.OR = [
+          {
+            publishedAt: {
+              gte: thirtyDaysAgo
+            }
+          },
+          {
+            publishedAt: null,
+            createdAt: {
+              gte: thirtyDaysAgo
+            }
+          }
+        ];
+      }
+
       const [articles, total] = await Promise.all([
         prisma.newsArticle.findMany({
           where,
           skip,
           take: limit,
-          orderBy: { publishedAt: 'desc' },
+          orderBy: [
+            { publishedAt: 'desc' },
+            { createdAt: 'desc' }
+          ],
           include: {
             analytics: {
               orderBy: { generatedAt: 'desc' },
