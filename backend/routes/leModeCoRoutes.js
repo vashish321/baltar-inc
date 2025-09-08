@@ -397,14 +397,41 @@ router.put('/admin/subscriptions/:subscriptionId/status', AuthService.requireAut
   }
 });
 
+// Create order for subscription
+router.post('/admin/orders/create', AuthService.requireAuth, async (req, res) => {
+  try {
+    const { subscriptionId } = req.body;
+
+    if (!subscriptionId) {
+      return res.status(400).json({
+        error: 'Subscription ID is required'
+      });
+    }
+
+    const order = await LeModeCoService.createSubscriptionOrder(subscriptionId);
+
+    res.status(201).json({
+      success: true,
+      message: 'Order created successfully',
+      order
+    });
+  } catch (error) {
+    console.error('Error creating order:', error);
+    res.status(500).json({
+      error: 'Failed to create order',
+      details: error.message
+    });
+  }
+});
+
 // Add item to order
 router.post('/admin/orders/:orderId/items', AuthService.requireAuth, async (req, res) => {
   try {
     const { orderId } = req.params;
     const itemData = req.body;
-    
+
     const item = await LeModeCoService.addItemToOrder(orderId, itemData);
-    
+
     res.status(201).json({
       success: true,
       message: 'Item added successfully',
