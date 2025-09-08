@@ -141,8 +141,7 @@ class LeModeCoService {
           address,
           packageId,
           monthlyAmount: subscriptionPackage.price,
-          status: 'PENDING',
-          paymentStatus: 'PENDING'
+          status: 'PENDING'
         },
         include: {
           package: true
@@ -205,8 +204,7 @@ class LeModeCoService {
         const subscription = await prisma.customerSubscription.update({
           where: { id: subscriptionId },
           data: {
-            status: 'ACTIVE',
-            paymentStatus: 'COMPLETED'
+            status: 'PAID'
           },
           include: {
             package: true

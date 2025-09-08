@@ -441,12 +441,12 @@
   background: #3182ce;
 }
 
-.paymentStatusCell {
+.statusCell {
   display: flex;
   align-items: center;
 }
 
-.paymentStatusSelect {
+.statusSelect {
   padding: 0.25rem 0.5rem;
   border: none;
   border-radius: 4px;
@@ -457,12 +457,12 @@
   transition: opacity 0.2s;
 }
 
-.paymentStatusSelect:disabled {
+.statusSelect:disabled {
   opacity: 0.7;
   cursor: not-allowed;
 }
 
-.paymentStatusSelect option {
+.statusSelect option {
   background: white;
   color: black;
 }
@@ -662,6 +662,53 @@
   border-radius: 6px;
   font-size: 0.875rem;
   font-weight: 500;
+}
+
+/* Shipping Warning Styles */
+.shippingWarning {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  background: #fef3c7;
+  border: 1px solid #fbbf24;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.warningIcon {
+  color: #92400e;
+  flex-shrink: 0;
+  margin-top: 0.125rem;
+}
+
+.warningText {
+  flex: 1;
+}
+
+.warningText strong {
+  color: #92400e;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.warningText p {
+  margin: 0;
+  color: #92400e;
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+.disabledBtn {
+  opacity: 0.5;
+  cursor: not-allowed !important;
+  background: #9ca3af !important;
+}
+
+.disabledBtn:hover {
+  transform: none !important;
+  box-shadow: none !important;
 }
 
 .emptyState {

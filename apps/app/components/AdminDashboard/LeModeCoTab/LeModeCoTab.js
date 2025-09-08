@@ -4,6 +4,7 @@ import { getApiEndpoint } from '@/lib/config';
 import ProductManagement from './ProductManagement';
 import EnhancedOrderManagement from './EnhancedOrderManagement';
 import TemplateManagement from './TemplateManagement';
+import StatusConfirmationModal from './StatusConfirmationModal';
 import styles from './LeModeCoTab.module.css';
 
 export default function LeModeCoTab() {
@@ -339,9 +340,8 @@ function SubscriptionsSection({ subscriptions, onRefresh, onSelectSubscription, 
         <div className={styles.tableHeader}>
           <div>Customer</div>
           <div>Package</div>
-          <div>Payment Status</div>
-          <div>Subscription Status</div>
-          <div>Monthly Amount</div>
+          <div>Status</div>
+          <div>Amount</div>
           <div>Created</div>
           <div>Actions</div>
         </div>
@@ -362,48 +362,81 @@ function SubscriptionsSection({ subscriptions, onRefresh, onSelectSubscription, 
 
 // Subscription Row Component
 function SubscriptionRow({ subscription, onSelect, onRefresh, onViewOrders }) {
-  const [updatingPayment, setUpdatingPayment] = useState(false);
+  const [updatingStatus, setUpdatingStatus] = useState(false);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [pendingStatus, setPendingStatus] = useState(null);
 
   const getStatusColor = (status) => {
     switch (status) {
-      case 'ACTIVE': return '#28a745';
       case 'PENDING': return '#ffc107';
-      case 'CANCELLED': return '#dc3545';
-      default: return '#6c757d';
-    }
-  };
-
-  const getPaymentStatusColor = (paymentStatus) => {
-    switch (paymentStatus) {
       case 'PAID': return '#28a745';
-      case 'PENDING': return '#ffc107';
       case 'FAILED': return '#dc3545';
-      case 'OVERDUE': return '#fd7e14';
+      case 'COMPLIMENTARY': return '#17a2b8';
+      case 'CANCELLED': return '#6c757d';
       default: return '#6c757d';
     }
   };
 
-  const handleUpdatePaymentStatus = async (newStatus) => {
+  const getStatusDisplayName = (status) => {
+    switch (status) {
+      case 'PENDING': return 'Pending';
+      case 'PAID': return 'Paid';
+      case 'FAILED': return 'Failed';
+      case 'COMPLIMENTARY': return 'Complimentary';
+      case 'CANCELLED': return 'Cancelled';
+      default: return status;
+    }
+  };
+
+  const handleStatusChange = (newStatus) => {
+    // If changing to PAID, show confirmation modal
+    if (newStatus === 'PAID') {
+      setPendingStatus(newStatus);
+      setShowConfirmModal(true);
+    } else {
+      // For other status changes, update directly
+      updateSubscriptionStatus(newStatus);
+    }
+  };
+
+  const updateSubscriptionStatus = async (newStatus) => {
     try {
-      setUpdatingPayment(true);
+      setUpdatingStatus(true);
       const token = localStorage.getItem('adminToken');
 
-      await fetch(getApiEndpoint(`/api/le-mode-co/admin/subscriptions/${subscription.id}/payment-status`), {
+      const response = await fetch(getApiEndpoint(`/api/le-mode-co/admin/subscriptions/${subscription.id}/status`), {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
         },
-        body: JSON.stringify({ paymentStatus: newStatus })
+        body: JSON.stringify({ status: newStatus })
       });
 
+      if (!response.ok) {
+        throw new Error('Failed to update subscription status');
+      }
+
       onRefresh();
+      setShowConfirmModal(false);
+      setPendingStatus(null);
     } catch (error) {
-      console.error('Error updating payment status:', error);
-      alert('Failed to update payment status');
+      console.error('Error updating subscription status:', error);
+      alert('Failed to update subscription status');
     } finally {
-      setUpdatingPayment(false);
+      setUpdatingStatus(false);
     }
+  };
+
+  const handleConfirmStatusChange = () => {
+    if (pendingStatus) {
+      updateSubscriptionStatus(pendingStatus);
+    }
+  };
+
+  const handleCancelStatusChange = () => {
+    setShowConfirmModal(false);
+    setPendingStatus(null);
   };
 
   const handleViewOrders = () => {
@@ -418,30 +451,24 @@ function SubscriptionRow({ subscription, onSelect, onRefresh, onViewOrders }) {
         <div className={styles.customerEmail}>{subscription.email}</div>
       </div>
       <div>{subscription.package.name}</div>
-      <div className={styles.paymentStatusCell}>
+      <div className={styles.statusCell}>
         <select
-          value={subscription.paymentStatus || 'PENDING'}
-          onChange={(e) => handleUpdatePaymentStatus(e.target.value)}
-          disabled={updatingPayment}
-          className={styles.paymentStatusSelect}
+          value={subscription.status || 'PENDING'}
+          onChange={(e) => handleStatusChange(e.target.value)}
+          disabled={updatingStatus}
+          className={styles.statusSelect}
+          title="Orders can only be shipped when status is PAID or COMPLIMENTARY"
           style={{
-            backgroundColor: getPaymentStatusColor(subscription.paymentStatus || 'PENDING'),
+            backgroundColor: getStatusColor(subscription.status || 'PENDING'),
             color: 'white'
           }}
         >
-          <option value="PENDING">Pending</option>
+          <option value="PENDING">Pending Payment</option>
           <option value="PAID">Paid</option>
-          <option value="FAILED">Failed</option>
-          <option value="OVERDUE">Overdue</option>
+          <option value="FAILED">Payment Failed</option>
+          <option value="COMPLIMENTARY">Complimentary</option>
+          <option value="CANCELLED">Cancelled</option>
         </select>
-      </div>
-      <div>
-        <span
-          className={styles.statusBadge}
-          style={{ backgroundColor: getStatusColor(subscription.status) }}
-        >
-          {subscription.status}
-        </span>
       </div>
       <div>${subscription.monthlyAmount}</div>
       <div>{new Date(subscription.createdAt).toLocaleDateString()}</div>
@@ -449,10 +476,20 @@ function SubscriptionRow({ subscription, onSelect, onRefresh, onViewOrders }) {
         <button
           className={styles.viewBtn}
           onClick={handleViewOrders}
+          title={`View orders for ${subscription.fullName}`}
         >
           View Orders
         </button>
       </div>
+
+      <StatusConfirmationModal
+        isOpen={showConfirmModal}
+        onClose={handleCancelStatusChange}
+        onConfirm={handleConfirmStatusChange}
+        subscription={subscription}
+        newStatus={pendingStatus}
+        isLoading={updatingStatus}
+      />
     </div>
   );
 }
@@ -533,6 +570,9 @@ function OrdersSection({ selectedSubscription, onRefresh }) {
 function OrderCard({ order, onRefresh }) {
   const [showAddItem, setShowAddItem] = useState(false);
   const [newItem, setNewItem] = useState({ itemName: '', description: '', category: '' });
+
+  const canShip = ['PAID', 'COMPLIMENTARY'].includes(order.subscription?.status);
+  const subscriptionStatus = order.subscription?.status || 'UNKNOWN';
 
   const handleAddItem = async () => {
     try {
@@ -643,6 +683,20 @@ function OrderCard({ order, onRefresh }) {
         )}
       </div>
 
+      {!canShip && (
+        <div className={styles.shippingWarning}>
+          <div className={styles.warningIcon}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 9V13M12 17H12.01M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
+          <div className={styles.warningText}>
+            <strong>Shipping Restricted</strong>
+            <p>Orders can only be shipped when subscription status is PAID or COMPLIMENTARY. Current status: <strong>{subscriptionStatus}</strong></p>
+          </div>
+        </div>
+      )}
+
       <div className={styles.orderActions}>
         {order.status !== 'COMPLETED' && (
           <>
@@ -654,8 +708,10 @@ function OrderCard({ order, onRefresh }) {
             </button>
             {order.items.length > 0 && (
               <button
-                className={styles.completeBtn}
+                className={`${styles.completeBtn} ${!canShip ? styles.disabledBtn : ''}`}
                 onClick={handleCompleteOrder}
+                disabled={!canShip}
+                title={!canShip ? `Cannot ship order - subscription status is ${subscriptionStatus}` : 'Complete and ship order'}
               >
                 Complete Order
               </button>
