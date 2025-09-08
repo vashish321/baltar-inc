@@ -17,7 +17,7 @@ class ProductService {
       const {
         name,
         description,
-        category,
+        categoryId,
         brand,
         color,
         size,
@@ -31,7 +31,7 @@ class ProductService {
         data: {
           name,
           description,
-          category,
+          categoryId,
           brand,
           color,
           size,

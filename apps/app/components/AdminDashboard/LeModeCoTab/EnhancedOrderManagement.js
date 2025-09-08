@@ -9,6 +9,7 @@ export default function EnhancedOrderManagement({ selectedSubscription }) {
   const [showProductSearch, setShowProductSearch] = useState(null);
   const [showStatusModal, setShowStatusModal] = useState(null);
   const [showTemplateModal, setShowTemplateModal] = useState(null);
+  const [creatingOrder, setCreatingOrder] = useState(false);
 
   useEffect(() => {
     if (selectedSubscription) {
@@ -44,6 +45,42 @@ export default function EnhancedOrderManagement({ selectedSubscription }) {
     }
   };
 
+  const createOrder = async () => {
+    if (!selectedSubscription) return;
+
+    try {
+      setCreatingOrder(true);
+      const token = localStorage.getItem('adminToken');
+
+      const response = await fetch(
+        getApiEndpoint('/api/le-mode-co/admin/orders/create'),
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            subscriptionId: selectedSubscription.id
+          })
+        }
+      );
+
+      const result = await response.json();
+      if (result.success) {
+        await fetchOrders(); // Refresh orders list
+        alert('Order created successfully!');
+      } else {
+        alert('Failed to create order: ' + (result.error || 'Unknown error'));
+      }
+    } catch (error) {
+      console.error('Error creating order:', error);
+      alert('Failed to create order');
+    } finally {
+      setCreatingOrder(false);
+    }
+  };
+
   if (!selectedSubscription) {
     return (
       <div className={styles.emptyState}>
@@ -61,10 +98,24 @@ export default function EnhancedOrderManagement({ selectedSubscription }) {
   return (
     <div className={styles.orderManagement}>
       <div className={styles.header}>
-        <h3>Orders for {selectedSubscription.fullName}</h3>
-        <div className={styles.customerDetails}>
-          <span>{selectedSubscription.package.name}</span>
-          <span>${selectedSubscription.monthlyAmount}/month</span>
+        <div className={styles.headerLeft}>
+          <h3>Orders for {selectedSubscription.fullName}</h3>
+          <div className={styles.customerDetails}>
+            <span>{selectedSubscription.package.name}</span>
+            <span>${selectedSubscription.monthlyAmount}/month</span>
+            <span className={`${styles.statusBadge} ${styles[selectedSubscription.status?.toLowerCase()]}`}>
+              {selectedSubscription.status}
+            </span>
+          </div>
+        </div>
+        <div className={styles.headerActions}>
+          <button
+            className={styles.createOrderBtn}
+            onClick={createOrder}
+            disabled={creatingOrder}
+          >
+            {creatingOrder ? 'Creating...' : '+ Create Order'}
+          </button>
         </div>
       </div>
 

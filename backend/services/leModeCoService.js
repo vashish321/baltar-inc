@@ -440,24 +440,28 @@ class LeModeCoService {
     try {
       const [
         totalSubscriptions,
-        activeSubscriptions,
+        paidSubscriptions,
+        complimentarySubscriptions,
         pendingOrders,
         completedOrders,
         monthlyRevenue
       ] = await Promise.all([
         prisma.customerSubscription.count(),
-        prisma.customerSubscription.count({ where: { status: 'ACTIVE' } }),
+        prisma.customerSubscription.count({ where: { status: 'PAID' } }),
+        prisma.customerSubscription.count({ where: { status: 'COMPLIMENTARY' } }),
         prisma.subscriptionOrder.count({ where: { status: 'PENDING' } }),
         prisma.subscriptionOrder.count({ where: { status: 'COMPLETED' } }),
         prisma.customerSubscription.aggregate({
-          where: { status: 'ACTIVE' },
+          where: { status: { in: ['PAID', 'COMPLIMENTARY'] } },
           _sum: { monthlyAmount: true }
         })
       ]);
 
       return {
         totalSubscriptions,
-        activeSubscriptions,
+        activeSubscriptions: paidSubscriptions + complimentarySubscriptions,
+        paidSubscriptions,
+        complimentarySubscriptions,
         pendingOrders,
         completedOrders,
         monthlyRevenue: monthlyRevenue._sum.monthlyAmount || 0
