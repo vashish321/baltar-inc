@@ -39,9 +39,8 @@ router.post('/webhook', express.raw({ type: 'application/json' }), async (req, r
         
         await prisma.customerSubscription.updateMany({
           where: { stripePaymentId: failedPayment.id },
-          data: { 
-            paymentStatus: 'FAILED',
-            status: 'CANCELLED'
+          data: {
+            status: 'FAILED'
           }
         });
         break;
@@ -53,8 +52,7 @@ router.post('/webhook', express.raw({ type: 'application/json' }), async (req, r
         // Update subscription status to canceled
         await prisma.customerSubscription.updateMany({
           where: { stripePaymentId: canceledPayment.id },
-          data: { 
-            paymentStatus: 'CANCELLED',
+          data: {
             status: 'CANCELLED'
           }
         });

@@ -145,7 +145,7 @@ router.post('/subscribe', async (req, res) => {
     const existingSubscription = await prisma.customerSubscription.findFirst({
       where: {
         email,
-        status: { in: ['PENDING', 'ACTIVE'] }
+        status: { in: ['PENDING', 'PAID'] }
       }
     });
 
@@ -351,17 +351,17 @@ router.get('/admin/subscriptions/:subscriptionId/orders', AuthService.requireAut
   }
 });
 
-// Update subscription payment status
-router.put('/admin/subscriptions/:subscriptionId/payment-status', AuthService.requireAuth, async (req, res) => {
+// Update subscription status
+router.put('/admin/subscriptions/:subscriptionId/status', AuthService.requireAuth, async (req, res) => {
   try {
     const { subscriptionId } = req.params;
-    const { paymentStatus } = req.body;
+    const { status } = req.body;
 
-    // Validate payment status
-    const validStatuses = ['PENDING', 'PAID', 'FAILED', 'OVERDUE'];
-    if (!validStatuses.includes(paymentStatus)) {
+    // Validate status
+    const validStatuses = ['PENDING', 'PAID', 'FAILED', 'COMPLIMENTARY', 'CANCELLED'];
+    if (!validStatuses.includes(status)) {
       return res.status(400).json({
-        error: 'Invalid payment status',
+        error: 'Invalid subscription status',
         validStatuses
       });
     }
@@ -371,9 +371,14 @@ router.put('/admin/subscriptions/:subscriptionId/payment-status', AuthService.re
 
     const updatedSubscription = await prisma.customerSubscription.update({
       where: { id: subscriptionId },
-      data: { paymentStatus },
+      data: { status },
       include: {
-        package: true
+        package: true,
+        order: {
+          include: {
+            items: true
+          }
+        }
       }
     });
 
@@ -384,9 +389,9 @@ router.put('/admin/subscriptions/:subscriptionId/payment-status', AuthService.re
       subscription: updatedSubscription
     });
   } catch (error) {
-    console.error('Error updating payment status:', error);
+    console.error('Error updating subscription status:', error);
     res.status(500).json({
-      error: 'Failed to update payment status',
+      error: 'Failed to update subscription status',
       details: error.message
     });
   }
@@ -542,6 +547,25 @@ router.get('/admin/orders/:orderId/status-history', AuthService.requireAuth, asy
     console.error('Error fetching order status history:', error);
     res.status(500).json({
       error: 'Failed to fetch order status history',
+      details: error.message
+    });
+  }
+});
+
+// Check if order can be shipped
+router.get('/admin/orders/:orderId/shipping-eligibility', AuthService.requireAuth, async (req, res) => {
+  try {
+    const { orderId } = req.params;
+    const eligibility = await OrderManagementService.canOrderBeShipped(orderId);
+
+    res.json({
+      success: true,
+      ...eligibility
+    });
+  } catch (error) {
+    console.error('Error checking shipping eligibility:', error);
+    res.status(500).json({
+      error: 'Failed to check shipping eligibility',
       details: error.message
     });
   }

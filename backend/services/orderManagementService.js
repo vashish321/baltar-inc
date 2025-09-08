@@ -20,14 +20,20 @@ class OrderManagementService {
         throw new Error('Order not found');
       }
 
+      // Check if subscription payment status allows shipping
+      if ((newStatus === 'SHIPPED' || newStatus === 'DELIVERED') &&
+          !['PAID', 'COMPLIMENTARY'].includes(order.subscription.status)) {
+        throw new Error(`Cannot ship order for subscription with status: ${order.subscription.status}. Only PAID or COMPLIMENTARY subscriptions can be shipped.`);
+      }
+
       // Prepare update data
       const updateData = { status: newStatus };
-      
+
       if (newStatus === 'SHIPPED' && trackingNumber) {
         updateData.trackingNumber = trackingNumber;
         updateData.shippedAt = new Date();
       }
-      
+
       if (newStatus === 'DELIVERED') {
         updateData.deliveredAt = new Date();
       }
@@ -425,6 +431,53 @@ class OrderManagementService {
       return notifications;
     } catch (error) {
       console.error('Error fetching notification history:', error);
+      throw error;
+    }
+  }
+
+  // Check if order can be shipped based on subscription status
+  static async canOrderBeShipped(orderId) {
+    try {
+      const order = await prisma.subscriptionOrder.findUnique({
+        where: { id: orderId },
+        include: {
+          subscription: {
+            include: { package: true }
+          }
+        }
+      });
+
+      if (!order) {
+        return { canShip: false, reason: 'Order not found' };
+      }
+
+      const subscriptionStatus = order.subscription.status;
+      const canShip = ['PAID', 'COMPLIMENTARY'].includes(subscriptionStatus);
+
+      return {
+        canShip,
+        reason: canShip ? null : `Subscription status is ${subscriptionStatus}. Only PAID or COMPLIMENTARY subscriptions can be shipped.`,
+        subscription: order.subscription,
+        order
+      };
+    } catch (error) {
+      console.error('Error checking if order can be shipped:', error);
+      return { canShip: false, reason: 'Error checking order status' };
+    }
+  }
+
+  // Get shipping eligibility for multiple orders
+  static async getShippingEligibility(orderIds) {
+    try {
+      const results = {};
+
+      for (const orderId of orderIds) {
+        results[orderId] = await this.canOrderBeShipped(orderId);
+      }
+
+      return results;
+    } catch (error) {
+      console.error('Error checking shipping eligibility:', error);
       throw error;
     }
   }

@@ -529,7 +529,6 @@ model CustomerSubscription {
   packageId         String
   stripePaymentId   String?               // Stripe payment intent ID
   status            SubscriptionStatus    @default(PENDING)
-  paymentStatus     PaymentStatus         @default(PENDING)
   monthlyAmount     Float
   preferences       String?               // JSON object for customer style preferences
   createdAt         DateTime              @default(now())
@@ -711,10 +710,11 @@ model NotificationLog {
 
 // Enums for Le-Mode-Co
 enum SubscriptionStatus {
-  PENDING
-  ACTIVE
-  PAUSED
-  CANCELLED
+  PENDING      // awaiting payment
+  PAID         // payment completed
+  FAILED       // payment failed
+  COMPLIMENTARY // free/promotional subscription
+  CANCELLED    // subscription cancelled
 }
 
 enum OrderStatus {
