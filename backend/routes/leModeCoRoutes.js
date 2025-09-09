@@ -336,8 +336,9 @@ router.get('/admin/subscriptions', AuthService.requireAuth, async (req, res) => 
 router.get('/admin/subscriptions/:subscriptionId/orders', AuthService.requireAuth, async (req, res) => {
   try {
     const { subscriptionId } = req.params;
-    const orders = await LeModeCoService.getOrdersBySubscription(subscriptionId);
-    
+    // For admin, include empty orders so they can be edited
+    const orders = await LeModeCoService.getOrdersBySubscription(subscriptionId, true);
+
     res.json({
       success: true,
       orders
@@ -441,6 +442,101 @@ router.post('/admin/orders/:orderId/items', AuthService.requireAuth, async (req,
     console.error('Error adding item:', error);
     res.status(500).json({
       error: 'Failed to add item',
+      details: error.message
+    });
+  }
+});
+
+// Remove item from order
+router.delete('/admin/orders/:orderId/items/:itemId', AuthService.requireAuth, async (req, res) => {
+  try {
+    const { orderId, itemId } = req.params;
+
+    const { PrismaClient } = require('@prisma/client');
+    const prisma = new PrismaClient();
+
+    await prisma.orderItem.delete({
+      where: {
+        id: itemId,
+        orderId: orderId
+      }
+    });
+
+    await prisma.$disconnect();
+
+    res.json({
+      success: true,
+      message: 'Item removed successfully'
+    });
+  } catch (error) {
+    console.error('Error removing item:', error);
+    res.status(500).json({
+      error: 'Failed to remove item',
+      details: error.message
+    });
+  }
+});
+
+// Apply template to order
+router.post('/admin/orders/:orderId/apply-template', AuthService.requireAuth, async (req, res) => {
+  try {
+    const { orderId } = req.params;
+    const { templateId } = req.body;
+
+    if (!templateId) {
+      return res.status(400).json({
+        error: 'Template ID is required'
+      });
+    }
+
+    const { PrismaClient } = require('@prisma/client');
+    const prisma = new PrismaClient();
+
+    // Get template with items
+    const template = await prisma.orderTemplate.findUnique({
+      where: { id: templateId },
+      include: { items: true }
+    });
+
+    if (!template) {
+      return res.status(404).json({
+        error: 'Template not found'
+      });
+    }
+
+    // Add template items to order
+    for (const templateItem of template.items) {
+      // Get product details for the template item
+      const product = await prisma.product.findUnique({
+        where: { id: templateItem.productId },
+        include: { category: true }
+      });
+
+      if (product) {
+        await prisma.orderItem.create({
+          data: {
+            orderId: orderId,
+            itemName: product.name,
+            description: product.description || `${product.brand} - ${product.name}`,
+            category: product.category?.name || 'GENERAL',
+            quantity: templateItem.quantity || 1,
+            unitValue: product.price
+          }
+        });
+      }
+    }
+
+    await prisma.$disconnect();
+
+    res.json({
+      success: true,
+      message: `Applied template "${template.name}" to order`,
+      itemsAdded: template.items.length
+    });
+  } catch (error) {
+    console.error('Error applying template:', error);
+    res.status(500).json({
+      error: 'Failed to apply template',
       details: error.message
     });
   }

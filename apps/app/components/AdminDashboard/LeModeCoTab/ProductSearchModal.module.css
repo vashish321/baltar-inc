@@ -1,0 +1,376 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(8px);
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.25);
+  width: 1200px;
+  max-width: 95vw;
+  height: 80vh;
+  max-height: 800px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  animation: slideUp 0.3s ease-out;
+  position: relative;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 32px 32px 24px 32px;
+  border-bottom: 1px solid #e5e7eb;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+}
+
+.modalHeader h3 {
+  margin: 0;
+  color: #111827;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+.closeButton {
+  background: #f3f4f6;
+  border: 1px solid #d1d5db;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 10px;
+  color: #6b7280;
+  font-size: 20px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  transition: all 0.2s ease;
+}
+
+.closeButton:hover {
+  background: #e2e8f0;
+  color: #334155;
+}
+
+.modalBody {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.5rem 2rem;
+}
+
+.searchSection {
+  margin-bottom: 1.5rem;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.2s ease;
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.selectedSection {
+  background: #f0f9ff;
+  border: 1px solid #bae6fd;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.selectedSection h4 {
+  margin: 0 0 1rem 0;
+  color: #0369a1;
+  font-size: 1rem;
+}
+
+.selectedProducts {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.selectedProduct {
+  background: white;
+  border: 1px solid #bae6fd;
+  border-radius: 6px;
+  padding: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.productInfo {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.productName {
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.productPrice {
+  color: #059669;
+  font-weight: 600;
+}
+
+.quantityControl {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #f1f5f9;
+  border-radius: 6px;
+  padding: 0.25rem;
+}
+
+.quantityControl button {
+  background: #3b82f6;
+  color: white;
+  border: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.quantityControl button:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
+
+.quantityControl span {
+  min-width: 20px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.removeSelected {
+  background: #fef2f2;
+  color: #dc2626;
+  border: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 0.875rem;
+}
+
+.removeSelected:hover {
+  background: #fee2e2;
+}
+
+.productsSection h4 {
+  margin: 0 0 1rem 0;
+  color: #1e293b;
+  font-size: 1rem;
+}
+
+.loading {
+  text-align: center;
+  padding: 2rem;
+  color: #64748b;
+}
+
+.productsList {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+  max-height: 400px;
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+.productCard {
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  min-width: 0;
+}
+
+.productCard:hover {
+  border-color: #3b82f6;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.1);
+}
+
+.productCard.selected {
+  border-color: #10b981;
+  background: #f0fdf4;
+}
+
+.productHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.5rem;
+}
+
+.productHeader h5 {
+  margin: 0;
+  color: #1e293b;
+  font-size: 0.875rem;
+  font-weight: 600;
+  flex: 1;
+}
+
+.price {
+  color: #059669;
+  font-weight: 700;
+  font-size: 0.875rem;
+}
+
+.productDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.productDetails span {
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+.productStock {
+  font-size: 0.75rem;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.selectedBadge {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: #10b981;
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.modalFooter {
+  display: flex;
+  gap: 1rem;
+  padding: 1.5rem 2rem;
+  border-top: 1px solid #e2e8f0;
+  background: #f8fafc;
+}
+
+.cancelButton {
+  flex: 1;
+  padding: 0.75rem 1.5rem;
+  background: #f1f5f9;
+  color: #475569;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.cancelButton:hover {
+  background: #e2e8f0;
+  border-color: #94a3b8;
+}
+
+.addButton {
+  flex: 1;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.addButton:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.4);
+}
+
+.addButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Responsive Design - Prevent Modal Switching */
+@media (max-width: 768px) {
+  .modal {
+    width: 95vw !important;
+    height: 90vh !important;
+    max-height: 90vh !important;
+  }
+
+  .productsList {
+    grid-template-columns: 1fr !important;
+    gap: 0.75rem;
+  }
+
+  .productCard {
+    padding: 0.75rem;
+  }
+}
+
+@media (min-width: 769px) {
+  .modal {
+    width: 1200px !important;
+    max-width: 95vw !important;
+  }
+
+  .productsList {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important;
+  }
+}
