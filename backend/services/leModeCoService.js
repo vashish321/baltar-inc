@@ -103,7 +103,7 @@ class LeModeCoService {
       const activeSubscriptions = await prisma.customerSubscription.count({
         where: {
           packageId,
-          status: 'ACTIVE'
+          status: { in: ['PAID', 'COMPLIMENTARY'] }
         }
       });
 
