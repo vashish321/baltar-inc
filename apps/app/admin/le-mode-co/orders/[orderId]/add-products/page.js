@@ -114,8 +114,8 @@ export default function AddProductsToOrderPage({ params }) {
       <div className={styles.modalBody} style={{ minHeight: "70vh" }}>
         {/* Left Sidebar */}
         <div className={styles.searchSection}>
-          <div className={styles.searchFilters}>
-            <input
+          {/* <div className={styles.searchFilters}> */}
+            {/* <input
               type="text"
               placeholder="Search products..."
               value={searchTerm}
@@ -134,7 +134,7 @@ export default function AddProductsToOrderPage({ params }) {
               <option value="JEWELRY">Jewelry</option>
               <option value="BAGS">Bags</option>
             </select>
-          </div>
+          </div> */}
 
           {selectedProducts.length > 0 && (
             <div className={styles.selectedSection}>

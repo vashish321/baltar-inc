@@ -65,38 +65,7 @@ export default function ProductManagement() {
         </button>
       </div>
 
-      <div className={styles.filters}>
-        <input
-          type="text"
-          placeholder="Search products..."
-          value={filters.search}
-          onChange={(e) => handleFilterChange('search', e.target.value)}
-          className={styles.searchInput}
-        />
-        
-        <select
-          value={filters.category}
-          onChange={(e) => handleFilterChange('category', e.target.value)}
-          className={styles.filterSelect}
-        >
-          <option value="">All Categories</option>
-          <option value="CLOTHING">Clothing</option>
-          <option value="ACCESSORIES">Accessories</option>
-          <option value="SHOES">Shoes</option>
-          <option value="JEWELRY">Jewelry</option>
-          <option value="BAGS">Bags</option>
-          <option value="OUTERWEAR">Outerwear</option>
-        </select>
-
-        <input
-          type="text"
-          placeholder="Filter by brand..."
-          value={filters.brand}
-          onChange={(e) => handleFilterChange('brand', e.target.value)}
-          className={styles.brandInput}
-        />
-      </div>
-
+     
       <div className={styles.productsGrid}>
         {products.map(product => (
           <ProductCard 

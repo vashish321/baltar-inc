@@ -115,9 +115,9 @@ export default function LookbookSection() {
                 )}
                 <div className={styles.productInfo}>
                   <div className={styles.productName}>{product.name}</div>
-                  {product.category && (
+                  {/* {product.category && (
                     <div className={styles.productCategory}>{product.category.name}</div>
-                  )}
+                  )} */}
                 </div>
               </div>
             ))
