@@ -538,6 +538,8 @@
 
 /* Enhanced Order Card */
 .orderCard {
+  padding-right: 4rem;
+  padding-left: 4rem;
   background: white;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
@@ -548,7 +550,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.5rem;
+  /* padding: 1.5rem; */
   border-bottom: 1px solid #e2e8f0;
 }
 
@@ -857,13 +859,15 @@
   border-radius: 20px;
   box-shadow: 0 25px 80px rgba(0, 0, 0, 0.25);
   width: 900px;
-  max-width: 95vw;
-  height: 80vh;
+  max-width: 95dvw;
+  height: 80dvh;
   max-height: 700px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   position: relative;
+  isolation: isolate;
+  contain: layout paint size;
 }
 
 .modalHeader {
@@ -1357,9 +1361,9 @@
   }
   
   .modal {
-    width: 95vw !important;
-    height: 90vh !important;
-    max-height: 90vh !important;
+    width: 95dvw !important;
+    height: 90dvh !important;
+    max-height: 90dvh !important;
     margin: 1rem;
   }
 
@@ -1377,8 +1381,8 @@
 @media (min-width: 769px) {
   .modal {
     width: 900px !important;
-    max-width: 95vw !important;
-    height: 80vh !important;
+    max-width: 95dvw !important;
+    height: 80dvh !important;
     max-height: 700px !important;
   }
 }

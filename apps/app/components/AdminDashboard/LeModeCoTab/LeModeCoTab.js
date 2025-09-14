@@ -25,11 +25,21 @@ export default function LeModeCoTab() {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const hash = window.location.hash || '';
+      if (hash.includes('orders')) {
+        setActiveSubTab('orders');
+      }
+    }
+  }, []);
+
+
   const fetchData = async () => {
     try {
       setLoading(true);
       const token = localStorage.getItem('adminToken');
-      
+
       const [statsRes, packagesRes, subscriptionsRes] = await Promise.all([
         fetch(getApiEndpoint('/api/le-mode-co/admin/dashboard-stats'), {
           headers: { 'Authorization': `Bearer ${token}` }
@@ -172,7 +182,7 @@ function OverviewSection({ stats, onRefresh }) {
             <p className={styles.statNumber}>{stats.totalSubscriptions || 0}</p>
           </div>
         </div>
-        
+
         <div className={styles.statCard}>
           <div className={styles.statIcon}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -184,7 +194,7 @@ function OverviewSection({ stats, onRefresh }) {
             <p className={styles.statNumber}>{stats.activeSubscriptions || 0}</p>
           </div>
         </div>
-        
+
         <div className={styles.statCard}>
           <div className={styles.statIcon}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -198,7 +208,7 @@ function OverviewSection({ stats, onRefresh }) {
             <p className={styles.statNumber}>{stats.pendingOrders || 0}</p>
           </div>
         </div>
-        
+
         <div className={styles.statCard}>
           <div className={styles.statIcon}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -236,7 +246,7 @@ function PackagesSection({ packages, onRefresh }) {
     <div className={styles.packagesSection}>
       <div className={styles.sectionHeader}>
         <h3>Subscription Packages</h3>
-        <button 
+        <button
           className={styles.createBtn}
           onClick={() => setShowCreateModal(true)}
         >
