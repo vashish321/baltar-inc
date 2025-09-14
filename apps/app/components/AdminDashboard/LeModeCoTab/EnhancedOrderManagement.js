@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { getApiEndpoint } from '@/lib/config';
 import TemplateApplyModal from './TemplateApplyModal';
-import ProductSearchModal from './ProductSearchModal';
+import { useRouter } from 'next/navigation';
 import styles from './EnhancedOrderManagement.module.css';
 
 export default function EnhancedOrderManagement({ selectedSubscription }) {
@@ -153,9 +153,9 @@ export default function EnhancedOrderManagement({ selectedSubscription }) {
 // Enhanced Order Card Component
 function EnhancedOrderCard({ order, subscription, onRefresh }) {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [showAddProduct, setShowAddProduct] = useState(false);
   const [showAddTemplate, setShowAddTemplate] = useState(false);
   const [updatingStatus, setUpdatingStatus] = useState(false);
+  const router = useRouter();
 
   const getStatusColor = (status) => {
     switch (status) {
@@ -357,7 +357,7 @@ function EnhancedOrderCard({ order, subscription, onRefresh }) {
               <div className={styles.itemActions}>
                 <button
                   className={styles.addProductBtn}
-                  onClick={() => setShowAddProduct(true)}
+                  onClick={() => router.push(`/admin/le-mode-co/orders/${order.id}/add-products`)}
                   title="Add products from catalog"
                 >
                   + Add Products
@@ -425,14 +425,6 @@ function EnhancedOrderCard({ order, subscription, onRefresh }) {
         )}
       </div>
 
-      {/* Add Product Modal */}
-      {showAddProduct && (
-        <ProductSearchModal
-          orderId={order.id}
-          onClose={() => setShowAddProduct(false)}
-          onRefresh={onRefresh}
-        />
-      )}
 
       {/* Add Template Modal */}
       {showAddTemplate && (

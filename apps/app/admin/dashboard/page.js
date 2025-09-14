@@ -27,6 +27,16 @@ export default function AdminDashboard() {
     checkAuthentication();
   }, []);
 
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const hash = window.location.hash || '';
+      if (hash.includes('le-mode-co')) {
+        setActiveTab('le-mode-co');
+      }
+    }
+  }, []);
+
+
   const checkAuthentication = async () => {
     try {
       const token = localStorage.getItem('adminToken');
@@ -71,10 +81,10 @@ export default function AdminDashboard() {
 
       if (quotesResponse.ok) {
         const quotesData = await quotesResponse.json();
-        
+
         const savourSipQuotes = quotesData.quotes.filter(q => q.serviceType === 'SAVOUR_AND_SIP');
         const frontendQuotes = quotesData.quotes.filter(q => q.serviceType === 'FRONTEND_WEB_DESIGN');
-        
+
         setData({
           savourSipQuotes,
           frontendQuotes,
@@ -130,7 +140,7 @@ export default function AdminDashboard() {
             <span className={styles.navIcon}>📊</span>
             Overview
           </button>
-          
+
           <button
             className={`${styles.navItem} ${activeTab === 'savour-sip' ? styles.active : ''}`}
             onClick={() => setActiveTab('savour-sip')}
@@ -138,7 +148,7 @@ export default function AdminDashboard() {
             <span className={styles.navIcon}>🥂</span>
             Savour & Sip
           </button>
-          
+
           <button
             className={`${styles.navItem} ${activeTab === 'frontend-design' ? styles.active : ''}`}
             onClick={() => setActiveTab('frontend-design')}
@@ -221,7 +231,7 @@ function OverviewTab({ data, loading }) {
           <p className={styles.statNumber}>{data.stats.totalQuotes}</p>
         </div>
       </div>
-      
+
       <div className={styles.statCard}>
         <div className={styles.statIcon}>⏳</div>
         <div className={styles.statContent}>
@@ -229,7 +239,7 @@ function OverviewTab({ data, loading }) {
           <p className={styles.statNumber}>{data.stats.pendingQuotes}</p>
         </div>
       </div>
-      
+
       <div className={styles.statCard}>
         <div className={styles.statIcon}>💰</div>
         <div className={styles.statContent}>
@@ -237,7 +247,7 @@ function OverviewTab({ data, loading }) {
           <p className={styles.statNumber}>${data.stats.quotedAmount.toLocaleString()}</p>
         </div>
       </div>
-      
+
       <div className={styles.statCard}>
         <div className={styles.statIcon}>✅</div>
         <div className={styles.statContent}>

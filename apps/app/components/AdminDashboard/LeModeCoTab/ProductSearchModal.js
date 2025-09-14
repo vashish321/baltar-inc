@@ -8,9 +8,21 @@ const ProductSearchModal = ({ orderId, onClose, onRefresh }) => {
   const [loading, setLoading] = useState(false);
   const [adding, setAdding] = useState(false);
   const [selectedProducts, setSelectedProducts] = useState([]);
+  const [categoryFilter, setCategoryFilter] = useState('');
 
   useEffect(() => {
     fetchProducts();
+  }, [searchTerm, categoryFilter]);
+
+  // Lock body scroll when modal is open
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    document.body.style.paddingRight = '0px';
+
+    return () => {
+      document.body.style.overflow = '';
+      document.body.style.paddingRight = '';
+    };
   }, []);
 
   const fetchProducts = async () => {
@@ -18,12 +30,10 @@ const ProductSearchModal = ({ orderId, onClose, onRefresh }) => {
       setLoading(true);
       const token = localStorage.getItem('adminToken');
 
-      // Build query parameters for search and filtering
       const queryParams = new URLSearchParams({
         search: searchTerm,
-        category: '',
-        brand: '',
-        page: '1'
+        category: categoryFilter,
+        limit: '50'
       }).toString();
 
       const response = await fetch(getApiEndpoint(`/api/products/admin/products?${queryParams}`), {
@@ -41,12 +51,6 @@ const ProductSearchModal = ({ orderId, onClose, onRefresh }) => {
     }
   };
 
-  const filteredProducts = products.filter(product =>
-    product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    product.brand?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    product.category?.name?.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
   const toggleProductSelection = (product) => {
     setSelectedProducts(prev => {
       const isSelected = prev.find(p => p.id === product.id);
@@ -60,7 +64,7 @@ const ProductSearchModal = ({ orderId, onClose, onRefresh }) => {
 
   const updateQuantity = (productId, quantity) => {
     setSelectedProducts(prev =>
-      prev.map(p => p.id === productId ? { ...p, quantity: Math.max(1, quantity) } : p)
+      prev.map(p => p.id === productId ? { ...p, quantity: Math.max(1, Math.min(quantity, p.stockQuantity || 99)) } : p)
     );
   };
 
@@ -109,59 +113,84 @@ const ProductSearchModal = ({ orderId, onClose, onRefresh }) => {
         </div>
 
         <div className={styles.modalBody}>
+          {/* Left Sidebar */}
           <div className={styles.searchSection}>
-            <input
-              type="text"
-              placeholder="Search products by name, brand, or category..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className={styles.searchInput}
-            />
-          </div>
+            <div className={styles.searchFilters}>
+              <input
+                type="text"
+                placeholder="Search products..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className={styles.searchInput}
+              />
+              <select
+                value={categoryFilter}
+                onChange={(e) => setCategoryFilter(e.target.value)}
+                className={styles.categorySelect}
+              >
+                <option value="">All Categories</option>
+                <option value="CLOTHING">Clothing</option>
+                <option value="ACCESSORIES">Accessories</option>
+                <option value="SHOES">Shoes</option>
+                <option value="JEWELRY">Jewelry</option>
+                <option value="BAGS">Bags</option>
+              </select>
+            </div>
 
-          {selectedProducts.length > 0 && (
-            <div className={styles.selectedSection}>
-              <h4>Selected Products ({selectedProducts.length})</h4>
-              <div className={styles.selectedProducts}>
+            {selectedProducts.length > 0 && (
+              <div className={styles.selectedSection}>
+                <div className={styles.selectedProductHeader}>
+                  <h4>Selected Products ({selectedProducts.length})</h4>
+                </div>
                 {selectedProducts.map(product => (
                   <div key={product.id} className={styles.selectedProduct}>
-                    <div className={styles.productInfo}>
-                      <span className={styles.productName}>{product.name}</span>
-                      <span className={styles.productPrice}>${product.price}</span>
+                    <div className={styles.selectedProductHeader}>
+                      <span className={styles.selectedProductName}>{product.name}</span>
+                      <span className={styles.selectedProductPrice}>${product.price}</span>
                     </div>
                     <div className={styles.quantityControl}>
                       <button
+                        className={styles.quantityButton}
                         onClick={() => updateQuantity(product.id, product.quantity - 1)}
                         disabled={product.quantity <= 1}
                       >
                         -
                       </button>
-                      <span>{product.quantity}</span>
+                      <input
+                        type="number"
+                        className={styles.quantityInput}
+                        value={product.quantity}
+                        onChange={(e) => updateQuantity(product.id, parseInt(e.target.value) || 1)}
+                        min="1"
+                        max={product.stockQuantity || 99}
+                      />
                       <button
+                        className={styles.quantityButton}
                         onClick={() => updateQuantity(product.id, product.quantity + 1)}
+                        disabled={product.quantity >= (product.stockQuantity || 99)}
                       >
                         +
                       </button>
+                      <button
+                        className={styles.quantityButton}
+                        onClick={() => toggleProductSelection(product)}
+                      >
+                        ✕
+                      </button>
                     </div>
-                    <button
-                      className={styles.removeSelected}
-                      onClick={() => toggleProductSelection(product)}
-                    >
-                      ✕
-                    </button>
                   </div>
                 ))}
               </div>
-            </div>
-          )}
+            )}
+          </div>
 
-          <div className={styles.productsSection}>
-            <h4>Available Products</h4>
+          {/* Right Content Area */}
+          <div className={styles.productsContainer}>
             {loading ? (
               <div className={styles.loading}>Loading products...</div>
             ) : (
               <div className={styles.productsList}>
-                {filteredProducts.map(product => {
+                {products.map(product => {
                   const isSelected = selectedProducts.find(p => p.id === product.id);
                   return (
                     <div
@@ -175,16 +204,14 @@ const ProductSearchModal = ({ orderId, onClose, onRefresh }) => {
                       </div>
                       <div className={styles.productDetails}>
                         {product.brand && <span>Brand: {product.brand}</span>}
+                        {product.category?.name && <span>Category: {product.category.name}</span>}
                         {product.color && <span>Color: {product.color}</span>}
                         {product.size && <span>Size: {product.size}</span>}
-                        {product.category && <span>Category: {product.category.name}</span>}
+                        <span className={styles.productStock}>
+                          Stock: {product.stockQuantity || 0}
+                        </span>
                       </div>
-                      <div className={styles.productStock}>
-                        Stock: {product.stockQuantity || 0}
-                      </div>
-                      {isSelected && (
-                        <div className={styles.selectedBadge}>✓ Selected</div>
-                      )}
+                      {isSelected && <div className={styles.selectedBadge}>Selected</div>}
                     </div>
                   );
                 })}
@@ -194,16 +221,25 @@ const ProductSearchModal = ({ orderId, onClose, onRefresh }) => {
         </div>
 
         <div className={styles.modalFooter}>
-          <button className={styles.cancelButton} onClick={onClose}>
-            Cancel
-          </button>
-          <button
-            className={styles.addButton}
-            onClick={addSelectedProducts}
-            disabled={selectedProducts.length === 0 || adding}
-          >
-            {adding ? 'Adding...' : `Add ${selectedProducts.length} Product${selectedProducts.length !== 1 ? 's' : ''}`}
-          </button>
+          <div className={styles.footerInfo}>
+            <span>
+              {selectedProducts.length} product{selectedProducts.length !== 1 ? 's' : ''} selected
+            </span>
+            {selectedProducts.length > 0 && (
+              <span>
+                Total: ${selectedProducts.reduce((sum, p) => sum + (p.price * p.quantity), 0).toFixed(2)}
+              </span>
+            )}
+          </div>
+          <div className={styles.footerActions}>
+            <button
+              className={styles.addButton}
+              onClick={addSelectedProducts}
+              disabled={selectedProducts.length === 0 || adding}
+            >
+              {adding ? '⏳ Adding...' : `✓ Add ${selectedProducts.length} Product${selectedProducts.length !== 1 ? 's' : ''}`}
+            </button>
+          </div>
         </div>
       </div>
     </div>
