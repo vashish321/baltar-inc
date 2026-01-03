@@ -54,7 +54,7 @@ export default function Navbar() {
     const href = hrefMap[lowerItem] || '/coming-soon';
 
     // Integrated pages should open in new tab, coming soon pages stay in same tab
-    const isIntegratedPage = hrefMap[lowerItem] && href !== '/coming-soon';
+    const isIntegratedPage = hrefMap[lowerItem] && hrefMap[lowerItem] !== '/coming-soon';
 
     if (isIntegratedPage) {
       return (

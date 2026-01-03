@@ -55,7 +55,7 @@ export default function MetaHeader() {
   const renderLink = (item, i) => {
     const lowerItem = item.toLowerCase();
     const href = hrefMap[lowerItem] || '/coming-soon';
-    const isIntegratedPage = ['transac', 'frontend web design', 'savour & sip', 'le mode co.', 'consumer pulse', 'vr (luxury eyewear & fashion tech)'].includes(lowerItem);
+    const isIntegratedPage = hrefMap[lowerItem] && hrefMap[lowerItem] !== '/coming-soon';
 
     if (isIntegratedPage) {
       return (
