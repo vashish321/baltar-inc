@@ -7,7 +7,7 @@ import './navbar.css';
 
 const navItems = {
   Finance: ['Wealth Management', 'Transac'],
-  Technology: ['Frontend Web Design', 'Cre8ive Studio'],
+  Technology: ['Toronto Media Inc.', 'Cre8ive Studio'],
   Consulting: ['Archon Engineering'],
   Hospitality: ['Savour & Sip'],
   Fashion: ['VR (Luxury Eyewear & Fashion Tech)', 'Le Mode Co.'],
@@ -17,7 +17,7 @@ const navItems = {
 
 const hrefMap = {
   'transac': '/transac',
-  'frontend web design': '/frontend-web-design',
+  'toronto media inc.': '/frontend-web-design',
   'le mode co.': '/le-mode-co',
   'savour & sip': '/sip-and-savour',
   'consumer pulse': '/consumer-pulse',
@@ -76,7 +76,7 @@ export default function Navbar() {
       <div className="navbar-content">
         {/* Logo */}
         <Link href="/" className="logo-with-icon">
-          <Image src="/logo.svg" alt="Baltar Inc Logo" width={28} height={28} />
+          <Image src="/Baltar-new.svg" alt="Baltar Inc Logo" width={28} height={28} />
           <span className="logo-text">Baltar Inc</span>
         </Link>
 

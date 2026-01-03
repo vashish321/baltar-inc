@@ -5,7 +5,7 @@ import styles from './MetaFooter.module.css';
 
 const footerSections = {
   'Technologies': [
-    { name: 'Frontend Web Design', href: '/frontend-web-design', external: true },
+    { name: 'Toronto Media Inc.', href: '/frontend-web-design', external: true },
     { name: 'Cre8ive Studio', href: '/cre8ive-studio-comingsoon', external: false },
     { name: 'Transac', href: '/transac', external: true },
   ],

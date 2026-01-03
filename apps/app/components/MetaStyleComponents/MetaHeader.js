@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import styles from './MetaHeader.module.css';
 
 const navItems = {
-  Technologies: ['Frontend Web Design', 'Cre8ive Studio', 'Transac'],
+  Technologies: ['Toronto Media Inc.', 'Cre8ive Studio', 'Transac'],
   Hospitality: ['Savour & Sip'],
   Engineering: ['Archon Engineering'],
   Finance: ['Baltar Wealth Management'],
@@ -16,7 +16,7 @@ const navItems = {
 
 const hrefMap = {
   'transac': '/transac',
-  'frontend web design': '/frontend-web-design',
+  'toronto media inc.': '/frontend-web-design',
   'le mode co.': '/le-mode-co',
   'savour & sip': '/sip-and-savour',
   'consumer pulse': '/consumer-pulse',
@@ -88,7 +88,7 @@ export default function MetaHeader() {
       <div className={styles.container}>
         {/* Logo */}
         <Link href="/" className={styles.logo}>
-          <Image src="/logo.svg" alt="Baltar Inc" width={32} height={32} />
+          <Image src="/Baltar-new.svg" alt="Baltar Inc" width={32} height={32} />
           <span className={styles.logoText}>Baltar Inc</span>
         </Link>
 

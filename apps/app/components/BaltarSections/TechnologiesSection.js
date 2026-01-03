@@ -102,10 +102,10 @@ export default function TechnologiesSection() {
         </motion.div>
 
         <div className={styles.servicesGrid}>
-          {/* Frontend Web Design & Hosting */}
+          {/* Toronto Media Inc. */}
           <motion.div className={styles.serviceCard} variants={slideInLeft}>
             <div className={styles.cardContent}>
-              <h3>Frontend Web Design & Hosting</h3>
+              <h3>Toronto Media Inc.</h3>
               <p>
                 We offer full-spectrum web services: design, development, domain registration, 
                 hosting, maintenance, and optimization.

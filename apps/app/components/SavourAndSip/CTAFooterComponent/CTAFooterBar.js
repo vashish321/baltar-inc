@@ -10,8 +10,8 @@ export default function CTAFooterBar() {
     router.push('/sip-and-savour/pricing');
   };
 
-  const handleCallClick = () => {
-    window.location.href = 'tel:+14165551234';
+  const handleEmailClick = () => {
+    window.location.href = 'mailto:admin@baltar.ca';
   };
 
   return (
@@ -36,12 +36,12 @@ export default function CTAFooterBar() {
           <div className={styles.ctaButtons}>
             <motion.button
               className={styles.phoneButton}
-              onClick={handleCallClick}
+              onClick={handleEmailClick}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <span className={styles.phoneIcon}>📞</span>
-              Call us today: (416) 555-1234
+              <span className={styles.phoneIcon}>✉️</span>
+              Email us: admin@baltar.ca
             </motion.button>
             
             <span className={styles.orText}>or</span>

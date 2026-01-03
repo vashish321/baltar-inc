@@ -113,12 +113,12 @@ export default function WhyChooseUsSection() {
           </p>
           <div className={styles.ctaButtons}>
             <motion.a
-              href="tel:+1234567890"
+              href="mailto:admin@baltar.ca"
               className={styles.primaryButton}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              📞 (XXX) XXX-XXXX
+              ✉️ admin@baltar.ca
             </motion.a>
             <motion.a
               href="/frontend-web-design-contact-us"

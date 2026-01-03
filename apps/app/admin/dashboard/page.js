@@ -154,7 +154,7 @@ export default function AdminDashboard() {
             onClick={() => setActiveTab('frontend-design')}
           >
             <span className={styles.navIcon}>💻</span>
-            Frontend Web Design
+            Toronto Media Inc.
           </button>
 
           <button
@@ -188,7 +188,7 @@ export default function AdminDashboard() {
           <h1 className={styles.pageTitle}>
             {activeTab === 'overview' && 'Dashboard Overview'}
             {activeTab === 'savour-sip' && 'Savour & Sip Management'}
-            {activeTab === 'frontend-design' && 'Frontend Web Design Management'}
+            {activeTab === 'frontend-design' && 'Toronto Media Inc. Management'}
             {activeTab === 'consumer-pulse' && 'Consumer Pulse Management'}
             {activeTab === 'le-mode-co' && 'Le-Mode-Co Management'}
           </h1>
@@ -307,7 +307,7 @@ function FrontendDesignTab({ quotes, loading, onRefresh }) {
   const [showInvoiceModal, setShowInvoiceModal] = useState(false);
 
   if (loading) {
-    return <div className={styles.loading}>Loading Frontend Web Design quotes...</div>;
+    return <div className={styles.loading}>Loading Toronto Media Inc. quotes...</div>;
   }
 
   return (
@@ -493,7 +493,7 @@ function InvoiceModal({ serviceType, onClose, onRefresh }) {
     <div className={styles.modalOverlay}>
       <div className={styles.modal}>
         <div className={styles.modalHeader}>
-          <h3>Generate Invoice - {serviceType === 'SAVOUR_AND_SIP' ? 'Savour & Sip' : 'Frontend Web Design'}</h3>
+          <h3>Generate Invoice - {serviceType === 'SAVOUR_AND_SIP' ? 'Savour & Sip' : 'Toronto Media Inc.'}</h3>
           <button className={styles.closeButton} onClick={onClose}>×</button>
         </div>
 

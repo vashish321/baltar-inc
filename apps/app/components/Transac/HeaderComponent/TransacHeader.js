@@ -34,7 +34,7 @@ export default function TransacHeader() {
     <header className={styles.header}>
       <div className={styles.container}>
         <Link href="/transac" className={styles.logoWithIcon}>
-          <Image src="/logo.svg" alt="Transac Logo" width={28} height={28} />
+          <Image src="/Baltar-new.svg" alt="Transac Logo" width={28} height={28} />
           <span className={styles.logoText}>Transac</span>
         </Link>
 

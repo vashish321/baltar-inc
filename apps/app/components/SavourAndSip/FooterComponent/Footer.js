@@ -1,12 +1,13 @@
 'use client';
 
+import Image from 'next/image';
 import styles from './Footer.module.css';
 
 export default function Footer() {
   return (
     <footer className={styles.footer}>
       <div className={styles.footerTop}>
-        <h2 className={styles.brand}>SAVOUR & SIP</h2>
+        <Image src="/Savour-Sip-New.svg" alt="Savour & Sip Logo" width={120} height={120} />
       </div>
 
       <div className={styles.footerContent}>
@@ -15,8 +16,7 @@ export default function Footer() {
           <h4>Contact Us</h4>
           <p>123 Culinary Avenue</p>
           <p>New York, NY 10001</p>
-          <p>Phone: (123) 456-7890</p>
-          <p>Email: hello@savourandsip.com</p>
+          <p>Email: admin@baltar.ca</p>
         </div>
 
         {/* Social Links */}

@@ -1,5 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import './HeaderComponent.css';
 
 export default function HeaderComponent() {
@@ -29,7 +30,10 @@ export default function HeaderComponent() {
 
   return (
     <header className="cuberto-header">
-      <div className="header-title">Frontend Web Design</div>
+      <div className="header-title">
+        <Image src="/Toronto-Media.svg" alt="Toronto Media Inc. Logo" width={40} height={40} />
+        <span>Toronto Media Inc.</span>
+      </div>
       <button className="menu-button" onClick={() => setIsMenuOpen(true)}>
         menu <span className="hamburger">≡</span>
       </button>
@@ -62,7 +66,7 @@ export default function HeaderComponent() {
                 </ul>
                 <div className="contact-block">
                   <p>Get in touch</p>
-                  <a href="mailto:getintouch@gmail.com">getintouch@gmail.com</a>
+                  <a href="mailto:admin@baltar.ca">admin@baltar.ca</a>
                 </div>
               </div>
             </div>

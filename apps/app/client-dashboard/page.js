@@ -12,7 +12,7 @@ export default function ClientDashboard() {
   useEffect(() => {
     // For demo purposes, we'll use a test client email
     // In production, this would come from authentication
-    const testClientEmail = 'test@example.com';
+    const testClientEmail = 'admin@baltar.ca';
     fetchClientData(testClientEmail);
   }, []);
 
