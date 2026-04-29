@@ -1,10 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const { PrismaClient } = require('@prisma/client');
 const ClientService = require('../services/clientService');
 const ProjectService = require('../services/projectService');
 
-const prisma = new PrismaClient();
+const prisma = require('../lib/prisma');
 
 // Create new booking (from contact forms)
 router.post('/', async (req, res) => {

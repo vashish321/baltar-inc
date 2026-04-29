@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const LeModeCoService = require('../services/leModeCoService');
+const prisma = require('../lib/prisma');
 
 // Stripe webhook endpoint
 router.post('/webhook', express.raw({ type: 'application/json' }), async (req, res) => {
@@ -34,8 +35,6 @@ router.post('/webhook', express.raw({ type: 'application/json' }), async (req, r
         console.log('Payment failed:', failedPayment.id);
         
         // Update subscription status to failed
-        const { PrismaClient } = require('@prisma/client');
-        const prisma = new PrismaClient();
         
         await prisma.customerSubscription.updateMany({
           where: { stripePaymentId: failedPayment.id },

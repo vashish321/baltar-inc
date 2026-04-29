@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const InvoiceService = require('../services/invoiceService');
 const AuthService = require('../services/authService');
+const prisma = require('../lib/prisma');
 
 // Create manual invoice
 router.post('/create', async (req, res) => {
@@ -90,8 +91,6 @@ router.get('/client/:clientId', async (req, res) => {
 router.get('/:invoiceId', async (req, res) => {
   try {
     const { invoiceId } = req.params;
-    const { PrismaClient } = require('@prisma/client');
-    const prisma = new PrismaClient();
 
     const invoice = await prisma.invoice.findUnique({
       where: { id: invoiceId },
@@ -190,8 +189,6 @@ router.post('/:invoiceId/payment', async (req, res) => {
 // Get all invoices (admin)
 router.get('/', AuthService.requireAuth, async (req, res) => {
   try {
-    const { PrismaClient } = require('@prisma/client');
-    const prisma = new PrismaClient();
 
     const { status, serviceType, page = 1, limit = 10 } = req.query;
     const skip = (page - 1) * limit;

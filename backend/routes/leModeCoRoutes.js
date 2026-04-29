@@ -5,6 +5,7 @@ const OrderManagementService = require('../services/orderManagementService');
 const TemplateService = require('../services/templateService');
 const AuthService = require('../services/authService');
 const EmailService = require('../services/emailService');
+const prisma = require('../lib/prisma');
 
 // Public Routes (for customers)
 
@@ -30,8 +31,6 @@ router.get('/packages', async (req, res) => {
 router.get('/lookbook/products', async (req, res) => {
   try {
     const { category } = req.query;
-    const { PrismaClient } = require('@prisma/client');
-    const prisma = new PrismaClient();
 
     const where = {
       isActive: true
@@ -76,8 +75,6 @@ router.get('/lookbook/products', async (req, res) => {
       }
     });
 
-    await prisma.$disconnect();
-
     res.json({
       success: true,
       products
@@ -94,8 +91,6 @@ router.get('/lookbook/products', async (req, res) => {
 // Get available categories for lookbook (public endpoint)
 router.get('/lookbook/categories', async (req, res) => {
   try {
-    const { PrismaClient } = require('@prisma/client');
-    const prisma = new PrismaClient();
 
     const categories = await prisma.category.findMany({
       where: {
@@ -110,8 +105,6 @@ router.get('/lookbook/categories', async (req, res) => {
         displayOrder: 'asc'
       }
     });
-
-    await prisma.$disconnect();
 
     res.json({
       success: true,
@@ -139,8 +132,6 @@ router.post('/subscribe', async (req, res) => {
     }
 
     // Check if customer already has an active subscription
-    const { PrismaClient } = require('@prisma/client');
-    const prisma = new PrismaClient();
     
     const existingSubscription = await prisma.customerSubscription.findFirst({
       where: {
@@ -367,9 +358,6 @@ router.put('/admin/subscriptions/:subscriptionId/status', AuthService.requireAut
       });
     }
 
-    const { PrismaClient } = require('@prisma/client');
-    const prisma = new PrismaClient();
-
     const updatedSubscription = await prisma.customerSubscription.update({
       where: { id: subscriptionId },
       data: { status },
@@ -382,8 +370,6 @@ router.put('/admin/subscriptions/:subscriptionId/status', AuthService.requireAut
         }
       }
     });
-
-    await prisma.$disconnect();
 
     res.json({
       success: true,
@@ -452,17 +438,12 @@ router.delete('/admin/orders/:orderId/items/:itemId', AuthService.requireAuth, a
   try {
     const { orderId, itemId } = req.params;
 
-    const { PrismaClient } = require('@prisma/client');
-    const prisma = new PrismaClient();
-
     await prisma.orderItem.delete({
       where: {
         id: itemId,
         orderId: orderId
       }
     });
-
-    await prisma.$disconnect();
 
     res.json({
       success: true,
@@ -488,9 +469,6 @@ router.post('/admin/orders/:orderId/apply-template', AuthService.requireAuth, as
         error: 'Template ID is required'
       });
     }
-
-    const { PrismaClient } = require('@prisma/client');
-    const prisma = new PrismaClient();
 
     // Get template with items
     const template = await prisma.orderTemplate.findUnique({
@@ -525,8 +503,6 @@ router.post('/admin/orders/:orderId/apply-template', AuthService.requireAuth, as
         });
       }
     }
-
-    await prisma.$disconnect();
 
     res.json({
       success: true,
@@ -1018,16 +994,12 @@ router.get('/admin/templates/meta/stats', AuthService.requireAuth, async (req, r
 // Get all categories
 router.get('/admin/categories', AuthService.requireAuth, async (req, res) => {
   try {
-    const { PrismaClient } = require('@prisma/client');
-    const prisma = new PrismaClient();
 
     const categories = await prisma.category.findMany({
       orderBy: {
         displayOrder: 'asc'
       }
     });
-
-    await prisma.$disconnect();
 
     res.json({
       success: true,
@@ -1053,9 +1025,6 @@ router.post('/admin/categories', AuthService.requireAuth, async (req, res) => {
       });
     }
 
-    const { PrismaClient } = require('@prisma/client');
-    const prisma = new PrismaClient();
-
     const category = await prisma.category.create({
       data: {
         name: name.toUpperCase(),
@@ -1063,8 +1032,6 @@ router.post('/admin/categories', AuthService.requireAuth, async (req, res) => {
         displayOrder: displayOrder || 0
       }
     });
-
-    await prisma.$disconnect();
 
     res.json({
       success: true,
@@ -1085,9 +1052,6 @@ router.put('/admin/categories/:id', AuthService.requireAuth, async (req, res) =>
     const { id } = req.params;
     const { name, description, displayOrder, isActive } = req.body;
 
-    const { PrismaClient } = require('@prisma/client');
-    const prisma = new PrismaClient();
-
     const updateData = {};
     if (name !== undefined) updateData.name = name.toUpperCase();
     if (description !== undefined) updateData.description = description;
@@ -1098,8 +1062,6 @@ router.put('/admin/categories/:id', AuthService.requireAuth, async (req, res) =>
       where: { id },
       data: updateData
     });
-
-    await prisma.$disconnect();
 
     res.json({
       success: true,
@@ -1119,16 +1081,12 @@ router.delete('/admin/categories/:id', AuthService.requireAuth, async (req, res)
   try {
     const { id } = req.params;
 
-    const { PrismaClient } = require('@prisma/client');
-    const prisma = new PrismaClient();
-
     // Check if category has products
     const productsCount = await prisma.product.count({
       where: { categoryId: id }
     });
 
     if (productsCount > 0) {
-      await prisma.$disconnect();
       return res.status(400).json({
         error: 'Cannot delete category with existing products',
         details: `This category has ${productsCount} products. Please reassign or delete the products first.`
@@ -1138,8 +1096,6 @@ router.delete('/admin/categories/:id', AuthService.requireAuth, async (req, res)
     await prisma.category.delete({
       where: { id }
     });
-
-    await prisma.$disconnect();
 
     res.json({
       success: true,
