@@ -342,14 +342,14 @@ export default function PricingPage() {
                 </div>
 
                 <div className={styles.formGroup}>
-                  <label className={styles.label}>Contact Email</label>
+                  <label className={styles.label}>Phone Number</label>
                   <input
-                    type="text"
+                    type="tel"
                     name="phone"
                     value={formData.phone}
                     onChange={handleInputChange}
                     className={styles.input}
-                    placeholder="admin@baltar.ca"
+                    placeholder="(416) 555-0000"
                     required
                   />
                 </div>
