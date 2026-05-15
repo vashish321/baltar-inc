@@ -1,0 +1,9 @@
+{
+  "buildCommand": "cd apps/app && npm run build",
+  "installCommand": "npm install",
+  "outputDirectory": "apps/app/.next",
+  "framework": "nextjs",
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "https://baltar-inc-1.onrender.com/api/$1" }
+  ]
+}
