@@ -2,6 +2,8 @@ const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
 const http = require('http');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
 const newsScheduler = require('./services/newsSchedulerService');
 const unifiedNewsScheduler = require('./services/unifiedNewsScheduler');
 const websocketService = require('./services/websocketService');
@@ -22,6 +24,31 @@ const corsOptions = {
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 };
+
+// Security headers
+app.use(helmet({
+  crossOriginResourcePolicy: { policy: 'cross-origin' }, // allow Vercel to fetch
+}));
+
+// Rate limiting — global
+const globalLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 300,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'Too many requests, please try again later.' },
+});
+app.use(globalLimiter);
+
+// Stricter limiter for auth routes
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 20,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'Too many auth attempts, please try again in 15 minutes.' },
+});
+app.use('/api/auth', authLimiter);
 
 // Stripe webhook needs raw body, so add it before express.json()
 app.use('/api/stripe', require('./routes/stripeWebhookRoutes'));

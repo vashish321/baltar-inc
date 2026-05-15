@@ -43,8 +43,13 @@ router.get('/verify', async (req, res) => {
   }
 });
 
-// Create admin (for initial setup only)
+// Create admin (for initial setup only — requires ADMIN_SETUP_SECRET in body)
 router.post('/create-admin', async (req, res) => {
+  const setupSecret = process.env.ADMIN_SETUP_SECRET;
+  if (!setupSecret || req.body.setupSecret !== setupSecret) {
+    return res.status(403).json({ error: 'Forbidden' });
+  }
+
   try {
     const { email, password, firstName, lastName } = req.body;
 
