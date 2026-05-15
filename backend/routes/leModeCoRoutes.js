@@ -608,7 +608,7 @@ router.put('/admin/orders/:orderId/status', AuthService.requireAuth, async (req,
   try {
     const { orderId } = req.params;
     const { status, notes, trackingNumber } = req.body;
-    const adminId = req.user?.id; // Assuming user info is available from auth middleware
+    const adminId = req.admin?.id; // Assuming user info is available from auth middleware
 
     const order = await OrderManagementService.updateOrderStatus(
       orderId,
@@ -721,7 +721,7 @@ router.post('/admin/orders/:orderId/notify-enhanced', AuthService.requireAuth, a
   try {
     const { orderId } = req.params;
     const { customMessage } = req.body;
-    const adminId = req.user?.id;
+    const adminId = req.admin?.id;
 
     const emailResult = await OrderManagementService.sendManualNotification(
       orderId,
@@ -806,7 +806,7 @@ router.get('/admin/templates/:templateId', AuthService.requireAuth, async (req, 
 router.post('/admin/templates', AuthService.requireAuth, async (req, res) => {
   try {
     const templateData = req.body;
-    const adminId = req.user?.id;
+    const adminId = req.admin?.id;
 
     const template = await TemplateService.createTemplate(templateData, adminId);
 
@@ -930,7 +930,7 @@ router.post('/admin/orders/:orderId/create-template', AuthService.requireAuth, a
   try {
     const { orderId } = req.params;
     const templateData = req.body;
-    const adminId = req.user?.id;
+    const adminId = req.admin?.id;
 
     const template = await TemplateService.createTemplateFromOrder(orderId, templateData, adminId);
 
@@ -953,7 +953,7 @@ router.post('/admin/templates/:templateId/duplicate', AuthService.requireAuth, a
   try {
     const { templateId } = req.params;
     const { newName } = req.body;
-    const adminId = req.user?.id;
+    const adminId = req.admin?.id;
 
     const template = await TemplateService.duplicateTemplate(templateId, newName, adminId);
 
