@@ -8,7 +8,7 @@ import styles from './MetaHeader.module.css';
 const navItems = {
   Technologies: ['Toronto Media Inc.', 'Cre8ive Studio', 'Transac'],
   Hospitality: ['Savour & Sip'],
-  Engineering: ['Archon Engineering'],
+  Consulting: ['Baltar Engineering', 'Baltar International Consultancy'],
   Finance: ['Baltar Wealth Management'],
   Fashion: ['VR (Luxury Eyewear & Fashion Tech)', 'Le Mode Co.'],
   Media: ['Consumer Pulse', 'Zeitgeist Media'],
@@ -22,7 +22,8 @@ const hrefMap = {
   'consumer pulse': '/consumer-pulse',
   'vr (luxury eyewear & fashion tech)': '/vr',
   'cre8ive studio': '/cre8ive-studio-comingsoon',
-  'archon engineering': '/archon-engineering-comingsoon',
+  'baltar engineering': '/baltar-engineering',
+  'baltar international consultancy': '/baltar-international',
   'baltar wealth management': '/baltar-finance-comingsoon',
   'zeitgeist media': '/zeitgeist-media-comingsoon',
 };

@@ -58,6 +58,8 @@ export default function LayoutClient({ children }) {
   const isServicesPage = pathname === '/services';
   const isCre8iveStudioComingSoonPage = pathname === '/cre8ive-studio-comingsoon';
   const isArchonEngineeringComingSoonPage = pathname === '/archon-engineering-comingsoon';
+  const isBaltarEngineeringPage = pathname === '/baltar-engineering';
+  const isBaltarInternationalPage = pathname === '/baltar-international';
   const isBaltarFinanceComingSoonPage = pathname === '/baltar-finance-comingsoon';
   const isZeitgeistMediaComingSoonPage = pathname === '/zeitgeist-media-comingsoon';
   const isAboutComingSoonPage = pathname === '/about-comingsoon';
@@ -118,7 +120,9 @@ export default function LayoutClient({ children }) {
                 !isLeModeCoSubscribePage &&
                 !isAnyConsumerPulsePage &&
                 !isVRpage &&
-                !isAnyNewComingSoonPage &&(
+                !isAnyNewComingSoonPage &&
+                !isBaltarEngineeringPage &&
+                !isBaltarInternationalPage &&(
                   isTransac
                     ? <TransacHeader />
                     : (isHome || isContactUsPage)
@@ -146,6 +150,8 @@ export default function LayoutClient({ children }) {
                 !isVRpage &&
                 !isAnyNewComingSoonPage &&
                 !isContactUsPage &&
+                !isBaltarEngineeringPage &&
+                !isBaltarInternationalPage &&
                 (
                   isHome
                     ? <MetaFooter />
