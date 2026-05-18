@@ -26,6 +26,11 @@ export default function LayoutClient({ children }) {
     pathname.startsWith('/technologies/') ||
     pathname.startsWith('/media/');
 
+  // These pages have their own branded footer — inject MetaHeader but not MetaFooter
+  const hasOwnFooter =
+    pathname.startsWith('/frontend-web-design') ||
+    pathname.startsWith('/transac');
+
   // Homepage and contact: MetaHeader + MetaFooter
   const isMetaPage = pathname === '/' || pathname === '/contact-us';
 
@@ -37,21 +42,32 @@ export default function LayoutClient({ children }) {
     );
   }
 
+  if (hasOwnFooter) {
+    return (
+      <div style={{ overflowX: 'hidden', width: '100%' }}>
+        <MetaHeader />
+        <main>{children}</main>
+      </div>
+    );
+  }
+
   if (isMetaPage) {
     return (
       <div style={{ overflowX: 'hidden', width: '100%', background: '#0B0F19' }}>
         <MetaHeader />
         <main>{children}</main>
-        {pathname === '/' && null /* MetaFooter is already in page.js for homepage */}
+        {/* MetaFooter is rendered inside page.js on the homepage; add it here for all other meta pages */}
+        {pathname !== '/' && <MetaFooter />}
       </div>
     );
   }
 
-  // All other pages: MetaHeader + content
+  // All other pages: MetaHeader + content + MetaFooter
   return (
     <div style={{ overflowX: 'hidden', width: '100%', background: '#0B0F19', color: '#fff' }}>
       <MetaHeader />
       <main>{children}</main>
+      <MetaFooter />
     </div>
   );
 }
