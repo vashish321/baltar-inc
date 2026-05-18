@@ -10,6 +10,7 @@ const departments = [
     subsidiaries: [
       { label: 'Toronto Media Inc.', href: '/frontend-web-design' },
       { label: 'Frontend Media Inc.', href: '/frontend-web-design' },
+      { label: 'True Cost Index', href: '/true-cost-index' },
       { label: 'Transac', href: '/transac' },
     ],
   },
@@ -29,7 +30,7 @@ const departments = [
   {
     name: 'Baltar Consultancy',
     subsidiaries: [
-      { label: 'Baltar Engineering', href: '/baltar-engineering' },
+      { label: 'Baltar Consulting', href: '/baltar-engineering' },
       { label: 'Baltar International', href: '/baltar-international' },
     ],
   },

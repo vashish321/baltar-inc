@@ -13,16 +13,12 @@ export default function LayoutClient({ children }) {
     pathname === '/savour-and-sip-coming-soon' ||
     pathname.startsWith('/vr') ||
     pathname.startsWith('/le-mode-co') ||
-    pathname.startsWith('/baltar-engineering') ||
-    pathname.startsWith('/baltar-international') ||
-    pathname.startsWith('/frontend-web-design') ||
-    pathname.startsWith('/transac') ||
     pathname.startsWith('/consumer-pulse') ||
     pathname.startsWith('/admin') ||
     pathname === '/login' ||
     pathname === '/signup' ||
     pathname === '/client-dashboard' ||
-    // new route group paths (keep for forward compat)
+    // route group paths (keep for forward compat)
     pathname.startsWith('/hospitality/') ||
     pathname.startsWith('/fashion/') ||
     pathname.startsWith('/consulting/') ||

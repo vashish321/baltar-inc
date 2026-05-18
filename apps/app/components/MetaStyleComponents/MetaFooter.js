@@ -5,19 +5,19 @@ import styles from './MetaFooter.module.css';
 
 const footerSections = {
   'Technologies': [
-    { name: 'Toronto Media Inc.', href: '/frontend-web-design', external: true },
-    { name: 'Cre8ive Studio', href: '/cre8ive-studio-comingsoon', external: false },
-    { name: 'Transac', href: '/transac', external: true },
+    { name: 'Toronto Media Inc.', href: '/frontend-web-design', external: false },
+    { name: 'Frontend Media Inc.', href: '/frontend-web-design', external: false },
+    { name: 'True Cost Index', href: '/true-cost-index', external: false },
+    { name: 'Transac', href: '/transac', external: false },
   ],
   'Consulting': [
-    { name: 'Hospitality', href: '/sip-and-savour', external: true },
-    { name: 'Baltar Engineering', href: '/baltar-engineering', external: false },
+    { name: 'Baltar Consulting', href: '/baltar-engineering', external: false },
     { name: 'Baltar International', href: '/baltar-international', external: false },
   ],
   'Brands': [
-    { name: 'VR Fashion', href: '/vr', external: true },
-    { name: 'Le Mode Co.', href: '/le-mode-co', external: true },
-    { name: 'Consumer Pulse', href: '/consumer-pulse', external: true },
+    { name: 'VR', href: '/vr', external: false },
+    { name: 'Le Mode Co.', href: '/le-mode-co', external: false },
+    { name: 'Savour & Sip', href: '/sip-and-savour', external: false },
   ],
   'Company': [
     { name: 'About', href: '/about-comingsoon', external: false },
@@ -69,8 +69,7 @@ export default function MetaFooter() {
               <h3 className={styles.companyName}>Baltar Inc</h3>
               <p className={styles.companyTagline}>One Company. Limitless Services.</p>
               <p className={styles.companyDescription}>
-                A multi-division firm offering advanced solutions across construction, 
-                technology, hospitality, finance, fashion, and media.
+                A Canadian multi-division firm operating across technology, hospitality, fashion, and consultancy.
               </p>
             </motion.div>
 
