@@ -9,10 +9,10 @@ const footerSections = {
     { name: 'Cre8ive Studio', href: '/cre8ive-studio-comingsoon', external: false },
     { name: 'Transac', href: '/transac', external: true },
   ],
-  'Services': [
+  'Consulting': [
     { name: 'Hospitality', href: '/sip-and-savour', external: true },
-    { name: 'Engineering', href: '/archon-engineering-comingsoon', external: false },
-    { name: 'Finance', href: '/baltar-finance-comingsoon', external: false },
+    { name: 'Baltar Engineering', href: '/baltar-engineering', external: false },
+    { name: 'Baltar International', href: '/baltar-international', external: false },
   ],
   'Brands': [
     { name: 'VR Fashion', href: '/vr', external: true },
