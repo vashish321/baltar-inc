@@ -13,15 +13,27 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Baltar Inc",
-  description: "Immersive modern homepage",
+  title: {
+    default: "Baltar Inc",
+    template: "%s | Baltar Inc",
+  },
+  description:
+    "A Canadian multi-division company operating across technology, hospitality, fashion, and consultancy.",
+  metadataBase: new URL("https://baltar.ca"),
+  icons: {
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon.ico', sizes: '32x32' },
+    ],
+    apple: '/apple-touch-icon.png',
+  },
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
-       <head>
-        {/* ✅ Ensures mobile responsiveness */}
+      <head>
+        {/* Ensures mobile responsiveness */}
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </head>
       <body>
