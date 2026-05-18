@@ -1,158 +1,128 @@
 'use client';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import styles from './MetaHeader.module.css';
 
-const navItems = {
-  Technologies: ['Toronto Media Inc.', 'Cre8ive Studio', 'Transac'],
-  Hospitality: ['Savour & Sip'],
-  Consulting: ['Baltar Engineering', 'Baltar International Consultancy'],
-  Finance: ['Baltar Wealth Management'],
-  Fashion: ['VR (Luxury Eyewear & Fashion Tech)', 'Le Mode Co.'],
-  Media: ['Consumer Pulse', 'Zeitgeist Media'],
-};
+const departments = [
+  {
+    name: 'Baltar Technologies',
+    subsidiaries: [
+      { label: 'Toronto Media Inc.', href: '/frontend-web-design' },
+      { label: 'Frontend Media Inc.', href: '/frontend-web-design' },
+      { label: 'Transac', href: '/transac' },
+    ],
+  },
+  {
+    name: 'Baltar Hospitality',
+    subsidiaries: [
+      { label: 'Savour & Sip', href: '/sip-and-savour' },
+    ],
+  },
+  {
+    name: 'Baltar Fashion',
+    subsidiaries: [
+      { label: 'VR', href: '/vr' },
+      { label: 'Le Mode Co.', href: '/le-mode-co' },
+    ],
+  },
+  {
+    name: 'Baltar Consultancy',
+    subsidiaries: [
+      { label: 'Baltar Engineering', href: '/baltar-engineering' },
+      { label: 'Baltar International', href: '/baltar-international' },
+    ],
+  },
+];
 
-const hrefMap = {
-  'transac': '/transac',
-  'toronto media inc.': '/frontend-web-design',
-  'le mode co.': '/le-mode-co',
-  'savour & sip': '/sip-and-savour',
-  'consumer pulse': '/consumer-pulse',
-  'vr (luxury eyewear & fashion tech)': '/vr',
-  'cre8ive studio': '/cre8ive-studio-comingsoon',
-  'baltar engineering': '/baltar-engineering',
-  'baltar international consultancy': '/baltar-international',
-  'baltar wealth management': '/baltar-finance-comingsoon',
-  'zeitgeist media': '/zeitgeist-media-comingsoon',
-};
-
-export default function MetaHeader() {
-  const [activeDropdown, setActiveDropdown] = useState(null);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+export default function MetaHeader({ light = false }) {
+  const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const timeoutRef = useRef(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 60);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const handleMouseEnter = (key) => {
-    clearTimeout(timeoutRef.current);
-    setActiveDropdown(key);
-  };
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [menuOpen]);
 
-  const handleMouseLeave = () => {
-    timeoutRef.current = setTimeout(() => {
-      setActiveDropdown(null);
-    }, 150);
-  };
-
-  const renderLink = (item, i) => {
-    const lowerItem = item.toLowerCase();
-    const href = hrefMap[lowerItem] || '/coming-soon';
-    const isIntegratedPage = hrefMap[lowerItem] && hrefMap[lowerItem] !== '/coming-soon';
-
-    if (isIntegratedPage) {
-      return (
-        <a 
-          href={href} 
-          key={i} 
-          className={styles.dropdownItem}
-          target="_blank" 
-          rel="noopener noreferrer"
-        >
-          {item}
-        </a>
-      );
-    } else {
-      return (
-        <Link href={href} key={i} className={styles.dropdownItem}>
-          {item}
-        </Link>
-      );
-    }
-  };
+  const close = () => setMenuOpen(false);
 
   return (
-    <motion.header 
-      className={`${styles.header} ${scrolled ? styles.scrolled : ''}`}
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-    >
-      <div className={styles.container}>
-        {/* Logo */}
-        <Link href="/" className={styles.logo}>
-          <Image src="/Baltar-new.svg" alt="Baltar Inc" width={32} height={32} />
-          <span className={styles.logoText}>Baltar Inc</span>
-        </Link>
-
-        {/* Desktop Navigation */}
-        <nav className={styles.nav}>
-          {Object.entries(navItems).map(([category, items]) => (
-            <div
-              key={category}
-              className={styles.navItem}
-              onMouseEnter={() => handleMouseEnter(category)}
-              onMouseLeave={handleMouseLeave}
+    <>
+      <header className={`${styles.header} ${scrolled ? styles.scrolled : ''} ${menuOpen ? styles.menuActive : ''} ${light ? styles.light : ''}`}>
+        <div className={styles.inner}>
+          <div className={styles.left}>
+            <button
+              className={styles.hamburger}
+              onClick={() => setMenuOpen(!menuOpen)}
+              aria-label={menuOpen ? 'Close menu' : 'Open menu'}
             >
-              <span className={styles.navLink}>{category}</span>
-              
-              <AnimatePresence>
-                {activeDropdown === category && (
-                  <motion.div
-                    className={styles.dropdown}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 10 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    {items.map((item, i) => renderLink(item, i))}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          ))}
-        </nav>
+              <span className={`${styles.line} ${menuOpen ? styles.lineTop : ''}`} />
+              <span className={`${styles.line} ${menuOpen ? styles.lineHide : ''}`} />
+              <span className={`${styles.line} ${menuOpen ? styles.lineBottom : ''}`} />
+            </button>
+            <Link href="/" className={styles.logo} onClick={close}>
+              Baltar Inc
+            </Link>
+          </div>
 
-        {/* Mobile Menu Button */}
-        <button
-          className={styles.mobileMenuButton}
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-        >
-          <span className={`${styles.hamburgerLine} ${mobileMenuOpen ? styles.active : ''}`}></span>
-          <span className={`${styles.hamburgerLine} ${mobileMenuOpen ? styles.active : ''}`}></span>
-          <span className={`${styles.hamburgerLine} ${mobileMenuOpen ? styles.active : ''}`}></span>
-        </button>
-      </div>
+          <div className={styles.right}>
+            <Link href="/contact-us" className={styles.contactLink} onClick={close}>
+              Contact
+            </Link>
+          </div>
+        </div>
+      </header>
 
-      {/* Mobile Menu */}
       <AnimatePresence>
-        {mobileMenuOpen && (
+        {menuOpen && (
           <motion.div
-            className={styles.mobileMenu}
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
+            className={styles.megaMenu}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25, ease: 'easeOut' }}
           >
-            {Object.entries(navItems).map(([category, items]) => (
-              <div key={category} className={styles.mobileCategory}>
-                <h3 className={styles.mobileCategoryTitle}>{category}</h3>
-                <div className={styles.mobileItems}>
-                  {items.map((item, i) => renderLink(item, i))}
-                </div>
-              </div>
-            ))}
+            <div className={styles.megaInner}>
+              {departments.map((dept, i) => (
+                <motion.div
+                  key={dept.name}
+                  className={styles.deptGroup}
+                  initial={{ opacity: 0, y: 24 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.05 + i * 0.07, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                >
+                  <p className={styles.deptName}>{dept.name}</p>
+                  <ul className={styles.subList}>
+                    {dept.subsidiaries.map((sub) => (
+                      <li key={sub.label}>
+                        <Link href={sub.href} className={styles.subLink} onClick={close}>
+                          <span>{sub.label}</span>
+                          <span className={styles.arrow}>↗</span>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </motion.div>
+              ))}
+            </div>
+
+            <div className={styles.megaFooter}>
+              <Link href="/contact-us" className={styles.megaContact} onClick={close}>
+                Contact Us
+              </Link>
+              <Link href="/about-comingsoon" className={styles.megaAbout} onClick={close}>
+                About Baltar
+              </Link>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.header>
+    </>
   );
 }
