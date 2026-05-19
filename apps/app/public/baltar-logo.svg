@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 280" width="280" height="280">
+  <!-- Rough hand-drawn circle approximation using path -->
+  <path d="M140,18
+    C195,16 258,60 264,118
+    C271,178 230,248 172,262
+    C114,276 46,240 24,186
+    C2,132 20,60 70,34
+    C90,24 115,19 140,18 Z"
+    fill="white"
+    stroke="#111"
+    stroke-width="3.5"
+    stroke-linejoin="round"
+    fill-rule="evenodd"
+  />
+  <text
+    x="140"
+    y="148"
+    text-anchor="middle"
+    dominant-baseline="middle"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="28"
+    font-weight="400"
+    letter-spacing="6"
+    fill="#111"
+  >BALTAR INC.</text>
+</svg>

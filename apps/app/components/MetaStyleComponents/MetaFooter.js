@@ -5,7 +5,7 @@ import styles from './MetaFooter.module.css';
 
 const footerSections = {
   'Technologies': [
-    { name: 'Toronto Media Inc.', href: '/frontend-web-design', external: false },
+    { name: 'Toronto Media Inc.', href: '/toronto-media-inc', external: false },
     { name: 'Frontend Media Inc.', href: '/frontend-web-design', external: false },
     { name: 'True Cost Index', href: '/true-cost-index', external: false },
     { name: 'Transac', href: '/transac', external: false },

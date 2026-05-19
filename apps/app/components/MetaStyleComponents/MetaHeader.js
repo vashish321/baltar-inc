@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import styles from './MetaHeader.module.css';
 
@@ -8,7 +9,7 @@ const departments = [
   {
     name: 'Baltar Technologies',
     subsidiaries: [
-      { label: 'Toronto Media Inc.', href: '/frontend-web-design' },
+      { label: 'Toronto Media Inc.', href: '/toronto-media-inc' },
       { label: 'Frontend Media Inc.', href: '/frontend-web-design' },
       { label: 'True Cost Index', href: '/true-cost-index' },
       { label: 'Transac', href: '/transac' },
@@ -68,7 +69,14 @@ export default function MetaHeader({ light = false }) {
               <span className={`${styles.line} ${menuOpen ? styles.lineBottom : ''}`} />
             </button>
             <Link href="/" className={styles.logo} onClick={close}>
-              Baltar Inc
+              <Image
+                src="/baltar-logo.svg"
+                alt="Baltar Inc"
+                width={44}
+                height={44}
+                className={styles.logoImg}
+                priority
+              />
             </Link>
           </div>
 
