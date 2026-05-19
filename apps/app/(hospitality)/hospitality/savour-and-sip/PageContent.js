@@ -19,6 +19,14 @@ const IMGS = {
   gallery4:   `${U}1551218372-a8789b81b253?auto=format&fit=crop&w=600&q=80`,
   gallery5:   `${U}1414235077428-338989a2e8c0?auto=format&fit=crop&w=600&q=80`,
   cta:        `${U}1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1800&q=85`,
+  food1: `https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80`,
+  food2: `https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=800&q=80`,
+  food3: `https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&fit=crop&w=800&q=80`,
+  food4: `https://images.unsplash.com/photo-1551218372-a8789b81b253?auto=format&fit=crop&w=800&q=80`,
+  food5: `https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=800&q=80`,
+  food6: `https://images.unsplash.com/photo-1484723091739-30a097e8f929?auto=format&fit=crop&w=800&q=80`,
+  food7: `https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?auto=format&fit=crop&w=800&q=80`,
+  food8: `https://images.unsplash.com/photo-1482049016688-2d3e1b311543?auto=format&fit=crop&w=800&q=80`,
 };
 
 const EASE = [0.16, 1, 0.3, 1];
@@ -140,8 +148,88 @@ const menuItems = [
   { category: 'Desserts', name: 'Valrhona Chocolate Délice', desc: 'Tahini ice cream, salted caramel, praline feuilletine' },
 ];
 
+const FULL_MENU = [
+  {
+    category: 'Fresh & Vibrant Salads',
+    items: [
+      { name: 'Spring Kale Crunch', desc: 'Hand-massaged kale with candied pecans, shaved carrots, crisp apple, dried cranberries, and a house poppy seed dressing.' },
+      { name: 'Classic Caesar, Elevated', desc: 'Crisp romaine hearts with smoky bacon lardons, shaved Parmesan, garlic croutons, and a bright lemon Caesar dressing.' },
+      { name: 'Roasted Beet & Chickpea Salad', desc: 'Seasoned chickpeas paired with fresh roasted beets, creamy feta, and a zesty lemon-garlic vinaigrette.' },
+    ],
+  },
+  {
+    category: "Chef's Mains",
+    items: [
+      { name: 'Guinness BBQ Chicken Breast', desc: 'Herb-brined and marinated chicken breast finished with a house-made Guinness barbecue glaze.' },
+      { name: '12-Hour Slow-Roasted Beef Spare Ribs', desc: 'Marinated overnight and slow-cooked for 12 hours — fall-off-the-bone ribs glazed in a red wine teriyaki reduction.' },
+      { name: 'Korean-Style Pork Chops', desc: 'Overnight-marinated in sweet chili, gochujang, ginger, garlic, and soy, topped with fresh green onion.' },
+    ],
+  },
+  {
+    category: 'Hearty Sides & Vegetables',
+    items: [
+      { name: 'Honey Garlic Roasted Root Vegetable Medley', desc: 'Parsnips, carrots, yams, and sweet potatoes roasted until caramelized in a house honey-garlic glaze.' },
+      { name: 'Seasonal Vegetable Medley', desc: 'A colourful blend of broccoli, snap peas, cauliflower, peppers, carrots, mushrooms, and baby corn.' },
+      { name: 'Classic Ratatouille Gratin', desc: 'Layers of zucchini, eggplant, peppers, and potatoes simmered with fresh herbs, finished with béchamel.' },
+    ],
+  },
+  {
+    category: 'Add-ons & Substitutions',
+    items: [
+      { name: 'Caribbean-Style Jerk Chicken', desc: 'Spiced and grilled jerk-marinated chicken.' },
+      { name: 'Fragrant Rice Pilaf', desc: 'Fluffy basmati rice pilaf with aromatic herbs.' },
+      { name: 'Pepper Roti', desc: 'Trinidadian stuffed flatbread with seasoned spicy filling.' },
+      { name: 'Char Siu-Style Pork Chops', desc: 'Pork chops marinated in Cantonese char siu glaze.' },
+      { name: 'Flaky Cheddar Biscuits', desc: 'Flaky, buttery biscuits with white cheddar and fresh chives.' },
+    ],
+  },
+  {
+    category: 'Artisan Sandwiches',
+    items: [
+      { name: 'Herb-Roasted Turkey', desc: 'Rosemary garlic aioli, arugula & Havarti.' },
+      { name: 'Mortadella & Ham', desc: 'Sun-dried tomato aioli, crisp lettuce & creamy Boursin.' },
+      { name: 'Roast Beef Classic', desc: 'Honey mustard, spinach & sun-dried tomatoes.' },
+    ],
+  },
+  {
+    category: 'Desserts & Sweet Endings',
+    items: [
+      { name: 'Seasonal Baked Pies', desc: 'Choose from apple, pear, strawberry & coconut cream — baked fresh and served golden.' },
+      { name: 'Cookie & Pastry Platters', desc: 'Banana chocolate cookies, browned butter chocolate chip, and cranberry oatmeal cookies.' },
+      { name: 'Fresh Seasonal Fruit Platter', desc: 'Oranges, kiwis, pineapple, strawberries, watermelon & blueberries.' },
+    ],
+  },
+];
+
+const DRINKS_MENU = [
+  {
+    category: 'Wine Pairings',
+    items: [
+      { name: 'Crisp White Wines', desc: 'Sauvignon Blanc, Pinot Grigio & Chardonnay — light and refreshing, ideal for salads and chicken.' },
+      { name: 'Elegant Red Wines', desc: 'Cabernet Sauvignon, Merlot & Pinot Noir — rich and full-bodied, complementing beef and pork dishes.' },
+      { name: 'Refreshing Rosé', desc: 'Dry rosé — a perfect match for lighter fare.' },
+    ],
+  },
+  {
+    category: 'Signature Cocktails',
+    items: [
+      { name: 'Elderflower Spring Spritz', desc: 'Prosecco, elderflower liqueur, soda water, and a lemon twist.' },
+      { name: 'Blackberry Bourbon Smash', desc: 'Bourbon muddled with fresh blackberries, mint, and a hint of lemon.' },
+    ],
+  },
+  {
+    category: 'Beer & Non-Alcoholic',
+    items: [
+      { name: 'Domestic & Craft Beer', desc: 'A curated selection of local craft beers and popular domestic brews.' },
+      { name: 'Mocktails', desc: 'Elderflower Fizz, Cucumber Mint Cooler & Virgin Mojito.' },
+      { name: 'Specialty Coffee & Tea', desc: 'Freshly brewed coffee, assorted teas & decaf options.' },
+    ],
+  },
+];
+
 export default function PageContent() {
   const [formSent, setFormSent] = useState(false);
+  const [activeTab, setActiveTab] = useState('Food Menu');
   const [formData, setFormData] = useState({ name: '', email: '', guests: '', date: '', message: '' });
 
   const handleSubmit = async (e) => {
@@ -288,32 +376,150 @@ export default function PageContent() {
         </div>
       </section>
 
-      {/* ── MENU HIGHLIGHTS ── */}
-      <section id="menu" style={{ background: '#FDF9F2', padding: '120px 80px', borderTop: `1px solid ${RULE}` }}>
+      {/* ── PHOTO CAROUSEL ── */}
+      <section style={{ background: INK, padding: '100px 0 80px', overflow: 'hidden' }}>
         <FadeUp>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 64 }}>
+          <div style={{ padding: '0 80px', marginBottom: 48, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
             <div>
-              <span style={{ fontSize: '0.6rem', letterSpacing: '0.22em', textTransform: 'uppercase', color: GOLD, display: 'block', marginBottom: 16 }}>From the Kitchen</span>
-              <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(2rem, 3.5vw, 3rem)', fontWeight: 400, color: INK, margin: 0, lineHeight: 1.1 }}>Menu Highlights</h2>
+              <span style={{ fontSize: '0.6rem', letterSpacing: '0.22em', textTransform: 'uppercase', color: GOLD_LT, display: 'block', marginBottom: 16 }}>From Our Kitchen</span>
+              <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(1.8rem, 3vw, 2.8rem)', fontWeight: 400, color: '#fff', margin: 0 }}>
+                Crafted to Be Remembered
+              </h2>
             </div>
-            <Link href="/hospitality/savour-and-sip/menu" style={{ fontSize: '0.7rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: INK, textDecoration: 'none', fontWeight: 600, borderBottom: `1px solid ${INK}`, paddingBottom: 3 }}>
-              Full Menu →
-            </Link>
+            <span style={{ fontSize: '0.68rem', color: 'rgba(255,255,255,0.3)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Scroll →</span>
           </div>
         </FadeUp>
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
-          {menuItems.map((item, i) => (
-            <FadeUp key={i} delay={i * 0.06}>
-              <div style={{ display: 'grid', gridTemplateColumns: '140px 1fr auto', gap: 32, alignItems: 'center', padding: '28px 0', borderTop: i === 0 ? `1px solid ${RULE}` : 'none', borderBottom: `1px solid ${RULE}` }}>
-                <span style={{ fontSize: '0.62rem', letterSpacing: '0.16em', textTransform: 'uppercase', color: GOLD }}>{item.category}</span>
-                <div>
-                  <h4 style={{ fontFamily: 'Georgia, serif', fontSize: '1.1rem', fontWeight: 400, color: INK, margin: '0 0 6px' }}>{item.name}</h4>
-                  <p style={{ fontSize: '0.82rem', color: MUTED, margin: 0, lineHeight: 1.65 }}>{item.desc}</p>
-                </div>
-              </div>
-            </FadeUp>
+        {/* Horizontal scroll strip */}
+        <div style={{
+          display: 'flex',
+          gap: 4,
+          overflowX: 'auto',
+          scrollSnapType: 'x mandatory',
+          scrollbarWidth: 'none',
+          msOverflowStyle: 'none',
+          paddingLeft: 80,
+          paddingRight: 80,
+          cursor: 'grab',
+        }}
+          onMouseDown={e => {
+            const el = e.currentTarget;
+            el.style.cursor = 'grabbing';
+            const startX = e.pageX - el.offsetLeft;
+            const scrollLeft = el.scrollLeft;
+            const onMove = mv => { el.scrollLeft = scrollLeft - (mv.pageX - el.offsetLeft - startX); };
+            const onUp = () => { el.style.cursor = 'grab'; window.removeEventListener('mousemove', onMove); window.removeEventListener('mouseup', onUp); };
+            window.addEventListener('mousemove', onMove);
+            window.addEventListener('mouseup', onUp);
+          }}
+        >
+          {[IMGS.food1, IMGS.food2, IMGS.food3, IMGS.food4, IMGS.food5, IMGS.food6, IMGS.food7, IMGS.food8].map((src, i) => (
+            <div key={i} style={{
+              flex: '0 0 340px',
+              height: 420,
+              position: 'relative',
+              overflow: 'hidden',
+              scrollSnapAlign: 'start',
+            }}>
+              <img
+                src={src}
+                alt={`Food ${i + 1}`}
+                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', transition: 'transform 0.5s ease', pointerEvents: 'none' }}
+                onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.04)'}
+                onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
+                draggable={false}
+              />
+            </div>
           ))}
         </div>
+        <style>{`.photo-scroll::-webkit-scrollbar { display: none; }`}</style>
+      </section>
+
+      {/* ── FULL MENU ── */}
+      <section id="menu" style={{ background: '#FDF9F2', padding: '120px 80px', borderTop: `1px solid ${RULE}` }}>
+        <FadeUp>
+          <div style={{ marginBottom: 64 }}>
+            <span style={{ fontSize: '0.6rem', letterSpacing: '0.22em', textTransform: 'uppercase', color: GOLD, display: 'block', marginBottom: 16 }}>Flavours of the Season</span>
+            <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(2rem, 3.5vw, 3rem)', fontWeight: 400, color: INK, margin: '0 0 40px', lineHeight: 1.1 }}>The Menu</h2>
+            {/* Tab row */}
+            <div style={{ display: 'flex', gap: 0, borderBottom: `1px solid ${RULE}` }}>
+              {['Food Menu', 'Drinks & Wine'].map(tab => (
+                <button
+                  key={tab}
+                  onClick={() => setActiveTab(tab)}
+                  style={{
+                    background: 'none', border: 'none', cursor: 'pointer',
+                    padding: '12px 32px 16px', fontFamily: 'inherit',
+                    fontSize: '0.72rem', letterSpacing: '0.14em', textTransform: 'uppercase',
+                    fontWeight: 600, color: activeTab === tab ? INK : MUTED,
+                    borderBottom: activeTab === tab ? `2px solid ${GOLD}` : '2px solid transparent',
+                    transition: 'color 0.2s, border-color 0.2s',
+                    marginBottom: -1,
+                  }}
+                >
+                  {tab}
+                </button>
+              ))}
+            </div>
+          </div>
+        </FadeUp>
+
+        {/* Food menu */}
+        {activeTab === 'Food Menu' && (
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '0 80px' }}>
+            {FULL_MENU.map((section, si) => (
+              <FadeUp key={section.category} delay={si * 0.05}>
+                <div style={{ marginBottom: 56 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 20, marginBottom: 28 }}>
+                    <div style={{ flex: 1, height: 1, background: RULE }} />
+                    <span style={{ fontSize: '0.6rem', letterSpacing: '0.22em', textTransform: 'uppercase', color: GOLD, whiteSpace: 'nowrap' }}>{section.category}</span>
+                    <div style={{ flex: 1, height: 1, background: RULE }} />
+                  </div>
+                  {section.items.map((item, ii) => (
+                    <div key={item.name} style={{ paddingBottom: 20, marginBottom: 20, borderBottom: ii < section.items.length - 1 ? `1px solid ${RULE}` : 'none' }}>
+                      <h4 style={{ fontFamily: 'Georgia, serif', fontSize: '1rem', fontWeight: 400, color: INK, margin: '0 0 6px' }}>{item.name}</h4>
+                      <p style={{ fontSize: '0.82rem', color: MUTED, margin: 0, lineHeight: 1.7 }}>{item.desc}</p>
+                    </div>
+                  ))}
+                </div>
+              </FadeUp>
+            ))}
+          </div>
+        )}
+
+        {/* Drinks menu */}
+        {activeTab === 'Drinks & Wine' && (
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '0 80px' }}>
+            {DRINKS_MENU.map((section, si) => (
+              <FadeUp key={section.category} delay={si * 0.05}>
+                <div style={{ marginBottom: 56 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 20, marginBottom: 28 }}>
+                    <div style={{ flex: 1, height: 1, background: RULE }} />
+                    <span style={{ fontSize: '0.6rem', letterSpacing: '0.22em', textTransform: 'uppercase', color: GOLD, whiteSpace: 'nowrap' }}>{section.category}</span>
+                    <div style={{ flex: 1, height: 1, background: RULE }} />
+                  </div>
+                  {section.items.map((item, ii) => (
+                    <div key={item.name} style={{ paddingBottom: 20, marginBottom: 20, borderBottom: ii < section.items.length - 1 ? `1px solid ${RULE}` : 'none' }}>
+                      <h4 style={{ fontFamily: 'Georgia, serif', fontSize: '1rem', fontWeight: 400, color: INK, margin: '0 0 6px' }}>{item.name}</h4>
+                      <p style={{ fontSize: '0.82rem', color: MUTED, margin: 0, lineHeight: 1.7 }}>{item.desc}</p>
+                    </div>
+                  ))}
+                </div>
+              </FadeUp>
+            ))}
+          </div>
+        )}
+
+        {/* Bottom CTA */}
+        <FadeUp>
+          <div style={{ textAlign: 'center', marginTop: 64, paddingTop: 48, borderTop: `1px solid ${RULE}` }}>
+            <p style={{ fontSize: '0.85rem', color: MUTED, marginBottom: 24, lineHeight: 1.7 }}>
+              All menus are customisable to your event, guest count, and dietary requirements.
+            </p>
+            <a href="mailto:hospitality@baltar.ca" style={{ display: 'inline-block', padding: '14px 44px', background: INK, color: CREAM, fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', textDecoration: 'none' }}>
+              Request a Custom Menu
+            </a>
+          </div>
+        </FadeUp>
       </section>
 
       {/* ── TESTIMONIAL ── */}
