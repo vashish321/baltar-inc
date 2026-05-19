@@ -24,11 +24,6 @@ const services = [
   },
 ];
 
-export const metadata = {
-  title: 'Baltar Consulting',
-  description: 'Structural engineering and project management for complex builds. Toronto, Canada.',
-};
-
 export default function BaltarConsultingPage() {
   return (
     <div className={styles.page}>
