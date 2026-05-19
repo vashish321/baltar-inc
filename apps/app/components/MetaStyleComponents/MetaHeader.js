@@ -10,7 +10,7 @@ const departments = [
     subsidiaries: [
       { label: 'Toronto Media Inc.', href: '/toronto-media-inc' },
       { label: 'Frontend Media Inc.', href: '/frontend-web-design' },
-      { label: 'True Cost Index', href: '/true-cost-index' },
+      { label: 'True Cost Index', href: 'https://truecostindex-frontend-rosy.vercel.app', external: true },
       { label: 'Transac', href: '/transac' },
     ],
   },
@@ -102,10 +102,17 @@ export default function MetaHeader({ light = false }) {
                   <ul className={styles.subList}>
                     {dept.subsidiaries.map((sub) => (
                       <li key={sub.label}>
-                        <Link href={sub.href} className={styles.subLink} onClick={close}>
-                          <span>{sub.label}</span>
-                          <span className={styles.arrow}>↗</span>
-                        </Link>
+                        {sub.external ? (
+                          <a href={sub.href} className={styles.subLink} target="_blank" rel="noopener noreferrer" onClick={close}>
+                            <span>{sub.label}</span>
+                            <span className={styles.arrow}>↗</span>
+                          </a>
+                        ) : (
+                          <Link href={sub.href} className={styles.subLink} onClick={close}>
+                            <span>{sub.label}</span>
+                            <span className={styles.arrow}>↗</span>
+                          </Link>
+                        )}
                       </li>
                     ))}
                   </ul>

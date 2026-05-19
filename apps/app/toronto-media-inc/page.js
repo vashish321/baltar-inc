@@ -1,26 +1,44 @@
 'use client';
-import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import styles from '../components/SubsidiaryPage/SubsidiaryPage.module.css';
+import styles from './TorontoMedia.module.css';
 
 const EASE = [0.16, 1, 0.3, 1];
 
 const services = [
   {
-    num: '01',
-    name: 'Digital Media Production',
-    desc: 'Video, photography, and content creation built for the platforms that matter — social, streaming, and editorial.',
+    title: 'Digital Media Production',
+    desc: 'Video, photography, and content creation built for the platforms that matter.',
   },
   {
-    num: '02',
-    name: 'Brand Storytelling',
-    desc: "Campaign strategy, creative direction, and distribution — from a single brand's voice to city-wide coverage.",
+    title: 'Brand Storytelling',
+    desc: 'Campaign strategy, creative direction, and distribution.',
   },
   {
-    num: '03',
-    name: 'Media Consulting',
-    desc: 'Audience development, monetisation strategy, and digital transformation advisory for media organisations.',
+    title: 'Media Consulting',
+    desc: 'Audience development, monetisation strategy, and digital transformation advisory.',
+  },
+];
+
+const stats = [
+  { value: '200+', label: 'Productions' },
+  { value: '85+', label: 'Brand Clients' },
+  { value: '12', label: 'Industries Served' },
+  { value: '8', label: 'Years Active' },
+];
+
+const workTiles = [
+  {
+    img: 'https://images.unsplash.com/photo-1492724441997-5dc865305da7?auto=format&fit=crop&w=600&q=80',
+    label: 'Brand Campaign',
+  },
+  {
+    img: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=600&q=80',
+    label: 'Editorial Content',
+  },
+  {
+    img: 'https://images.unsplash.com/photo-1559136555-9303baea8ebd?auto=format&fit=crop&w=600&q=80',
+    label: 'Social Media',
   },
 ];
 
@@ -29,17 +47,6 @@ export default function TorontoMediaIncPage() {
     <div className={styles.page}>
       {/* Hero */}
       <section className={styles.hero}>
-        <div className={styles.heroImg}>
-          <Image
-            src="https://images.unsplash.com/photo-1492724441997-5dc865305da7?auto=format&fit=crop&w=1920&q=80"
-            alt="Toronto Media Inc."
-            fill
-            priority
-            sizes="100vw"
-            style={{ objectFit: 'cover', objectPosition: 'center 30%' }}
-          />
-        </div>
-        <div className={styles.heroOverlay} />
         <div className={styles.heroContent}>
           <motion.span
             className={styles.heroLabel}
@@ -47,63 +54,113 @@ export default function TorontoMediaIncPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2, ease: EASE }}
           >
-            Baltar Technologies — Toronto, Canada
+            TORONTO MEDIA INC. — BALTAR TECHNOLOGIES
           </motion.span>
           <motion.h1
             className={styles.heroTitle}
-            initial={{ opacity: 0, y: 28 }}
+            initial={{ opacity: 0, y: 32 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3, ease: EASE }}
+            transition={{ duration: 0.8, delay: 0.35, ease: EASE }}
           >
-            Toronto<br />Media Inc.
+            Digital Media.<br />Brands That Move.
           </motion.h1>
           <motion.p
             className={styles.heroSub}
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.45, ease: EASE }}
+            transition={{ duration: 0.7, delay: 0.5, ease: EASE }}
           >
-            Digital media production, brand storytelling, and content strategy rooted in Toronto — built for audiences everywhere.
+            Video, photography, brand storytelling, and content strategy — rooted in Toronto, built for audiences everywhere.
           </motion.p>
           <motion.div
+            className={styles.heroCtas}
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.6, ease: EASE }}
+            transition={{ duration: 0.6, delay: 0.65, ease: EASE }}
           >
-            <Link href="/contact-us" className={styles.heroCta}>
+            <Link href="/contact-us" className={styles.ctaPrimary}>
               Work With Us
             </Link>
+            <a href="#services" className={styles.ctaGhost}>
+              View Services ↓
+            </a>
           </motion.div>
         </div>
       </section>
 
-      {/* Intro */}
-      <section className={styles.intro}>
-        <p className={styles.introLabel}>What We Do</p>
-        <p className={styles.introText}>
-          Toronto Media Inc. is a full-service digital media company. We produce content that moves people and builds brands — from campaign ideation to final distribution.
-        </p>
+      {/* Stats row */}
+      <section className={styles.stats}>
+        {stats.map((s) => (
+          <div key={s.label} className={styles.statItem}>
+            <span className={styles.statValue}>{s.value}</span>
+            <span className={styles.statLabel}>{s.label}</span>
+          </div>
+        ))}
       </section>
 
-      {/* Services */}
-      <section className={styles.services}>
-        <div className={styles.servicesRule} />
-        <div className={styles.servicesGrid}>
-          {services.map((s) => (
-            <div key={s.num} className={styles.serviceCard}>
-              <p className={styles.serviceNum}>{s.num}</p>
-              <h3 className={styles.serviceName}>{s.name}</h3>
-              <p className={styles.serviceDesc}>{s.desc}</p>
-            </div>
-          ))}
+      {/* Services section */}
+      <section className={styles.services} id="services">
+        <div className={styles.servicesInner}>
+          <div className={styles.servicesLeft}>
+            <p className={styles.sectionEyebrow}>WHAT WE DO</p>
+            {services.map((s, i) => (
+              <motion.div
+                key={s.title}
+                className={styles.serviceRow}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: '-40px' }}
+                transition={{ duration: 0.5, delay: i * 0.1, ease: EASE }}
+              >
+                <div className={styles.serviceTopRule} />
+                <div className={styles.serviceRowInner}>
+                  <div className={styles.serviceText}>
+                    <h3 className={styles.serviceTitle}>{s.title}</h3>
+                    <p className={styles.serviceDesc}>{s.desc}</p>
+                  </div>
+                  <span className={styles.serviceArrow}>→</span>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+          <div className={styles.servicesRight}>
+            <img
+              src="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=800&q=80"
+              alt="Media production"
+              className={styles.servicesImage}
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Featured work strip */}
+      <section className={styles.work}>
+        <div className={styles.workInner}>
+          <p className={styles.sectionEyebrow}>FEATURED WORK</p>
+          <div className={styles.workGrid}>
+            {workTiles.map((tile, i) => (
+              <motion.div
+                key={tile.label}
+                className={styles.workTile}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-40px' }}
+                transition={{ duration: 0.55, delay: i * 0.1, ease: EASE }}
+              >
+                <img src={tile.img} alt={tile.label} className={styles.workImg} />
+                <div className={styles.workOverlay}>
+                  <span className={styles.workLabel}>{tile.label}</span>
+                  <span className={styles.workArrow}>↗</span>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* CTA strip */}
       <div className={styles.ctaStrip}>
-        <p className={styles.ctaText}>
-          Tell your story at the highest level.
-        </p>
+        <p className={styles.ctaAccent}>Tell your story at the highest level.</p>
         <Link href="/contact-us" className={styles.ctaButton}>
           Get in Touch
         </Link>

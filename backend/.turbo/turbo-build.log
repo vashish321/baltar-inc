@@ -1,0 +1,15 @@
+
+
+> baltar-backend@1.0.0 build
+> npx prisma generate
+
+[1G[0K[1G[0K[2mPrisma schema loaded from prisma/schema.prisma[22m
+
+
+✔ Generated [1mPrisma Client[22m (v6.19.2)[2m to ./../node_modules/@prisma/client[22m in 157ms
+
+Start by importing your Prisma Client (See: https://pris.ly/d/importing-client)
+
+Tip: Want to turn off tips and other hints? https://pris.ly/tip-4-nohints
+
+[1G[0K⠙[1G[0K[1G[0K⠙[1G[0K

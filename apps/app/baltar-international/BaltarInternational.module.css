@@ -1,0 +1,347 @@
+/* BaltarInternational.module.css — buildscape-template inspired */
+
+.page {
+  background-color: #0B0F19;
+  color: #ffffff;
+  font-family: system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── Hero ── */
+.hero {
+  position: relative;
+  height: 100vh;
+  min-height: 600px;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+}
+
+.heroBg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  z-index: 0;
+}
+
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(11,15,25,0.9) 0%, rgba(11,15,25,0.5) 50%, rgba(11,15,25,0.2) 100%);
+  z-index: 1;
+}
+
+.heroContent {
+  position: relative;
+  z-index: 2;
+  padding: 0 6vw 8vh;
+  max-width: 860px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.2rem;
+}
+
+.eyebrow {
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #4A9E8C;
+  font-weight: 500;
+}
+
+.heroTitle {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(3.5rem, 7vw, 8rem);
+  font-weight: 700;
+  line-height: 1.02;
+  color: #ffffff;
+  margin: 0;
+}
+
+.heroSub {
+  font-size: clamp(1rem, 1.3vw, 1.15rem);
+  font-weight: 300;
+  color: rgba(255,255,255,0.68);
+  max-width: 500px;
+  line-height: 1.65;
+  margin: 0;
+}
+
+.heroCta {
+  display: inline-block;
+  margin-top: 0.4rem;
+  padding: 0.85rem 2.2rem;
+  border: 1.5px solid #4A9E8C;
+  color: #4A9E8C;
+  font-weight: 600;
+  font-size: 0.88rem;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+}
+
+.heroCta:hover {
+  background-color: #4A9E8C;
+  color: #0B0F19;
+  transform: translateY(-1px);
+}
+
+/* ── Stats strip ── */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid rgba(74,158,140,0.25);
+  border-bottom: 1px solid rgba(74,158,140,0.25);
+}
+
+.statItem {
+  padding: 3.5rem 5vw;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  border-right: 1px solid rgba(74,158,140,0.2);
+}
+
+.statItem:last-child {
+  border-right: none;
+}
+
+.statValue {
+  font-family: Georgia, serif;
+  font-size: clamp(2rem, 3vw, 3rem);
+  font-weight: 700;
+  color: #4A9E8C;
+  line-height: 1;
+}
+
+.statLabel {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: rgba(255,255,255,0.45);
+}
+
+/* ── Services ── */
+.services {
+  padding: 100px 6vw;
+}
+
+.servicesInner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.sectionEyebrow {
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #4A9E8C;
+  margin: 0 0 1.5rem;
+  font-weight: 500;
+}
+
+.servicesHeading {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(2rem, 3vw, 3rem);
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 4rem;
+  max-width: 700px;
+  line-height: 1.2;
+}
+
+.servicesGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.serviceCard {
+  padding: 2.5rem 2rem 2.5rem;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+}
+
+.cardTopBorder {
+  height: 3px;
+  background-color: #4A9E8C;
+  margin-bottom: 2rem;
+  width: 40px;
+}
+
+.cardTitle {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 1rem;
+}
+
+.cardDesc {
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* ── Regions strip ── */
+.regions {
+  padding: 80px 6vw;
+  background: rgba(255,255,255,0.02);
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.regionsInner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.regionsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  margin-top: 3rem;
+}
+
+.regionBlock {
+  padding: 3rem 4vw 3rem 0;
+  border-right: 1px solid rgba(255,255,255,0.08);
+  padding-right: 4vw;
+}
+
+.regionBlock:last-child {
+  border-right: none;
+  padding-right: 0;
+  padding-left: 4vw;
+}
+
+.regionBlock:nth-child(2) {
+  padding-left: 4vw;
+}
+
+.regionAccent {
+  width: 30px;
+  height: 2px;
+  background-color: #4A9E8C;
+  margin-bottom: 1.5rem;
+}
+
+.regionName {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 0.6rem;
+}
+
+.regionCountries {
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ── CTA strip ── */
+.ctaStrip {
+  padding: 6rem 6vw;
+  background-color: #0B0F19;
+  border-top: 1px solid rgba(74,158,140,0.2);
+}
+
+.ctaInner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.ctaText {
+  font-family: Georgia, serif;
+  font-size: clamp(1.4rem, 2.2vw, 2.2rem);
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+  max-width: 600px;
+}
+
+.ctaButton {
+  display: inline-block;
+  padding: 0.9rem 2.4rem;
+  border: 1.5px solid #4A9E8C;
+  color: #4A9E8C;
+  font-weight: 600;
+  font-size: 0.88rem;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  flex-shrink: 0;
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+}
+
+.ctaButton:hover {
+  background-color: #4A9E8C;
+  color: #0B0F19;
+  transform: translateY(-1px);
+}
+
+/* ── Responsive ── */
+@media (max-width: 1000px) {
+  .servicesGrid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .regionsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .regionBlock {
+    border-right: none;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    padding: 2.5rem 0;
+  }
+
+  .regionBlock:last-child {
+    border-bottom: none;
+    padding-left: 0;
+  }
+
+  .regionBlock:nth-child(2) {
+    padding-left: 0;
+  }
+}
+
+@media (max-width: 760px) {
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .statItem:nth-child(2) {
+    border-right: none;
+  }
+
+  .statItem:nth-child(3) {
+    border-top: 1px solid rgba(74,158,140,0.2);
+  }
+
+  .statItem:nth-child(4) {
+    border-top: 1px solid rgba(74,158,140,0.2);
+    border-right: none;
+  }
+
+  .ctaInner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 600px) {
+  .heroContent {
+    padding: 0 5vw 6vh;
+  }
+}

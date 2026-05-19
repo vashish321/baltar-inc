@@ -1,8 +1,7 @@
 'use client';
-import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import styles from '../components/SubsidiaryPage/SubsidiaryPage.module.css';
+import styles from './BaltarConsulting.module.css';
 
 const EASE = [0.16, 1, 0.3, 1];
 
@@ -24,86 +23,116 @@ const services = [
   },
 ];
 
+const stats = [
+  { value: '150+', label: 'Projects Delivered' },
+  { value: '12', label: 'Years of Practice' },
+  { value: '$2B+', label: 'Construction Value' },
+  { value: '98%', label: 'On-Time Completion' },
+];
+
+const marqueeText = 'STRUCTURAL ENGINEERING · PROJECT MANAGEMENT · SITE ASSESSMENT · FOUNDATION DESIGN · PRECISION DELIVERY · ';
+
 export default function BaltarConsultingPage() {
   return (
     <div className={styles.page}>
       {/* Hero */}
       <section className={styles.hero}>
-        <div className={styles.heroImg}>
-          <Image
-            src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1920&q=80"
-            alt="Baltar Consulting"
-            fill
-            priority
-            sizes="100vw"
-            style={{ objectFit: 'cover', objectPosition: 'center 60%' }}
-          />
-        </div>
+        <img
+          src="https://images.unsplash.com/photo-1590486803833-1c5dc8ddd4c8?auto=format&fit=crop&w=1920&q=80"
+          alt="Construction engineering"
+          className={styles.heroBg}
+        />
         <div className={styles.heroOverlay} />
         <div className={styles.heroContent}>
           <motion.span
-            className={styles.heroLabel}
+            className={styles.eyebrow}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2, ease: EASE }}
           >
-            Baltar Consultancy — Toronto, Canada
+            BALTAR CONSULTANCY — TORONTO
           </motion.span>
           <motion.h1
             className={styles.heroTitle}
-            initial={{ opacity: 0, y: 28 }}
+            initial={{ opacity: 0, y: 32 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3, ease: EASE }}
+            transition={{ duration: 0.8, delay: 0.35, ease: EASE }}
           >
-            Baltar<br />Consulting.
+            We Build<br />What Matters.
           </motion.h1>
           <motion.p
             className={styles.heroSub}
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.45, ease: EASE }}
+            transition={{ duration: 0.7, delay: 0.5, ease: EASE }}
           >
-            Structural engineering and project management for the builds that matter. Precision from the ground up.
+            Structural engineering and project management for the builds that define cities.
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.6, ease: EASE }}
+            transition={{ duration: 0.6, delay: 0.65, ease: EASE }}
           >
             <Link href="/contact-us" className={styles.heroCta}>
-              Work With Us
+              Start a Project
             </Link>
           </motion.div>
         </div>
       </section>
 
-      {/* Intro */}
-      <section className={styles.intro}>
-        <p className={styles.introLabel}>What We Do</p>
-        <p className={styles.introText}>
-          Baltar Consulting brings engineering rigour to every project — from residential builds to large-scale commercial developments. We work where the stakes are highest and precision is non-negotiable.
-        </p>
+      {/* Ticker strip */}
+      <div className={styles.ticker}>
+        <div className={styles.tickerTrack}>
+          <span>{marqueeText}</span>
+          <span>{marqueeText}</span>
+          <span>{marqueeText}</span>
+        </div>
+      </div>
+
+      {/* Services section */}
+      <section className={styles.services}>
+        <div className={styles.servicesInner}>
+          <p className={styles.sectionEyebrow}>WHAT WE DO</p>
+          <div className={styles.servicesLayout}>
+            <div className={styles.servicesLeft}>
+              <h2 className={styles.servicesHeading}>A Fully Integrated Engineering Service</h2>
+            </div>
+            <div className={styles.servicesRight}>
+              {services.map((s, i) => (
+                <motion.div
+                  key={s.num}
+                  className={styles.serviceRow}
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-60px' }}
+                  transition={{ duration: 0.6, delay: i * 0.12, ease: EASE }}
+                >
+                  <div className={styles.serviceTop}>
+                    <span className={styles.serviceNum}>{s.num}</span>
+                    <h3 className={styles.serviceName}>{s.name}</h3>
+                  </div>
+                  <p className={styles.serviceDesc}>{s.desc}</p>
+                  <hr className={styles.serviceRule} />
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
       </section>
 
-      {/* Services */}
-      <section className={styles.services}>
-        <div className={styles.servicesRule} />
-        <div className={styles.servicesGrid}>
-          {services.map((s) => (
-            <div key={s.num} className={styles.serviceCard}>
-              <p className={styles.serviceNum}>{s.num}</p>
-              <h3 className={styles.serviceName}>{s.name}</h3>
-              <p className={styles.serviceDesc}>{s.desc}</p>
-            </div>
-          ))}
-        </div>
+      {/* Stats strip */}
+      <section className={styles.stats}>
+        {stats.map((s, i) => (
+          <div key={s.label} className={styles.statItem}>
+            <span className={styles.statValue}>{s.value}</span>
+            <span className={styles.statLabel}>{s.label}</span>
+          </div>
+        ))}
       </section>
 
       {/* CTA strip */}
       <div className={styles.ctaStrip}>
-        <p className={styles.ctaText}>
-          Ready to discuss your next project?
-        </p>
+        <p className={styles.ctaText}>Ready to build something exceptional?</p>
         <Link href="/contact-us" className={styles.ctaButton}>
           Get in Touch
         </Link>

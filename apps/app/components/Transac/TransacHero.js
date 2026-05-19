@@ -4,17 +4,6 @@ import styles from './TransacHero.module.css';
 export default function TransacHero() {
   return (
     <section className={styles.hero}>
-      <video
-        autoPlay
-        muted
-        loop
-        playsInline
-        className={styles.heroVideo}
-      >
-        <source src="/video.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
-
       <div className={styles.heroContent}>
         <h1>Seamless Digital Receipts, Unified Loyalty—Built for Modern Commerce</h1>
         <p>

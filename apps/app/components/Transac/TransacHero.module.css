@@ -5,20 +5,8 @@
   height: 100vh;
   width: 100vw;
   overflow: hidden;
-  background-color: #f8f8f6; /* light beige background */
+  background: linear-gradient(135deg, #f8f8f6 0%, #eaeae8 100%);
   box-sizing: border-box;
-}
-
-.heroVideo {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
-  z-index: 0;
-  opacity: 0.6;
-  pointer-events: none;
 }
 
 .heroContent {
@@ -32,10 +20,9 @@
   align-items: center;
   text-align: center;
   padding: 2rem;
-  background: rgba(255, 255, 255, 0.75);
+  background: transparent;
   box-sizing: border-box;
   overflow-x: hidden;
-  backdrop-filter: blur(8px);
 }
 
 .heroContent h1 {
