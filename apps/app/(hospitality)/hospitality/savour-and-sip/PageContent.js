@@ -100,10 +100,10 @@ function SavourNav() {
           </Link>
         </div>
         <div style={{ display: 'flex', gap: 32, alignItems: 'center' }}>
-          <Link href="/hospitality/savour-and-sip/menu" style={{ fontSize: '0.72rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: linkColor, textDecoration: 'none', transition: 'color 0.3s' }}>Menu</Link>
-          <Link href="/hospitality/savour-and-sip/events" style={{ fontSize: '0.72rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: linkColor, textDecoration: 'none', transition: 'color 0.3s' }}>Events</Link>
+          <Link href="/sip-and-savour/menu" style={{ fontSize: '0.72rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: linkColor, textDecoration: 'none', transition: 'color 0.3s' }}>Menu</Link>
+          <Link href="/sip-and-savour/events" style={{ fontSize: '0.72rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: linkColor, textDecoration: 'none', transition: 'color 0.3s' }}>Events</Link>
           <a href="mailto:hospitality@baltar.ca" style={{ fontSize: '0.72rem', letterSpacing: '0.12em', textTransform: 'uppercase', padding: '10px 24px', border: `1px solid ${scrolled ? INK : 'rgba(255,255,255,0.6)'}`, color: linkColor, textDecoration: 'none', transition: 'all 0.3s' }}>
-            Reserve
+            Get in Touch
           </a>
         </div>
       </nav>
@@ -625,10 +625,9 @@ export default function PageContent() {
           </div>
           <nav style={{ display: 'flex', gap: 36 }}>
             {[
-              { label: 'Menu', href: '/hospitality/savour-and-sip/menu' },
-              { label: 'Events', href: '/hospitality/savour-and-sip/events' },
-              { label: 'Services', href: '/hospitality/savour-and-sip/services' },
-              { label: 'Pricing', href: '/hospitality/savour-and-sip/pricing' },
+              { label: 'Menu', href: '/sip-and-savour/menu' },
+              { label: 'Events', href: '/sip-and-savour/events' },
+              { label: 'Services', href: '/sip-and-savour/services' },
             ].map(l => (
               <Link key={l.href} href={l.href} style={{ fontSize: '0.72rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)', textDecoration: 'none', transition: 'color 0.2s' }}
                 onMouseEnter={e => e.currentTarget.style.color = GOLD_LT}
