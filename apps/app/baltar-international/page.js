@@ -24,11 +24,6 @@ const services = [
   },
 ];
 
-export const metadata = {
-  title: 'Baltar International',
-  description: 'Cross-border advisory, M&A strategy, and global operations. Toronto, Canada.',
-};
-
 export default function BaltarInternationalPage() {
   return (
     <div className={styles.page}>

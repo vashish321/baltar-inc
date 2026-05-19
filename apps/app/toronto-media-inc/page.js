@@ -24,11 +24,6 @@ const services = [
   },
 ];
 
-export const metadata = {
-  title: 'Toronto Media Inc.',
-  description: 'Digital media production and brand storytelling. Toronto, Canada.',
-};
-
 export default function TorontoMediaIncPage() {
   return (
     <div className={styles.page}>
