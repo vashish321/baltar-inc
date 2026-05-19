@@ -231,3 +231,23 @@
     align-items: flex-start;
   }
 }
+
+@media (max-width: 480px) {
+  .hero { min-height: 100svh; }
+  .heroContent { padding: 0 24px 80px; }
+  .heroTitle { font-size: clamp(2rem, 12vw, 3rem); }
+  .heroSub { font-size: 0.95rem; }
+  .heroCta {
+    display: block;
+    text-align: center;
+    border-radius: 6px;
+    width: 100%;
+    max-width: 280px;
+    box-sizing: border-box;
+  }
+  .ctaStrip {
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: flex-start;
+  }
+}

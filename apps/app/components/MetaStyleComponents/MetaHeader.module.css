@@ -263,6 +263,40 @@
   }
 }
 
+@media (max-width: 768px) {
+  .inner {
+    padding: 0 20px;
+  }
+
+  .contactLink {
+    display: none;
+  }
+
+  .megaInner {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 20px;
+  }
+
+  .megaMenu {
+    padding: 80px 24px 40px;
+  }
+
+  .deptName {
+    font-size: 0.65rem;
+  }
+
+  .subLink {
+    font-size: 1.1rem;
+    padding: 10px 0;
+  }
+
+  .megaFooter {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
 @media (max-width: 600px) {
   .inner {
     padding: 0 1.25rem;

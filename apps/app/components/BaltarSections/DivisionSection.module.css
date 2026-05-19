@@ -159,13 +159,37 @@
   transform: translateY(-1px);
 }
 
+@media (max-width: 1024px) {
+  .heading { font-size: clamp(1.8rem, 4.5vw, 3rem); }
+  .content { padding: 0 40px 56px; }
+}
+
 @media (max-width: 768px) {
   .content { padding: 0 28px 48px; }
   .heading { font-size: clamp(1.75rem, 6vw, 2.4rem); }
 }
 
 @media (max-width: 480px) {
-  .section { height: 75vh; }
-  .ctas { flex-direction: column; }
-  .btnPrimary, .btnSecondary { width: 100%; justify-content: center; }
+  .section { min-height: 70vh; height: auto; }
+  .heading {
+    font-size: clamp(1.6rem, 7vw, 2.2rem);
+    line-height: 1.2;
+  }
+  .body { font-size: 0.9rem; }
+  .ctas {
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }
+  .btnPrimary,
+  .btnSecondaryDark,
+  .btnSecondaryLight,
+  .btnPrimaryLight,
+  .btnSecondary {
+    width: 100%;
+    justify-content: center;
+    border-radius: 8px;
+  }
+  .content { padding: 0 24px 48px; }
+  .label { font-size: 0.6rem; }
 }

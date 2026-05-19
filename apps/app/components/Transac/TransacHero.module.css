@@ -82,16 +82,43 @@
 /* Responsive Design */
 @media (max-width: 768px) {
   .heroContent h1 {
-    font-size: 1.8rem;
+    font-size: clamp(1.6rem, 7vw, 2.5rem);
   }
 
   .heroContent p {
     font-size: 1rem;
   }
 
+  .heroContent {
+    padding: 1.5rem;
+  }
+
   .buttonPrimary,
   .buttonSecondary {
     padding: 0.6rem 1.2rem;
     font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero { min-height: 100svh; }
+  .heroContent h1 {
+    font-size: clamp(1.5rem, 8vw, 2rem);
+  }
+  .heroContent {
+    padding: 1.25rem;
+  }
+  .heroButtons {
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    align-items: stretch;
+  }
+  .buttonPrimary,
+  .buttonSecondary {
+    width: 100%;
+    text-align: center;
+    border-radius: 6px;
+    box-sizing: border-box;
   }
 }
