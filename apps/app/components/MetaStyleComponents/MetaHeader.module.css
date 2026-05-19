@@ -88,13 +88,18 @@
 }
 
 .logo:hover {
-  opacity: 0.75;
+  opacity: 0.65;
 }
 
-.logoImg {
-  height: 44px;
-  width: auto;
-  display: block;
+.logoText {
+  color: #fff;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 0.85rem;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.4);
+  white-space: nowrap;
 }
 
 /* ─── Right: contact link ─── */

@@ -30,7 +30,7 @@ export default function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2, ease: EASE }}
         >
-          Baltar Inc — Toronto, Canada
+          Toronto, Canada
         </motion.span>
         <motion.h1
           className={styles.heading}
@@ -38,7 +38,7 @@ export default function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.35, ease: EASE }}
         >
-          One Company.<br />Limitless Services.
+          One company.<br />Every industry.
         </motion.h1>
         <motion.p
           className={styles.sub}
@@ -46,7 +46,7 @@ export default function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.5, ease: EASE }}
         >
-          Technology. Hospitality. Fashion. Consultancy.
+          Technology · Hospitality · Fashion · Consultancy
         </motion.p>
         <motion.div
           className={styles.ctas}
@@ -58,7 +58,7 @@ export default function HeroSection() {
             className={styles.ctaPrimary}
             onClick={() => document.getElementById('divisions')?.scrollIntoView({ behavior: 'smooth' })}
           >
-            Explore Baltar
+            Explore
           </button>
           <Link href="/contact-us" className={styles.ctaSecondary}>
             Contact Us
