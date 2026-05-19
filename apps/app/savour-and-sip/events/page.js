@@ -33,10 +33,10 @@ function EventsNav() {
       background: 'rgba(250,248,243,0.97)', backdropFilter: 'blur(12px)',
       boxShadow: '0 1px 0 rgba(28,23,20,0.08)',
     }}>
-      <Link href="/sip-and-savour" style={{ fontSize: '0.62rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: INK, textDecoration: 'none', fontWeight: 600 }}>
+      <Link href="/savour-and-sip" style={{ fontSize: '0.62rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: INK, textDecoration: 'none', fontWeight: 600 }}>
         ← Savour &amp; Sip
       </Link>
-      <Link href="/sip-and-savour" style={{ fontFamily: 'Georgia, serif', fontSize: '1rem', letterSpacing: '0.12em', color: INK, textDecoration: 'none', position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}>
+      <Link href="/savour-and-sip" style={{ fontFamily: 'Georgia, serif', fontSize: '1rem', letterSpacing: '0.12em', color: INK, textDecoration: 'none', position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}>
         Savour &amp; Sip
       </Link>
       <a href="mailto:admin@baltar.ca" style={{ fontSize: '0.72rem', letterSpacing: '0.12em', textTransform: 'uppercase', padding: '10px 24px', border: `1px solid ${INK}`, color: INK, textDecoration: 'none' }}>
@@ -248,7 +248,7 @@ export default function EventsPage() {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 16 }}>
           <span style={{ fontFamily: 'Georgia, serif', fontSize: '0.9rem', color: 'rgba(255,255,255,0.6)' }}>Savour &amp; Sip</span>
           <nav style={{ display: 'flex', gap: 32 }}>
-            {[{ l: 'Menu', h: '/sip-and-savour/menu' }, { l: 'Services', h: '/sip-and-savour/services' }, { l: 'Back to Home', h: '/sip-and-savour' }].map(({ l, h }) => (
+            {[{ l: 'Menu', h: '/savour-and-sip/menu' }, { l: 'Services', h: '/savour-and-sip/services' }, { l: 'Back to Home', h: '/savour-and-sip' }].map(({ l, h }) => (
               <Link key={h} href={h} style={{ fontSize: '0.68rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)', textDecoration: 'none' }}>{l}</Link>
             ))}
           </nav>

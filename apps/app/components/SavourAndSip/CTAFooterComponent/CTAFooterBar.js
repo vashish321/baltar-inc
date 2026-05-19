@@ -7,7 +7,7 @@ export default function CTAFooterBar() {
   const router = useRouter();
 
   const handleQuoteClick = () => {
-    router.push('/sip-and-savour/pricing');
+    router.push('/savour-and-sip/pricing');
   };
 
   const handleEmailClick = () => {

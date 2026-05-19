@@ -59,7 +59,7 @@ export default function AboutPage() {
   return (
     <div className={styles.aboutPage}>
       {/* Shared Header */}
-      <SharedHeader currentPage="/sip-and-savour/about" />
+      <SharedHeader currentPage="/savour-and-sip/about" />
 
       {/* Hero Section */}
       <section className={styles.heroSection}>
@@ -232,7 +232,7 @@ export default function AboutPage() {
             <div className={styles.ctaButtons}>
               <motion.button 
                 className={styles.primaryButton}
-                onClick={() => router.push('/sip-and-savour/services')}
+                onClick={() => router.push('/savour-and-sip/services')}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -240,7 +240,7 @@ export default function AboutPage() {
               </motion.button>
               <motion.button 
                 className={styles.secondaryButton}
-                onClick={() => router.push('/sip-and-savour/pricing')}
+                onClick={() => router.push('/savour-and-sip/pricing')}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >

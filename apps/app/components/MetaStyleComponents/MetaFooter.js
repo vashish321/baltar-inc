@@ -17,7 +17,7 @@ const footerSections = {
   'Brands': [
     { name: 'VR', href: '/vr', external: false },
     { name: 'Le Mode Co.', href: '/le-mode-co', external: false },
-    { name: 'Savour & Sip', href: '/sip-and-savour', external: false },
+    { name: 'Savour & Sip', href: '/savour-and-sip', external: false },
   ],
   'Company': [
     { name: 'About', href: '/about-comingsoon', external: false },

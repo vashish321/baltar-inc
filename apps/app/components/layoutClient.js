@@ -9,7 +9,7 @@ export default function LayoutClient({ children }) {
 
   // Pages with their own full-page UI — no shared header/footer
   const isSelfContained =
-    pathname.startsWith('/sip-and-savour') ||
+    pathname.startsWith('/savour-and-sip') ||
     pathname === '/savour-and-sip-coming-soon' ||
     pathname.startsWith('/vr') ||
     pathname.startsWith('/le-mode-co') ||

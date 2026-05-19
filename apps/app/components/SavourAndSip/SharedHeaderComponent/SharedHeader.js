@@ -4,12 +4,12 @@ import { useRouter } from 'next/navigation';
 import styles from './SharedHeader.module.css';
 
 const menuItems = [
-  { name: "Home", link: "/sip-and-savour" },
-  { name: "About Us", link: "/sip-and-savour/about" },
-  { name: "Services", link: "/sip-and-savour/services" },
-  { name: "Events We Serve", link: "/sip-and-savour/events" },
-  { name: "Menu", link: "/sip-and-savour/menu" },
-  { name: "Pricing", link: "/sip-and-savour/pricing" },
+  { name: "Home", link: "/savour-and-sip" },
+  { name: "About Us", link: "/savour-and-sip/about" },
+  { name: "Services", link: "/savour-and-sip/services" },
+  { name: "Events We Serve", link: "/savour-and-sip/events" },
+  { name: "Menu", link: "/savour-and-sip/menu" },
+  { name: "Pricing", link: "/savour-and-sip/pricing" },
 ];
 
 export default function SharedHeader({ currentPage = '' }) {
@@ -38,7 +38,7 @@ export default function SharedHeader({ currentPage = '' }) {
       {/* Header Navbar */}
       <div className={styles.headerNavbar}>
         <button className={styles.menuButton} onClick={() => setMenuOpen(true)}>☰</button>
-        <button className={styles.locationButton} onClick={() => handleButtonClick("/sip-and-savour/services")}>
+        <button className={styles.locationButton} onClick={() => handleButtonClick("/savour-and-sip/services")}>
           Book Services
         </button>
       </div>

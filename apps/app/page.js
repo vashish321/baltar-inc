@@ -26,8 +26,8 @@ const divisions = [
     sub: 'Savour & Sip handles the food, the bar, and everything in between — so you can actually be present at your own event. Serving Toronto and the GTA.',
     imgSrc: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1920&q=80',
     imgPosition: 'center top',
-    primaryCta: { label: 'Savour & Sip', href: '/sip-and-savour' },
-    secondaryCta: { label: 'Enquire', href: '/sip-and-savour' },
+    primaryCta: { label: 'Savour & Sip', href: '/savour-and-sip' },
+    secondaryCta: { label: 'Enquire', href: '/savour-and-sip' },
     dark: true,
   },
   {

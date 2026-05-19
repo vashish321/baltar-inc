@@ -17,7 +17,7 @@ const departments = [
   {
     name: 'Baltar Hospitality',
     subsidiaries: [
-      { label: 'Savour & Sip', href: '/sip-and-savour' },
+      { label: 'Savour & Sip', href: '/savour-and-sip' },
     ],
   },
   {

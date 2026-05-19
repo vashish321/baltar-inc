@@ -16,31 +16,31 @@ const slides = [
     title: "Bringing Hospitality to Life — One Event, One Venue, One Team at a Time.",
     description: "Event bartenders, catering, restaurant staffing, and hospitality experts serving private, corporate, and commercial clients across Ontario.",
     buttonText: "Book Our Services",
-    buttonLink: "/sip-and-savour/services",
+    buttonLink: "/savour-and-sip/services",
   },
   {
     image: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
     title: "Professional Hospitality Staff",
     description: "Trained bartenders, servers, chefs, and event teams ready to make your event unforgettable.",
     buttonText: "Hire Hospitality Staff",
-    buttonLink: "/sip-and-savour/services",
+    buttonLink: "/savour-and-sip/services",
   },
   {
     image: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
     title: "Complete Event Solutions",
     description: "From intimate dinners to corporate galas, we handle every detail with professionalism and care.",
     buttonText: "Plan Your Event",
-    buttonLink: "/sip-and-savour/events",
+    buttonLink: "/savour-and-sip/events",
   },
 ];
 
 const menuItems = [
-  { name: "Home", link: "/sip-and-savour" },
-  { name: "About Us", link: "/sip-and-savour/about" },
-  { name: "Services", link: "/sip-and-savour/services" },
-  { name: "Events We Serve", link: "/sip-and-savour/events" },
-  { name: "Menu", link: "/sip-and-savour/menu" },
-  { name: "Pricing", link: "/sip-and-savour/pricing" },
+  { name: "Home", link: "/savour-and-sip" },
+  { name: "About Us", link: "/savour-and-sip/about" },
+  { name: "Services", link: "/savour-and-sip/services" },
+  { name: "Events We Serve", link: "/savour-and-sip/events" },
+  { name: "Menu", link: "/savour-and-sip/menu" },
+  { name: "Pricing", link: "/savour-and-sip/pricing" },
 ];
 
 export default function HeroSection() {
@@ -149,7 +149,7 @@ export default function HeroSection() {
         }}
       >
         <button className={styles.menuButton} onClick={() => setMenuOpen(true)}>☰</button>
-        <button className={styles.locationButton} onClick={() => handleButtonClick("/sip-and-savour/services")}>
+        <button className={styles.locationButton} onClick={() => handleButtonClick("/savour-and-sip/services")}>
           Book Services
         </button>
       </div>

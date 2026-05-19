@@ -19,7 +19,7 @@ const hrefMap = {
   'transac': '/transac',
   'toronto media inc.': '/frontend-web-design',
   'le mode co.': '/le-mode-co',
-  'savour & sip': '/sip-and-savour',
+  'savour & sip': '/savour-and-sip',
   'consumer pulse': '/consumer-pulse',
   'vr (luxury eyewear & fashion tech)': '/vr',
 };

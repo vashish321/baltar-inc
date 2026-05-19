@@ -113,7 +113,7 @@ export default function HospitalitySection() {
               </p>
               
               <a 
-                href="/sip-and-savour" 
+                href="/savour-and-sip" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className={styles.serviceLink}

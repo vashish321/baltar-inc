@@ -85,7 +85,7 @@ export default function FeatureVideos() {
     if (lower === 'transac') return '/transac';
     if (lower === 'frontend web design') return '/frontend-web-design';
     if (lower === 'toronto media inc.') return '/frontend-web-design';
-    if(lower === 'savour & sip') return '/sip-and-savour';
+    if(lower === 'savour & sip') return '/savour-and-sip';
     if(lower === 'le mode co.') return '/le-mode-co';
     if(lower==='vr (luxury eyewear & fashion tech)') return '/vr';
     if(lower==='consumer pulse') return '/consumer-pulse';

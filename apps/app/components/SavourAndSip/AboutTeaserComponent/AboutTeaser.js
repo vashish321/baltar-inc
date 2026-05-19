@@ -7,7 +7,7 @@ export default function AboutTeaser() {
   const router = useRouter();
 
   const handleButtonClick = () => {
-    router.push("/sip-and-savour/about");
+    router.push("/savour-and-sip/about");
   };
 
   return (
