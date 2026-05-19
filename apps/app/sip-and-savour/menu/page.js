@@ -39,7 +39,7 @@ function MenuNav() {
       <Link href="/sip-and-savour" style={{ fontFamily: 'Georgia, serif', fontSize: '1rem', letterSpacing: '0.12em', color: INK, textDecoration: 'none', position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}>
         Savour &amp; Sip
       </Link>
-      <a href="mailto:hospitality@baltar.ca" style={{ fontSize: '0.72rem', letterSpacing: '0.12em', textTransform: 'uppercase', padding: '10px 24px', border: `1px solid ${INK}`, color: INK, textDecoration: 'none' }}>
+      <a href="mailto:admin@baltar.ca" style={{ fontSize: '0.72rem', letterSpacing: '0.12em', textTransform: 'uppercase', padding: '10px 24px', border: `1px solid ${INK}`, color: INK, textDecoration: 'none' }}>
         Get in Touch
       </a>
     </nav>
@@ -494,7 +494,7 @@ export default function MenuPage() {
             <p style={{ fontSize: '0.85rem', color: MUTED, lineHeight: 1.75, maxWidth: 520, margin: '0 auto 28px' }}>
               All menus are fully customisable to your event, guest count, and dietary requirements. We accommodate vegan, halal, gluten-free, and all allergen needs.
             </p>
-            <a href="mailto:hospitality@baltar.ca" style={{ display: 'inline-block', padding: '14px 44px', background: INK, color: CREAM, fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', textDecoration: 'none', transition: 'background 0.2s' }}
+            <a href="mailto:admin@baltar.ca" style={{ display: 'inline-block', padding: '14px 44px', background: INK, color: CREAM, fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', textDecoration: 'none', transition: 'background 0.2s' }}
               onMouseEnter={e => e.currentTarget.style.background = '#3a2e29'}
               onMouseLeave={e => e.currentTarget.style.background = INK}
             >

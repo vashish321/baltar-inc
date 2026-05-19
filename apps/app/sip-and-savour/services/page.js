@@ -40,7 +40,7 @@ function ServicesNav() {
       <Link href="/sip-and-savour" style={{ fontFamily: 'Georgia, serif', fontSize: '1rem', letterSpacing: '0.12em', color: INK, textDecoration: 'none', position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}>
         Savour &amp; Sip
       </Link>
-      <a href="mailto:hospitality@baltar.ca" style={{ fontSize: '0.72rem', letterSpacing: '0.12em', textTransform: 'uppercase', padding: '10px 24px', border: `1px solid ${INK}`, color: INK, textDecoration: 'none' }}>
+      <a href="mailto:admin@baltar.ca" style={{ fontSize: '0.72rem', letterSpacing: '0.12em', textTransform: 'uppercase', padding: '10px 24px', border: `1px solid ${INK}`, color: INK, textDecoration: 'none' }}>
         Get in Touch
       </a>
     </nav>
@@ -310,7 +310,7 @@ export default function ServicesPage() {
                   </div>
                 </div>
 
-                <a href="mailto:hospitality@baltar.ca" style={{ display: 'inline-flex', alignItems: 'center', gap: 10, alignSelf: 'flex-start', fontSize: '0.72rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: INK, textDecoration: 'none', fontWeight: 700, borderBottom: `1.5px solid ${INK}`, paddingBottom: 3, transition: 'color 0.2s, border-color 0.2s' }}
+                <a href="mailto:admin@baltar.ca" style={{ display: 'inline-flex', alignItems: 'center', gap: 10, alignSelf: 'flex-start', fontSize: '0.72rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: INK, textDecoration: 'none', fontWeight: 700, borderBottom: `1.5px solid ${INK}`, paddingBottom: 3, transition: 'color 0.2s, border-color 0.2s' }}
                   onMouseEnter={e => { e.currentTarget.style.color = GOLD; e.currentTarget.style.borderColor = GOLD; }}
                   onMouseLeave={e => { e.currentTarget.style.color = INK; e.currentTarget.style.borderColor = INK; }}
                 >
@@ -363,11 +363,11 @@ export default function ServicesPage() {
           <p style={{ fontSize: '0.95rem', color: MUTED, lineHeight: 1.8, maxWidth: 520, margin: '0 auto 48px' }}>
             Every partnership starts with a conversation. Tell us about your venue, your organisation, or your event — and we'll put together a proposal that fits.
           </p>
-          <a href="mailto:hospitality@baltar.ca" style={{ display: 'inline-block', padding: '16px 52px', background: INK, color: CREAM, fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', textDecoration: 'none', transition: 'background 0.2s' }}
+          <a href="mailto:admin@baltar.ca" style={{ display: 'inline-block', padding: '16px 52px', background: INK, color: CREAM, fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', textDecoration: 'none', transition: 'background 0.2s' }}
             onMouseEnter={e => e.currentTarget.style.background = '#3a2e29'}
             onMouseLeave={e => e.currentTarget.style.background = INK}
           >
-            hospitality@baltar.ca
+            admin@baltar.ca
           </a>
         </FadeUp>
       </section>

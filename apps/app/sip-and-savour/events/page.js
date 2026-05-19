@@ -39,7 +39,7 @@ function EventsNav() {
       <Link href="/sip-and-savour" style={{ fontFamily: 'Georgia, serif', fontSize: '1rem', letterSpacing: '0.12em', color: INK, textDecoration: 'none', position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}>
         Savour &amp; Sip
       </Link>
-      <a href="mailto:hospitality@baltar.ca" style={{ fontSize: '0.72rem', letterSpacing: '0.12em', textTransform: 'uppercase', padding: '10px 24px', border: `1px solid ${INK}`, color: INK, textDecoration: 'none' }}>
+      <a href="mailto:admin@baltar.ca" style={{ fontSize: '0.72rem', letterSpacing: '0.12em', textTransform: 'uppercase', padding: '10px 24px', border: `1px solid ${INK}`, color: INK, textDecoration: 'none' }}>
         Get in Touch
       </a>
     </nav>
@@ -196,11 +196,11 @@ export default function EventsPage() {
             <p style={{ fontSize: '0.92rem', color: 'rgba(255,255,255,0.6)', lineHeight: 1.8, marginBottom: 48, maxWidth: 480, marginLeft: 'auto', marginRight: 'auto' }}>
               Whether it's a club dinner for fifty or a private celebration for twelve — reach out and let's start the conversation. Every great event begins the same way.
             </p>
-            <a href="mailto:hospitality@baltar.ca" style={{ display: 'inline-block', padding: '16px 52px', background: CREAM, color: INK, fontSize: '0.78rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', textDecoration: 'none', marginBottom: 16 }}>
+            <a href="mailto:admin@baltar.ca" style={{ display: 'inline-block', padding: '16px 52px', background: CREAM, color: INK, fontSize: '0.78rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', textDecoration: 'none', marginBottom: 16 }}>
               Begin the Conversation
             </a>
             <p style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.35)', marginTop: 16, letterSpacing: '0.06em' }}>
-              hospitality@baltar.ca
+              admin@baltar.ca
             </p>
           </FadeUp>
         </div>
@@ -232,7 +232,7 @@ export default function EventsPage() {
               Follow on Instagram
             </a>
             <a
-              href="mailto:hospitality@baltar.ca"
+              href="mailto:admin@baltar.ca"
               style={{ display: 'inline-block', padding: '14px 36px', background: 'transparent', color: 'rgba(255,255,255,0.6)', fontSize: '0.75rem', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', textDecoration: 'none', border: '1px solid rgba(255,255,255,0.2)', transition: 'all 0.2s' }}
               onMouseEnter={e => { e.currentTarget.style.color = '#fff'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.5)'; }}
               onMouseLeave={e => { e.currentTarget.style.color = 'rgba(255,255,255,0.6)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)'; }}

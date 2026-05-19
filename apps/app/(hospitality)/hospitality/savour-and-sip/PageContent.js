@@ -102,7 +102,7 @@ function SavourNav() {
         <div style={{ display: 'flex', gap: 32, alignItems: 'center' }}>
           <Link href="/sip-and-savour/menu" style={{ fontSize: '0.72rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: linkColor, textDecoration: 'none', transition: 'color 0.3s' }}>Menu</Link>
           <Link href="/sip-and-savour/events" style={{ fontSize: '0.72rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: linkColor, textDecoration: 'none', transition: 'color 0.3s' }}>Events</Link>
-          <a href="mailto:hospitality@baltar.ca" style={{ fontSize: '0.72rem', letterSpacing: '0.12em', textTransform: 'uppercase', padding: '10px 24px', border: `1px solid ${scrolled ? INK : 'rgba(255,255,255,0.6)'}`, color: linkColor, textDecoration: 'none', transition: 'all 0.3s' }}>
+          <a href="mailto:admin@baltar.ca" style={{ fontSize: '0.72rem', letterSpacing: '0.12em', textTransform: 'uppercase', padding: '10px 24px', border: `1px solid ${scrolled ? INK : 'rgba(255,255,255,0.6)'}`, color: linkColor, textDecoration: 'none', transition: 'all 0.3s' }}>
             Get in Touch
           </a>
         </div>
@@ -269,7 +269,7 @@ export default function PageContent() {
             style={{ display: 'flex', gap: 16, flexWrap: 'wrap', justifyContent: 'center' }}
             initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.65, ease: EASE }}
           >
-            <a href="mailto:hospitality@baltar.ca" style={{ padding: '14px 40px', background: CREAM, color: INK, fontSize: '0.78rem', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', textDecoration: 'none' }}>
+            <a href="mailto:admin@baltar.ca" style={{ padding: '14px 40px', background: CREAM, color: INK, fontSize: '0.78rem', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', textDecoration: 'none' }}>
               Reserve a Table
             </a>
             <a href="#menu" style={{ padding: '14px 40px', background: 'transparent', color: '#fff', border: '1px solid rgba(255,255,255,0.55)', fontSize: '0.78rem', fontWeight: 500, letterSpacing: '0.12em', textTransform: 'uppercase', textDecoration: 'none' }}>
@@ -344,7 +344,7 @@ export default function PageContent() {
                   <span style={{ fontFamily: 'Georgia, serif', fontSize: '2.4rem', color: `rgba(139,105,20,0.2)`, display: 'block', marginBottom: 20, lineHeight: 1 }}>{s.num}</span>
                   <h3 style={{ fontFamily: 'Georgia, serif', fontSize: '1.25rem', fontWeight: 400, color: INK, margin: '0 0 16px' }}>{s.title}</h3>
                   <p style={{ fontSize: '0.85rem', color: MUTED, lineHeight: 1.8, margin: '0 0 28px' }}>{s.desc}</p>
-                  <a href="mailto:hospitality@baltar.ca" style={{ fontSize: '0.7rem', letterSpacing: '0.16em', textTransform: 'uppercase', color: GOLD, textDecoration: 'none', fontWeight: 600 }}>
+                  <a href="mailto:admin@baltar.ca" style={{ fontSize: '0.7rem', letterSpacing: '0.16em', textTransform: 'uppercase', color: GOLD, textDecoration: 'none', fontWeight: 600 }}>
                     Enquire →
                   </a>
                 </div>
@@ -515,7 +515,7 @@ export default function PageContent() {
             <p style={{ fontSize: '0.85rem', color: MUTED, marginBottom: 24, lineHeight: 1.7 }}>
               All menus are customisable to your event, guest count, and dietary requirements.
             </p>
-            <a href="mailto:hospitality@baltar.ca" style={{ display: 'inline-block', padding: '14px 44px', background: INK, color: CREAM, fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', textDecoration: 'none' }}>
+            <a href="mailto:admin@baltar.ca" style={{ display: 'inline-block', padding: '14px 44px', background: INK, color: CREAM, fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', textDecoration: 'none' }}>
               Request a Custom Menu
             </a>
           </div>
@@ -548,7 +548,7 @@ export default function PageContent() {
             <p style={{ fontSize: '0.92rem', color: 'rgba(255,255,255,0.6)', lineHeight: 1.75, marginBottom: 48, maxWidth: 520, marginLeft: 'auto', marginRight: 'auto' }}>
               Corporate dinners, private celebrations, wedding receptions, brand activations — we bring your vision to life with precision and grace.
             </p>
-            <a href="mailto:hospitality@baltar.ca" style={{ display: 'inline-block', padding: '16px 52px', background: CREAM, color: INK, fontSize: '0.78rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', textDecoration: 'none' }}>
+            <a href="mailto:admin@baltar.ca" style={{ display: 'inline-block', padding: '16px 52px', background: CREAM, color: INK, fontSize: '0.78rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', textDecoration: 'none' }}>
               Begin the Conversation
             </a>
           </FadeUp>
