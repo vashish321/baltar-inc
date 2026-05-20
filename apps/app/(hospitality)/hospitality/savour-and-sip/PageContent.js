@@ -59,6 +59,14 @@ function FadeUp({ children, delay = 0, style }) {
 function SavourNav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 60);
@@ -78,35 +86,91 @@ function SavourNav() {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: '0 48px',
-    height: 72,
+    padding: isMobile ? '0 20px' : '0 48px',
+    height: 64,
     transition: 'background 0.3s ease, box-shadow 0.3s ease',
-    background: scrolled ? 'rgba(250,248,243,0.96)' : 'transparent',
-    backdropFilter: scrolled ? 'blur(12px)' : 'none',
+    background: scrolled || open ? 'rgba(250,248,243,0.98)' : 'transparent',
+    backdropFilter: scrolled || open ? 'blur(12px)' : 'none',
     boxShadow: scrolled ? '0 1px 0 rgba(28,23,20,0.08)' : 'none',
   };
 
-  const linkColor = scrolled ? INK : '#fff';
+  const linkColor = scrolled || open ? INK : '#fff';
 
   return (
     <>
       <nav style={navStyle}>
-        <Link href="/" style={{ fontSize: '0.62rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: linkColor, textDecoration: 'none', fontWeight: 600, transition: 'color 0.3s' }}>
+        <Link href="/" style={{ fontSize: '0.62rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: linkColor, textDecoration: 'none', fontWeight: 600, transition: 'color 0.3s', zIndex: 2 }}>
           Baltar Inc.
         </Link>
-        <div style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}>
-          <Link href="/hospitality/savour-and-sip" style={{ fontFamily: 'Georgia, serif', fontSize: '1rem', letterSpacing: '0.12em', color: linkColor, textDecoration: 'none', transition: 'color 0.3s' }}>
-            Savour &amp; Sip
-          </Link>
-        </div>
-        <div style={{ display: 'flex', gap: 32, alignItems: 'center' }}>
-          <Link href="/savour-and-sip/menu" style={{ fontSize: '0.72rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: linkColor, textDecoration: 'none', transition: 'color 0.3s' }}>Menu</Link>
-          <Link href="/savour-and-sip/events" style={{ fontSize: '0.72rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: linkColor, textDecoration: 'none', transition: 'color 0.3s' }}>Events</Link>
-          <a href="mailto:admin@baltar.ca" style={{ fontSize: '0.72rem', letterSpacing: '0.12em', textTransform: 'uppercase', padding: '10px 24px', border: `1px solid ${scrolled ? INK : 'rgba(255,255,255,0.6)'}`, color: linkColor, textDecoration: 'none', transition: 'all 0.3s' }}>
-            Get in Touch
-          </a>
-        </div>
+
+        {/* Centre brand — hide on mobile when menu open to avoid clash */}
+        {!isMobile && (
+          <div style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}>
+            <Link href="/savour-and-sip" style={{ fontFamily: 'Georgia, serif', fontSize: '1rem', letterSpacing: '0.12em', color: linkColor, textDecoration: 'none', transition: 'color 0.3s' }}>
+              Savour &amp; Sip
+            </Link>
+          </div>
+        )}
+
+        {/* Desktop links */}
+        {!isMobile && (
+          <div style={{ display: 'flex', gap: 32, alignItems: 'center' }}>
+            <Link href="/savour-and-sip/menu" style={{ fontSize: '0.72rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: linkColor, textDecoration: 'none', transition: 'color 0.3s' }}>Menu</Link>
+            <Link href="/savour-and-sip/events" style={{ fontSize: '0.72rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: linkColor, textDecoration: 'none', transition: 'color 0.3s' }}>Events</Link>
+            <a href="mailto:admin@baltar.ca" style={{ fontSize: '0.72rem', letterSpacing: '0.12em', textTransform: 'uppercase', padding: '10px 24px', border: `1px solid ${scrolled ? INK : 'rgba(255,255,255,0.6)'}`, color: linkColor, textDecoration: 'none', transition: 'all 0.3s' }}>
+              Get in Touch
+            </a>
+          </div>
+        )}
+
+        {/* Mobile hamburger */}
+        {isMobile && (
+          <button
+            onClick={() => setOpen(o => !o)}
+            style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 8, zIndex: 2, display: 'flex', flexDirection: 'column', gap: 5 }}
+            aria-label="Toggle menu"
+          >
+            <span style={{ display: 'block', width: 22, height: 1.5, background: linkColor, transition: 'transform 0.3s, opacity 0.3s', transform: open ? 'translateY(6.5px) rotate(45deg)' : 'none' }} />
+            <span style={{ display: 'block', width: 22, height: 1.5, background: linkColor, transition: 'opacity 0.3s', opacity: open ? 0 : 1 }} />
+            <span style={{ display: 'block', width: 22, height: 1.5, background: linkColor, transition: 'transform 0.3s, opacity 0.3s', transform: open ? 'translateY(-6.5px) rotate(-45deg)' : 'none' }} />
+          </button>
+        )}
       </nav>
+
+      {/* Mobile drawer */}
+      <AnimatePresence>
+        {isMobile && open && (
+          <motion.div
+            initial={{ opacity: 0, y: -16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -16 }}
+            transition={{ duration: 0.25 }}
+            style={{
+              position: 'fixed', top: 64, left: 0, right: 0, bottom: 0,
+              background: CREAM, zIndex: 99,
+              display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+              gap: 40,
+            }}
+          >
+            <Link href="/savour-and-sip" onClick={() => setOpen(false)} style={{ fontFamily: 'Georgia, serif', fontSize: '1.6rem', color: INK, textDecoration: 'none', letterSpacing: '0.06em' }}>Savour &amp; Sip</Link>
+            <div style={{ width: 32, height: 1, background: GOLD }} />
+            {[
+              { label: 'Menu', href: '/savour-and-sip/menu' },
+              { label: 'Events', href: '/savour-and-sip/events' },
+              { label: 'Services', href: '/savour-and-sip/services' },
+            ].map(l => (
+              <Link key={l.href} href={l.href} onClick={() => setOpen(false)}
+                style={{ fontSize: '0.8rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: INK, textDecoration: 'none', fontWeight: 600 }}>
+                {l.label}
+              </Link>
+            ))}
+            <a href="mailto:admin@baltar.ca" onClick={() => setOpen(false)}
+              style={{ marginTop: 8, padding: '14px 40px', border: `1px solid ${INK}`, fontSize: '0.72rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: INK, textDecoration: 'none', fontWeight: 600 }}>
+              Get in Touch
+            </a>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }
@@ -231,6 +295,21 @@ export default function PageContent() {
   const [formSent, setFormSent] = useState(false);
   const [activeTab, setActiveTab] = useState('Food Menu');
   const [formData, setFormData] = useState({ name: '', email: '', guests: '', date: '', message: '' });
+  const [isMobile, setIsMobile] = useState(false);
+  const [isTablet, setIsTablet] = useState(false);
+
+  useEffect(() => {
+    const check = () => {
+      setIsMobile(window.innerWidth < 768);
+      setIsTablet(window.innerWidth < 1024);
+    };
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
+
+  const px = isMobile ? '24px' : isTablet ? '40px' : '80px';
+  const py = isMobile ? '64px' : isTablet ? '80px' : '120px';
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -266,13 +345,13 @@ export default function PageContent() {
             The Art of the<br />Shared Table
           </motion.h1>
           <motion.div
-            style={{ display: 'flex', gap: 16, flexWrap: 'wrap', justifyContent: 'center' }}
+            style={{ display: 'flex', gap: 12, flexWrap: 'wrap', justifyContent: 'center' }}
             initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.65, ease: EASE }}
           >
-            <a href="mailto:admin@baltar.ca" style={{ padding: '14px 40px', background: CREAM, color: INK, fontSize: '0.78rem', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', textDecoration: 'none' }}>
+            <a href="mailto:admin@baltar.ca" style={{ padding: isMobile ? '12px 28px' : '14px 40px', background: CREAM, color: INK, fontSize: isMobile ? '0.7rem' : '0.78rem', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', textDecoration: 'none', borderRadius: 2 }}>
               Reserve a Table
             </a>
-            <a href="#menu" style={{ padding: '14px 40px', background: 'transparent', color: '#fff', border: '1px solid rgba(255,255,255,0.55)', fontSize: '0.78rem', fontWeight: 500, letterSpacing: '0.12em', textTransform: 'uppercase', textDecoration: 'none' }}>
+            <a href="#menu" style={{ padding: isMobile ? '12px 28px' : '14px 40px', background: 'transparent', color: '#fff', border: '1px solid rgba(255,255,255,0.55)', fontSize: isMobile ? '0.7rem' : '0.78rem', fontWeight: 500, letterSpacing: '0.12em', textTransform: 'uppercase', textDecoration: 'none', borderRadius: 2 }}>
               View Menu
             </a>
           </motion.div>
@@ -294,11 +373,13 @@ export default function PageContent() {
       <Marquee />
 
       {/* ── INTRO ── */}
-      <section style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', minHeight: '65vh' }}>
-        <div style={{ position: 'relative', overflow: 'hidden' }}>
+      <section style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', minHeight: isMobile ? 'auto' : '65vh' }}>
+        {!isMobile && (
+        <div style={{ position: 'relative', overflow: 'hidden', minHeight: 400 }}>
           <Image src={IMGS.intro} alt="Restaurant atmosphere" fill sizes="50vw" style={{ objectFit: 'cover' }} />
         </div>
-        <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '80px 80px 80px 72px', background: '#FDF9F2' }}>
+        )}
+        <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: isMobile ? '56px 24px' : isTablet ? '64px 48px' : '80px 80px 80px 72px', background: '#FDF9F2' }}>
           <FadeUp>
             <div style={{ width: 40, height: 1, background: GOLD, marginBottom: 36 }} />
             <span style={{ fontSize: '0.6rem', letterSpacing: '0.22em', textTransform: 'uppercase', color: GOLD, display: 'block', marginBottom: 24 }}>Our Philosophy</span>
@@ -319,14 +400,14 @@ export default function PageContent() {
       </section>
 
       {/* ── SERVICES ── */}
-      <section id="services" style={{ padding: '120px 80px', background: CREAM }}>
+      <section id="services" style={{ padding: `${py} ${px}`, background: CREAM }}>
         <FadeUp>
           <span style={{ fontSize: '0.6rem', letterSpacing: '0.22em', textTransform: 'uppercase', color: GOLD, display: 'block', marginBottom: 16 }}>What We Offer</span>
-          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(2.2rem, 4vw, 3.6rem)', fontWeight: 400, color: INK, margin: '0 0 80px', lineHeight: 1.1 }}>
+          <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(2.2rem, 4vw, 3.6rem)', fontWeight: 400, color: INK, margin: isMobile ? '0 0 40px' : '0 0 80px', lineHeight: 1.1 }}>
             Curated Experiences,<br />Delivered Flawlessly
           </h2>
         </FadeUp>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 2 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : isTablet ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)', gap: isMobile ? 24 : 2 }}>
           {[
             { num: '01', title: 'Private Dining & Catering', desc: 'Seasonal tasting menus crafted from locally sourced ingredients, presented with the precision of a fine dining kitchen — delivered to your chosen venue.', img: IMGS.service1 },
             { num: '02', title: 'Curated Bar Programs', desc: 'Bespoke cocktail menus, sommelier-selected wine pairings, and zero-proof programs designed to complement every course and occasion.', img: IMGS.service2 },
@@ -355,31 +436,31 @@ export default function PageContent() {
       </section>
 
       {/* ── GALLERY ── */}
-      <section style={{ padding: '0 80px 120px', background: CREAM }}>
+      <section style={{ padding: isMobile ? `0 ${px} 64px` : `0 ${px} ${py}`, background: CREAM }}>
         <FadeUp style={{ marginBottom: 48 }}>
           <span style={{ fontSize: '0.6rem', letterSpacing: '0.22em', textTransform: 'uppercase', color: GOLD, display: 'block', marginBottom: 12 }}>Portfolio</span>
           <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(2rem, 3vw, 2.8rem)', fontWeight: 400, color: INK, margin: 0 }}>
             A Taste of Our Work
           </h2>
         </FadeUp>
-        <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr', gridTemplateRows: 'auto auto', gap: 4 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr 1fr' : '2fr 1fr 1fr', gridTemplateRows: 'auto', gap: 4 }}>
           {[IMGS.gallery1, IMGS.gallery2, IMGS.gallery3, IMGS.gallery4, IMGS.gallery5].map((src, i) => (
             <FadeUp key={i} delay={i * 0.07} style={{
               position: 'relative',
               overflow: 'hidden',
-              gridRow: i === 0 ? '1 / 3' : 'auto',
-              aspectRatio: i === 0 ? '3/4' : '4/3',
+              gridRow: (!isMobile && i === 0) ? '1 / 3' : 'auto',
+              aspectRatio: (!isMobile && i === 0) ? '3/4' : '4/3',
             }}>
-              <Image src={src} alt={`Gallery ${i + 1}`} fill sizes="33vw" style={{ objectFit: 'cover' }} />
+              <Image src={src} alt={`Gallery ${i + 1}`} fill sizes={isMobile ? '50vw' : '33vw'} style={{ objectFit: 'cover' }} />
             </FadeUp>
           ))}
         </div>
       </section>
 
       {/* ── PHOTO CAROUSEL ── */}
-      <section style={{ background: INK, padding: '100px 0 80px', overflow: 'hidden' }}>
+      <section style={{ background: INK, padding: isMobile ? '56px 0 48px' : '100px 0 80px', overflow: 'hidden' }}>
         <FadeUp>
-          <div style={{ padding: '0 80px', marginBottom: 48, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
+          <div style={{ padding: `0 ${px}`, marginBottom: 48, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
             <div>
               <span style={{ fontSize: '0.6rem', letterSpacing: '0.22em', textTransform: 'uppercase', color: GOLD_LT, display: 'block', marginBottom: 16 }}>From Our Kitchen</span>
               <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(1.8rem, 3vw, 2.8rem)', fontWeight: 400, color: '#fff', margin: 0 }}>
@@ -397,8 +478,8 @@ export default function PageContent() {
           scrollSnapType: 'x mandatory',
           scrollbarWidth: 'none',
           msOverflowStyle: 'none',
-          paddingLeft: 80,
-          paddingRight: 80,
+          paddingLeft: isMobile ? 24 : 80,
+          paddingRight: isMobile ? 24 : 80,
           cursor: 'grab',
         }}
           onMouseDown={e => {
@@ -435,7 +516,7 @@ export default function PageContent() {
       </section>
 
       {/* ── FULL MENU ── */}
-      <section id="menu" style={{ background: '#FDF9F2', padding: '120px 80px', borderTop: `1px solid ${RULE}` }}>
+      <section id="menu" style={{ background: '#FDF9F2', padding: `${py} ${px}`, borderTop: `1px solid ${RULE}` }}>
         <FadeUp>
           <div style={{ marginBottom: 64 }}>
             <span style={{ fontSize: '0.6rem', letterSpacing: '0.22em', textTransform: 'uppercase', color: GOLD, display: 'block', marginBottom: 16 }}>Flavours of the Season</span>
@@ -523,7 +604,7 @@ export default function PageContent() {
       </section>
 
       {/* ── TESTIMONIAL ── */}
-      <section style={{ padding: '120px 80px', background: INK, textAlign: 'center' }}>
+      <section style={{ padding: `${py} ${px}`, background: INK, textAlign: 'center' }}>
         <FadeUp>
           <div style={{ width: 40, height: 1, background: GOLD_LT, margin: '0 auto 48px' }} />
           <blockquote style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(1.6rem, 3vw, 2.8rem)', fontWeight: 400, lineHeight: 1.35, color: '#fff', maxWidth: 820, margin: '0 auto 40px', letterSpacing: '-0.01em' }}>
@@ -556,7 +637,7 @@ export default function PageContent() {
       </section>
 
       {/* ── ENQUIRY FORM ── */}
-      <section style={{ background: CREAM, padding: '120px 80px', borderTop: `1px solid ${RULE}` }}>
+      <section style={{ background: CREAM, padding: `${py} ${px}`, borderTop: `1px solid ${RULE}` }}>
         <div style={{ maxWidth: 640, margin: '0 auto' }}>
           <FadeUp>
             <span style={{ fontSize: '0.6rem', letterSpacing: '0.22em', textTransform: 'uppercase', color: GOLD, display: 'block', marginBottom: 16 }}>Make an Enquiry</span>
@@ -617,8 +698,8 @@ export default function PageContent() {
       </section>
 
       {/* ── FOOTER ── */}
-      <footer style={{ background: INK, color: 'rgba(255,255,255,0.5)', padding: '56px 80px 40px' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', paddingBottom: 40, borderBottom: '1px solid rgba(255,255,255,0.08)', marginBottom: 32, flexWrap: 'wrap', gap: 32 }}>
+      <footer style={{ background: INK, color: 'rgba(255,255,255,0.5)', padding: isMobile ? '48px 24px 32px' : '56px 80px 40px' }}>
+        <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', justifyContent: 'space-between', alignItems: isMobile ? 'flex-start' : 'flex-start', paddingBottom: 40, borderBottom: '1px solid rgba(255,255,255,0.08)', marginBottom: 32, gap: 32 }}>
           <div>
             <div style={{ fontFamily: 'Georgia, serif', fontSize: '1.1rem', color: '#fff', letterSpacing: '0.08em', marginBottom: 8 }}>Savour &amp; Sip</div>
             <div style={{ fontSize: '0.68rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.3)' }}>A Baltar Hospitality Company</div>
