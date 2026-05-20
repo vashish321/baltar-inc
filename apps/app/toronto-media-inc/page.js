@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { useState, useEffect, useRef } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import styles from './TorontoMedia.module.css';
+import TMINav from './TMINav';
 
 const EASE = [0.16, 1, 0.3, 1];
 const LIME = '#C8F135';
@@ -215,6 +216,7 @@ export default function TorontoMediaIncPage() {
 
   return (
     <div className={styles.page}>
+      <TMINav />
 
       {/* ─── SEO head content embedded as structured data ─── */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
