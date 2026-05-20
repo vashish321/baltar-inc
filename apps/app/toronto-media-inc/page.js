@@ -114,7 +114,7 @@ const caseStudies = [
     type: 'Government / Public Sector',
     year: '2023',
     tags: ['Web Redesign', 'Information Architecture', 'Accessibility', 'WCAG 2.1 AA'],
-    headline: 'Rebuilding digital infrastructure for one of Ontario's most critical utilities.',
+    headline: "Rebuilding digital infrastructure for one of Ontario’s most critical utilities.",
     body: `The Ontario Clean Water Agency (OCWA) required a full redesign of its public-facing digital presence to serve municipalities, Indigenous communities, and the general public across Ontario. Our engagement began with a full content audit across more than 400 pages, followed by a collaborative information architecture workshop with OCWA's communications, operations, and executive teams.
 
 We restructured the site taxonomy around user intent — separating service offerings, contract management, emergency response, and public education into intuitive pathways. Accessibility was a non-negotiable: the final build met WCAG 2.1 AA standards throughout, including screen reader compatibility, keyboard navigation, sufficient colour contrast, and alt-text protocols for all imagery.
@@ -127,7 +127,7 @@ The redesign reduced the average time-to-information from 4.2 clicks to 1.8, and
     type: 'Post-Secondary / UX Research',
     year: '2022',
     tags: ['UX Research', 'Focus Groups', 'Ideation', 'Storyboarding', 'Pain Points'],
-    headline: 'A research-first digital redesign for one of Canada's top pharmacy programs.',
+    headline: "A research-first digital redesign for one of Canada's top pharmacy programs.",
     body: `This engagement was led entirely by UX research methodology before any design decisions were made. We began with structured focus groups across three user cohorts — undergraduate pharmacy students, graduate researchers, and administrative staff — uncovering fundamentally different mental models of the faculty's digital ecosystem.
 
 Pain points surfaced quickly: students couldn't locate placement scheduling, researchers faced broken links in the grants portal, and staff described the internal CMS as "a filing cabinet that fights back." We ran ideation workshops with mixed cohorts to generate solutions collaboratively, then produced storyboards for each primary user journey to validate the concept with stakeholders before committing to wireframes.
