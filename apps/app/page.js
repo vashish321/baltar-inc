@@ -1,23 +1,20 @@
-import HeroSection from './components/HeroComponent/HeroSection';
-import TechnologiesSection from './components/BaltarSections/TechnologiesSection';
-import HospitalitySection from './components/BaltarSections/HospitalitySection';
-import EngineeringSection from './components/BaltarSections/EngineeringSection';
-import FinanceSection from './components/BaltarSections/FinanceSection';
-import FashionSection from './components/BaltarSections/FashionSection';
-import MediaSection from './components/BaltarSections/MediaSection';
-import ContactSection from './components/BaltarSections/ContactSection';
+import AppleHomePage from './components/AppleHomePage/AppleHomePage';
+
+export const metadata = {
+  title: 'Baltar Inc. | One Company. Limitless Services.',
+  description:
+    'Baltar Inc is a Canadian multi-division firm operating across technology, hospitality, fashion, and consultancy. Serving businesses and clients across Toronto and the GTA.',
+  keywords: [
+    'Baltar Inc',
+    'Toronto business',
+    'Canadian technology company',
+    'web design Toronto',
+    'event catering Toronto',
+    'luxury eyewear Canada',
+    'engineering consulting Toronto',
+  ],
+};
 
 export default function Home() {
-  return (
-    <>
-      <HeroSection />
-      <TechnologiesSection />
-      <HospitalitySection />
-      <EngineeringSection />
-      <FinanceSection />
-      <FashionSection />
-      <MediaSection />
-      <ContactSection />
-    </>
-  );
+  return <AppleHomePage />;
 }
