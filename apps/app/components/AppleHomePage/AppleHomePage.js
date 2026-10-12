@@ -90,14 +90,14 @@ export default function AppleHomePage() {
           if (reveals.length) {
             gsap.fromTo(
               reveals,
-              { opacity: 0, y: 36, filter: 'blur(4px)' },
+              { opacity: 0, y: 32 },
               {
                 opacity: 1,
                 y: 0,
-                filter: 'blur(0px)',
                 stagger: 0.09,
                 duration: 0.8,
                 ease: 'power3.out',
+                overwrite: 'auto',
                 scrollTrigger: {
                   trigger: section,
                   start: 'top 70%',
